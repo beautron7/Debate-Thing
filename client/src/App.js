@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Sidebar from './components/Sidebar'
-import logo from './logo.svg';
 import './App.css';
 const ELECTRON = window.require('electron');
 
