@@ -19,14 +19,14 @@ export default class CardPreview extends Component {
       keywords,
     } = this.props;
 
-    const keywordNodes = keywords? keywords.map((keyword,index) => <span key={index} class="keyword" style={cardStyle.keyword} draggable="false">{keyword}</span>):null
+    const keywordNodes = keywords? keywords.map((keyword,index) => <span key={index} className="keyword" style={cardStyle.keyword} draggable="false">{keyword}</span>):null
 
     return (
       <div style={cardStyle.root} draggable="true">
         <img style={cardStyle.img} src={img} draggable="false" alt="" />
         <div style={cardStyle.author} draggable="false">{author}</div>
         <div style={cardStyle.title} draggable="false">{title}</div>
-        {keywordNodes}
+        <div style={cardStyle.keywordContainer} draggable="false">{keywordNodes}</div>
       </div>
     )
   }

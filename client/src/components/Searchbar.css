@@ -1,0 +1,5 @@
+.search-bar {
+  max-width: 90%;
+  align-self: center !important;
+  /*^ not working*/
+}

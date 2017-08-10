@@ -5,7 +5,7 @@ import CardsFrame from './components/CardsFrame'
 
 import './App.css';
 const ELECTRON = window.nodeRequire('electron');
-const CARDS = [{
+var CARDS = [{
   image:'./img/vox.com.png',
   author:'Klien 14',
   title:'Panasonic',
@@ -25,15 +25,14 @@ class App extends Component {
           <Tabs />
           <CommandBar />
         </Ribbon>*/}
-
         <Sidebar left>
-          <Searchbar id="docsearch"/>
+          <Searchbar title="Find Section" id="docsearch"/>
           {/*<NavFrame />*/}
         </Sidebar>
 
 
         <Sidebar right>
-          <Searchbar id="docsearch"/>
+          <Searchbar title="Search Cards" id="cardsSearch"/>
           <CardsFrame data={CARDS} />
         </Sidebar>
       </div>
