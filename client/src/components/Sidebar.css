@@ -1,0 +1,9 @@
+.side-bar {
+  position: fixed;
+  top: 7.8em;
+  background-color: lightgray;
+  min-width:15em;
+  width:23%;
+  height: 100%;
+  padding-top: 0.5em;
+}

@@ -1,0 +1,10 @@
+/*Ribbon.css*/
+.ribbon {
+  height: 6em;
+  /*background-color: #0af;*/
+  background-color: lightgrey;
+  text-align: left;
+  border-bottom-color: black;
+  border-bottom-style:dotted;
+  border-bottom-width: 0.1em;
+}

@@ -1,22 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import './Sidebar.css'
 
 export default class Sidebar extends Component {
   static propTypes = {
     left: PropTypes.bool,
     right: PropTypes.bool,
-  }
-
-  get baseStyle(){
-    return {
-      position: 'fixed',
-      top: '7em',
-      backgroundColor: 'lightgray',
-      minWidth:'15em',
-      width:'23%',
-      height: '100%',
-      paddingTop: '0em',
-    }
+    shrinkTopMargin: PropTypes.bool.isRequired,
   }
 
   render(){
@@ -24,14 +14,16 @@ export default class Sidebar extends Component {
       left,
       right,
       children,
+      shrinkTopMargin,
     } = this.props;
 
-    var style = {...this.baseStyle}
+    var style = {}
     if(right){style.right='0em'}
     if(left){style.left='0em'}
+    if(!shrinkTopMargin()){style.top='1.8em'}
 
     return (
-      <div style={style}>
+      <div className="side-bar" style={style}>
         {children}
       </div>
     )
