@@ -1,15 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import './%COMPONENTNAME%.css'
+import './Card.css'
 
-export default class %COMPONENTNAME% extends Component {
+export default class Card extends Component {
   static propTypes = {
-    /*...propTypes*/
+    /*...propTypes*/  
   }
-
-  // constructor(a,b,c){
-  //   super(a,b,c)
-  // }
 
   render(){
     const {
@@ -17,7 +13,7 @@ export default class %COMPONENTNAME% extends Component {
     } = this.props
 
     return (
-
+      <div className="card  ">This is a placeholder for a card</div>
     )
   }
 }

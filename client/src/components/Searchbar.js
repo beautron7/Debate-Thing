@@ -22,14 +22,16 @@ export default class Searchbar extends Component {
     this.textDOM = undefined;
 
     return (
-      <div className="search-bar" ref={self => {this.DOM=self}}>
-        <div className="input-group">
-          <input type="text" onChange={this.onChange} ref={self => this.textDOM=self} className="form-control input" placeholder={title}></input>
-          <span className="input-group-btn">
-            <button className="btn btn-info" onClick={this.onSubmit} type="button">
-              <i className="glyphicon glyphicon-search"></i>
-            </button>
-          </span>
+      <div className="search-bar-container">
+        <div className="search-bar" ref={self => {this.DOM=self}}>
+          <div className="input-group">
+            <input type="text" onChange={this.onChange} ref={self => this.textDOM=self} className="form-control input" placeholder={title}></input>
+            <span className="input-group-btn">
+              <button className="btn btn-info" onClick={this.onSubmit} type="button">
+                <i className="glyphicon glyphicon-search"></i>
+              </button>
+            </span>
+          </div>
         </div>
       </div>
     )

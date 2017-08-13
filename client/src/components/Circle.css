@@ -1,0 +1,7 @@
+#editor .circle {
+  width: 1em;
+  height: 1em;
+	border-radius: 50%;
+  background-color: black;
+  margin: auto;
+}

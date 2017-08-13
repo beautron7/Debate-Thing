@@ -6,7 +6,31 @@
   margin: auto;
 }
 #editor {
+  position: fixed;
   background-color: rgba(255,0,0,0.5);
   overflow-y: scroll;
   overflow-x: hidden;
+}
+
+#editor > .section {
+  width:100%;
+  margin:auto;
+}
+
+#editor > .section > div > .heading {
+  font-size: 3em;
+  display: block;
+  border-style: solid;
+}
+
+#editor > .section .section > div > .heading {
+  font-size: 2em;
+  display: block;
+  text-decoration: underline;
+}
+
+#editor > .section .section {
+  width:90%;
+  background-color: #0af;
+  margin:auto
 }

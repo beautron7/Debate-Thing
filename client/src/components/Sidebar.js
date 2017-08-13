@@ -6,7 +6,16 @@ export default class Sidebar extends Component {
   static propTypes = {
     left: PropTypes.bool,
     right: PropTypes.bool,
-    shrinkTopMargin: PropTypes.bool.isRequired,
+  }
+
+  constructor(a,b,c){
+    super(a,b,c)
+    this.show=true
+    this.toggleVis =()=> {
+      this.show = !this.show;
+      this.forceUpdate()
+      window.App.editor.forceUpdate()
+    }
   }
 
   render(){
@@ -14,14 +23,14 @@ export default class Sidebar extends Component {
       left,
       right,
       children,
-      shrinkTopMargin,
+      // shrinkTopMargin,
     } = this.props;
 
     var style = {}
     if(right){style.right='0em'}
     if(left){style.left='0em'}
-    if(!shrinkTopMargin()){style.top='1.8em'}
-
+    if(!window.App.Ribbon.show){style.top='1.8em'}
+    if(!this.show){style.visibility='hidden'}
     return (
       <div className="side-bar" style={style}>
         {children}

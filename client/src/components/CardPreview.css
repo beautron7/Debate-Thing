@@ -1,0 +1,43 @@
+.card-preview {
+  margin: 1em;
+  width: auto;
+  height: 6em;
+  background-color: #AAA;
+}
+.card-preview > img {
+  height: 5em;
+  width: 5em;
+  margin: 0.5em;
+  float: left;
+  background-color: white;
+}
+.card-preview > .author {
+  text-align: left;
+  margin: 0;
+  margin-top: 0.5em;
+  font-size: 1.5em;
+  width: 100%;
+}
+.card-preview > .title {
+  text-align: left;
+  margin: 0;
+  font-size: 1em;
+  font-style: italic;
+  width:100%;
+}
+.card-preview > .keywordContainer {
+  text-align: left;
+}
+.card-preview > .keywordContainer > .keyword {
+  background-color: #FB0;
+  border-radius: 0.6em;
+  font-size: 1em;
+  height: 1.2em;
+  margin-left: 0.1em;
+  margin-right: 0.1em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+.card-preview > .url {
+  visibility: hidden;
+}

@@ -1,50 +1,48 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import Tab from './Tab'
-import Ribbon from './Ribbon'
-
 import './Tabbar.css'
 
 export default class Tabbar extends Component {
-  static propTypes = {
-    updateGUI: PropTypes.func.isRequired,
+  constructor(a,b,c){
+    super(a,b,c)
+    this.paneNumber=0
+    window.electron = window.electron||window.nodeRequire('electron');
   }
 
-  constructor(){
-    super(arguments)
-    this.currentTab=1
-  }
-
-  get showRibbon(){
+  showRibbon(){
     return this.currentTab !== -1
   }
 
   render(){
-    const {
-      updateGUI,
-    } = this.props
+
+    const {updateGUI} = window.App
 
     const tabs = ['File','Edit','Settings','View'].map((x,i)=>(
       <Tab
-        active={this.currentTab===i}
+        active={this.paneNumber===i}
         name={x}
         key={i}
         onClick={()=>{
-          this.currentTab=i
-          updateGUI()
+          if(window.App.Ribbon.show){
+            this.paneNumber=i
+            this.forceUpdate()
+            window.App.Ribbon.forceUpdate()
+          } else {
+            this.paneNumber=i
+            updateGUI()
+          }
         }}
       />
     ))
-
     return (
-      <div>
-        <div className='tab-container'>
-          {tabs}
-          <i style={{'float':'right'}} onClick={()=>{this.currentTab=-1;updateGUI()}} className="tab glyphicon glyphicon-eject"></i>
-        </div>
-        <div>
-          <Ribbon show={this.showRibbon} paneNumber={this.currentTab}/>
-        </div>
+      <div className='tab-container'>
+        {tabs}
+        <a className="fa fa-window-thing fa-window-close"    onClick={x=>window.electron.remote.getCurrentWindow().close()}></a>
+        <a className="fa fa-window-thing fa-window-maximize" onClick={x=>window.electron.remote.getCurrentWindow().maximize()}></a>
+        <a className="fa fa-window-thing fa-window-minimize" onClick={x=>window.electron.remote.getCurrentWindow().minimize()}></a>
+
+        <i style={{'float':'right'}} onClick={()=>{this.paneNumber=-1;updateGUI()}} className="tab glyphicon glyphicon-eject"></i>
       </div>
     )
   }

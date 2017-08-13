@@ -4,4 +4,15 @@
   overflow-y: hidden;
   padding-top: 0.2em;
   clear: both;
+  -webkit-app-region: drag;
+}
+.fa-window-thing{
+  margin-top:0.25em;
+  height: 1.8em;
+  width: 1.8em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  float:right;
+  -webkit-app-region: no-drag;
+  color:black;
 }

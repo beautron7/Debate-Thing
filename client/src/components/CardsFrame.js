@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import CardPreview from './CardPreview'
-
+import './scrollbar.css'
+import './CardsFrame.css'
 
 export default class CardsFrame extends Component {
   static propTypes = {
@@ -21,10 +22,11 @@ export default class CardsFrame extends Component {
         title={card.title}
         author={card.author}
         keywords={card.keywords}
+        url={card.url}
       />)
     )
     return (
-      <div>{cardCollection}</div>
+      <div className="cards-frame scrollbar">{cardCollection}</div>
     )
   }
 }

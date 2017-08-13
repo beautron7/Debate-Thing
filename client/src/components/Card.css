@@ -1,0 +1,10 @@
+.card {
+  display: block;
+  width: 90%;
+  background-color: #0fa;
+  margin:auto;
+  min-height: 5em;
+  border-radius: 1em;
+  border-style: solid;
+  margin-bottom: 1em;
+}

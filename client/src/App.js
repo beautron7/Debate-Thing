@@ -4,49 +4,53 @@ import Searchbar from './components/Searchbar'
 import CardsFrame from './components/CardsFrame'
 import Editor from './components/Editor'
 import Tabbar from './components/Tabbar'
-
+import Ribbon from './components/Ribbon'
 import './App.css';
-const ELECTRON = window.nodeRequire('electron');
+
+window.electron = window.electron||window.nodeRequire('electron');
+
 
 var CARDS = [{
+  url:'www.vox.com',
   image:'./img/vox.com.png',
   author:'Klien 14',
   title:'Panasonic',
   keywords:['One','Two'],
 },{
+  url:'www.google.com',
   image:'',
   author:'Klien 14',
   title:'Panasonic',
   keywords:['One','Five'],
 }]
 
-
-
 class App extends Component {
-  constructor(){
-    if (App.instance)
+  constructor(a,b,c){
+    if (window.App)
       throw new Error('App may only be instanciated once')
-    super(arguments)
-    this.showNav=true
-    this.showCard=true
+    super(a,b,c)
 
-    App.instance = this
+    this.Ribbon = {show:true}
+    this.Tabbar = {paneNumber:0}
+    this.leftBar = {toggleVis:()=>(0),show:true}
+    this.rightBar = {toggleVis:()=>(0),show:true}
+    window.App = this
+    // this.updateGUI()
   }
 
-  shrinkTopMargin() {
-    var self = this? this:App.instance;
+  shrinkTopMargin() {//getter
+    var self = window.App
     return typeof self.Tabbar==='undefined'? true:self.Tabbar.showRibbon
   }
 
-  shrinkRightMargin() {
-    var self = this? this:App.instance;
-  }
-
   updateGUI(){
-    var self = this? this:App.instance
+    console.log("GUI UPDATE");
+    var self = window.App
     self.rightBar.forceUpdate()
     self.leftBar.forceUpdate()
     self.Tabbar.forceUpdate()
+    self.Ribbon.forceUpdate()
+    self.editor.forceUpdate()
     // self.forceUpdate()
   }
 
@@ -55,18 +59,19 @@ class App extends Component {
       <div className="App">
         <Tabbar
           ref={self => this.Tabbar=self}
-          updateGUI={this.updateGUI}
-          
+        />
+        <Ribbon
+          ref={x=>this.Ribbon=x}
         />
         <Sidebar left
           ref={self => this.leftBar=self}
-          shrinkTopMargin={App.instance.shrinkTopMargin}
+          shrinkTopMargin={this.shrinkTopMargin}
         >
-          <Searchbar title="Find Section" onChange={console.log} id="docsearch"/>
-          {/*<NavFrame />*/}
+          <Searchbar title="Find Section" id="docsearch"/>
         </Sidebar>
 
         <Editor
+          ref={self => this.editor=self}
           shrinkTopMargin={this.shrinkTopMargin}
         />
 

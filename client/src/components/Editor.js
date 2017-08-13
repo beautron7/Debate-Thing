@@ -1,29 +1,50 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import './Editor.css'
+import './scrollbar.css'
+import Section from './Section.js'
 
 export default class Editor extends Component {
   static propTypes = {
-    shrinkTopMargin:PropTypes.bool,
     shrinkLeftMargin:PropTypes.bool,
     shrinkRightMargin:PropTypes.bool,
   }
 
+  constructor(a,b,c){
+    super(a,b,c)
+    this.data = [
+      "1AC Space",
+      {
+        title:"Grab'em",
+        author:"Trump",
+        text:"Grab'em by the pussy.",
+      },
+      [
+        "Contention 1",
+        {
+          title:"Fraking",
+          author:"Rajan",
+          text:"yolo",
+        },
+        {
+          title:"Fraking",
+          author:"Rajan",
+          text:"yolo",
+        },
+      ],
+    ]
+  }
+function
   render(){
-    const {
-      shrinkTopMargin,
-      shrinkLeftMargin,
-      shrinkRightMargin,
-    }=this.props
     var style={
-      top: shrinkTopMargin()? '1.8em':'7.8em',
-      left: shrinkLeftMargin? '0em':'23%',
-      right: shrinkRightMargin? '0em':'23%',
+      top: window.App.Ribbon.show? '7.8em':'1.8em',
+      left: window.App.leftBar.show? '23%':'0',
+      right: window.App.rightBar.show? '23%':'0',
       bottom: '0em',
     }
     return (
-      <div id ="editor">
-        <div className="circle"></div>
+      <div id="editor" className="scrollbar" style={style}>
+        <Section path ={[Infinity]} data={this.data}/>
       </div>
     )
   }
