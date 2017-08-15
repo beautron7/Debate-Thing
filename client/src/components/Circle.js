@@ -7,31 +7,31 @@ export default class Circle extends Component {
     path:PropTypes.arrayOf(PropTypes.number).isRequired
   }
 
-  // constructor(a,b,c){
-  //   super(a,b,c)
-  // }
-
-  static onDrop=function (ev) {
+  constructor(a,b,c){
+    super(a,b,c)
+  this.onDrop=function(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("card-url");
-    console.log("Droped","Circle",ev.dataTransfer.getData("text/plain"));
-    Circle.onDragLeave(ev)
+    console.log("Droped Circle",ev.dataTransfer.getData("text/plain","at",this.props.path));
+    this.onDragLeave(ev)
   }
-  static onDragOver=function (ev) {
+  this.onDragOver=function(ev) {
     ev.preventDefault();
     // console.log("Over","Circle",ev);
     ev.target.style.width
     ev.dataTransfer.dropEffect = "link"
   }
-  static onDragEnter=function (ev) {
+  this.onDragEnter=function(ev) {
     ev.target.style.width="2em"
     ev.target.style.height="2em"
   }
-  static onDragLeave=function (ev) {
+  this.onDragLeave=function(ev) {
     ev.target.style.width="1em"
     ev.target.style.height="1em"
   }
-  
+  }
+
+
   render(){
     const {
       path
@@ -40,10 +40,10 @@ export default class Circle extends Component {
     return (
       <div
         className="circle"
-        onDrop={Circle.onDrop}
-        onDragOver={Circle.onDragOver}
-        onDragEnter={Circle.onDragEnter}
-        onDragLeave={Circle.onDragLeave}
+        onDrop={this.onDrop}
+        onDragOver={this.onDragOver}
+        onDragEnter={this.onDragEnter}
+        onDragLeave={this.onDragLeave}
       ></div>
     )
   }

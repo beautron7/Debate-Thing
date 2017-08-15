@@ -33,6 +33,12 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+  mainWindow.on('maximize', function () {
+    mainWindow.webContents.send('Window-State','maximized')
+  })
+  mainWindow.on('unmaximize', function () {
+    mainWindow.webContents.send('Window-State','unmaximized')
+  })
 }
 
 // This method will be called when Electron has finished

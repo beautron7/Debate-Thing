@@ -8,10 +8,24 @@ export default class Tabbar extends Component {
     super(a,b,c)
     this.paneNumber=0
     window.electron = window.electron||window.nodeRequire('electron');
+    window.electron.ipcRenderer.on('Window-State',(event, message) => {
+      console.log(message)
+      window.state=message
+      window.App.Tabbar.forceUpdate()
+    })
   }
 
   showRibbon(){
     return this.currentTab !== -1
+  }
+
+  toggleMaximize(){
+    var browserWindow = window.electron.remote.getCurrentWindow()
+    if(window.state=="maximized"){
+      browserWindow.unmaximize()
+    } else {
+      browserWindow.maximize()
+    }
   }
 
   render(){
@@ -39,7 +53,7 @@ export default class Tabbar extends Component {
       <div className='tab-container'>
         {tabs}
         <a className="fa fa-window-thing fa-window-close"    onClick={x=>window.electron.remote.getCurrentWindow().close()}></a>
-        <a className="fa fa-window-thing fa-window-maximize" onClick={x=>window.electron.remote.getCurrentWindow().maximize()}></a>
+        <a className={"fa fa-window-thing fa-window-"+(window.state=='maximized'?'restore':'maximize')} onClick={this.toggleMaximize}></a>
         <a className="fa fa-window-thing fa-window-minimize" onClick={x=>window.electron.remote.getCurrentWindow().minimize()}></a>
 
         <i style={{'float':'right'}} onClick={()=>{this.paneNumber=-1;updateGUI()}} className="tab glyphicon glyphicon-eject"></i>
