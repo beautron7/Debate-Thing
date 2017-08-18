@@ -27,6 +27,18 @@ var CARDS = [{
 }]
 
 class App extends Component {
+  getCardDataByUrl(url){
+    return {
+      author:'May Dupnaim',
+      title:'Example Card',
+      text:'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      url:url,
+      key:(()=>(
+        String.fromCharCode(65 + Math.floor(Math.random() * 26)) + Date.now()//generates a time code with
+      ))()
+    }
+  }
+
   constructor(a,b,c){
     if (window.App)
       throw new Error('App may only be instanciated once')

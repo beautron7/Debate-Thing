@@ -3,8 +3,55 @@
   width: 90%;
   background-color: #0fa;
   margin:auto;
-  min-height: 5em;
+  /*min-height: 5em;*/
+  /*height: 0em;*/
   border-radius: 1em;
   border-style: solid;
   margin-bottom: 1em;
+  overflow: hidden;
+}
+
+.card > .cardHead {
+  background: #fff;
+}
+
+.card > .cardHead > .cardHeadUpper {
+  min-width: 100%;
+  min-height: 1em;
+  background: #ddd;
+  font-size: 1.5em;
+  font-weight: bold;
+  padding-left: 0.5em;
+  padding-top: 0.25em;
+  text-align: left;
+}
+
+.card > .cardHead > .cardHeadLower {
+  background: #af0;
+  position: relative;
+  height: 2.75em;
+}
+
+.card > .cardHead > .cardHeadLower > .cardAuthor{
+  padding-left: 0.5em;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: left;
+  left:0em;
+
+  background: #ad0;
+
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.card > .cardHead > .cardHeadLower > .cardButtons{
+  position: absolute;
+  right: 0.25em;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.card .cardBody {
+  text-align: left;
 }

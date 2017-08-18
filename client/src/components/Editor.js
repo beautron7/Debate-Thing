@@ -14,11 +14,11 @@ export default class Editor extends Component {
     super(a,b,c)
     this.data = [
       "1AC Space",
-      {
-        title:"Grab'em",
-        author:"Trump",
-        text:"Grab'em by the pussy.",
-      },
+      // {
+      //   title:"Grab'em",
+      //   author:"Trump",
+      //   text:"Grab'em.",
+      // },
       [
         "Contention 1",
         {
@@ -32,10 +32,35 @@ export default class Editor extends Component {
           text:"yolo",
         },
       ],
+      [
+        "Contention 2",
+        {
+          title:"What Nuclear War?",
+          author:"Jackson",
+          text:"hi",
+        },
+        {
+          title:"No",
+          author:"Yes",
+          text:"meh",
+        },
+      ],
     ]
   }
-function
+
   render(){
+    //DEBUG fn
+    var traverse =(array)=> {
+      array.key=array.key? array.key:Math.random()
+      if (Array.isArray(array)){
+        for(var i = 1; i < array.length; i++){
+          traverse(array[i])
+        }
+      }
+    }
+
+    traverse(this.data)
+    //END DEBUG FN
     var style={
       top: window.App.Ribbon.show? '7.8em':'1.8em',
       left: window.App.leftBar.show? '23%':'0',
@@ -44,7 +69,11 @@ function
     }
     return (
       <div id="editor" className="scrollbar" style={style}>
-        <Section path ={[Infinity]} data={this.data}/>
+        <Section
+          ref={self=>this.primarySection=self}
+          path={[]}
+          data={this.data}
+        />
       </div>
     )
   }

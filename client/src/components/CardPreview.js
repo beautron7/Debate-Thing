@@ -35,7 +35,7 @@ export default class CardPreview extends Component {
       // ev.prevenev.dataTransfer.dropEffect = "move"tDefault()
       ev.dataTransfer.setData(
         "text/plain",
-        ev.target.getElementsByClassName('url')[0].textContent
+        "cardRef:"+ev.target.getElementsByClassName('url')[0].textContent
       )
       console.log(
         "DragStart",

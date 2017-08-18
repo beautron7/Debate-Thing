@@ -9,26 +9,44 @@ export default class Circle extends Component {
 
   constructor(a,b,c){
     super(a,b,c)
-  this.onDrop=function(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("card-url");
-    console.log("Droped Circle",ev.dataTransfer.getData("text/plain","at",this.props.path));
-    this.onDragLeave(ev)
   }
-  this.onDragOver=function(ev) {
+  static onDrop(ev,self) {
+    var cardUrl = ev.dataTransfer.getData("text/plain")
+    if (cardUrl.slice(0,8) != "cardRef:") {
+      Circle.onDragLeave(ev,self)
+      return false
+    }
+
+    ev.preventDefault();
+    console.log("Droped Circle",cardUrl,"at",self.props.path);
+    var insertionPointParent = window.App.editor.data
+    var parentReactElement = window.App.editor.primarySection //used to forceUpdate
+
+    for (var i = 0; i < self.props.path.length-1; i++) {//stop before the final point so splicing can occour.
+      var index = self.props.path[i]
+      parentReactElement = parentReactElement.children[index]
+      insertionPointParent = insertionPointParent[index]
+    }
+
+    var insertToIndex = self.props.path[self.props.path.length-1]
+    insertionPointParent.splice(insertToIndex,0,window.App.getCardDataByUrl(cardUrl))
+    parentReactElement.forceUpdate()
+
+    Circle.onDragLeave(ev,self)
+  }
+  static onDragOver(ev,self) {
     ev.preventDefault();
     // console.log("Over","Circle",ev);
     ev.target.style.width
     ev.dataTransfer.dropEffect = "link"
   }
-  this.onDragEnter=function(ev) {
+  static onDragEnter(ev,self) {
     ev.target.style.width="2em"
     ev.target.style.height="2em"
   }
-  this.onDragLeave=function(ev) {
+  static onDragLeave(ev,self) {
     ev.target.style.width="1em"
     ev.target.style.height="1em"
-  }
   }
 
 
@@ -40,10 +58,10 @@ export default class Circle extends Component {
     return (
       <div
         className="circle"
-        onDrop={this.onDrop}
-        onDragOver={this.onDragOver}
-        onDragEnter={this.onDragEnter}
-        onDragLeave={this.onDragLeave}
+        onDrop={ev=>Circle.onDrop(ev,this)}
+        onDragOver={ev=>Circle.onDragOver(ev,this)}
+        onDragEnter={ev=>Circle.onDragEnter(ev,this)}
+        onDragLeave={ev=>Circle.onDragLeave(ev,this)}
       ></div>
     )
   }

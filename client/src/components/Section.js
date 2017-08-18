@@ -14,37 +14,45 @@ export default class Section extends Component {
   //   this.forceUpdate()
   // }
 
-  constructor(a,b,c){
-    super(a,b,c)
-    console.log(a,b,c);
-  }
+  // constructor(a,b,c){
+  //   super(a,b,c)
+  //   console.log(a,b,c);
+  // }
 
   render(){
+    const {
+      path,
+      data,
+    }=this.props
 
-    var [first, ...rest] = this.props.data
+    // this.keyvals = this.keyvals? this.keyvals:[0,1]
+
+
+    var [first, ...rest] = data
+    this.children = []
 
     var content = [<div key={0}>
-      <span
-        path={[this.path].concat(0)}
-        className="heading">{first}</span>
-      <Circle />
+      <span className="heading" ref={self=>this.children.push(self)}>{first}</span>
+      <Circle path={path.concat(1)} />
     </div>]
 
     content.push(
       ...rest.map((x,i)=> (
-        <div key={(i+1)}>
+        <div key={x.key}>
           {
             Array.isArray(x)?
               <Section
-                path={[this.path].concat([i+1])}
+                path={path.concat(...[i+1])}
+                ref={self=>this.children[i+1]=self}
                 data={x}/>
               :<Card
-                path={[this.path].concat([i+1])}
+                path={path.concat(...[i+1])}
+                ref={self=>this.children[i+1]=self}
                 data={x}
               />
           }
           <Circle
-            path={[this.path].concat([i+1])}
+            path={path.concat(...[i+2])}
           />
         </div>
       ))
