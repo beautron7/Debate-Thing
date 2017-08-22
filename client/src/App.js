@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Hash from 'hasha'
 import Sidebar from './components/Sidebar'
 import Searchbar from './components/Searchbar'
 import CardsFrame from './components/CardsFrame'

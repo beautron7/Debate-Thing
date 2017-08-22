@@ -15,8 +15,8 @@ export default class Ribbon extends Component {
       </div>),(<div>
         <span>Settings</span>
       </div>),(<div>
-        <div>
-          <span onClick={x=>window.App.leftBar.toggleVis()} className="btn btn-primary btn-xs">Toggle Left sidebar</span><br />
+        <div className="btn-group">
+          <span onClick={x=>window.App.leftBar.toggleVis()} className="btn btn-primary btn-xs">Toggle Left sidebar</span>
           <span onClick={x=>window.App.rightBar.toggleVis()}  className="btn btn-primary btn-xs">Toggle Right sidebar</span>
         </div>
       </div>),
@@ -24,7 +24,7 @@ export default class Ribbon extends Component {
   }
 
   get show(){
-    if (typeof window.App.Tabbar === "undefined")
+    if (typeof window.App.Tabbar === "undefined" || window.App.Tabbar === null)
       return true
     return  window.App.Tabbar.paneNumber !== -1
   }

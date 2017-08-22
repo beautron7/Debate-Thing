@@ -25,6 +25,20 @@ export default class Section extends Component {
       data,
     }=this.props
 
+    var _onDragStart=(ev)=> {
+      this.enableCircles=false
+      this.forceUpdate()
+      // ev.prevenev.dataTransfer.dropEffect = "move"tDefault()
+      ev.dataTransfer.setData(
+        "text/plain",
+        "secPath:"+JSON.stringify(this.props.path)
+      )
+      console.log(
+        "DragStart",
+        "Section",
+        JSON.stringify(this.props.path),
+      );
+    }
     // this.keyvals = this.keyvals? this.keyvals:[0,1]
 
 
@@ -54,12 +68,13 @@ export default class Section extends Component {
           <Circle
             path={path.concat(...[i+2])}
           />
+        <div className="terminator" ></div>
         </div>
       ))
     )
 
     return (
-      <div className="section">
+      <div draggable="false" className="section" onDragStart={_onDragStart}>
         {content}
       </div>
     )

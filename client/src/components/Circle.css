@@ -4,4 +4,16 @@
 	border-radius: 50%;
   background-color: black;
   margin: auto;
+  margin-top: 1em;
+  margin-bottom: 1em;
+
+
+  -webkit-transition: height 0.35s ;
+  -webkit-transition: width 0.35s ;
+  -moz-transition: height 0.35s ;
+  -moz-transition: width 0.35s ;
+  -o-transition: height 0.35s ;
+  -o-transition: width 0.35s ;
+  transition: height 0.35s ;
+  transition: width 0.35s ;
 }

@@ -9,7 +9,6 @@ export default class Card extends Component {
     author: PropTypes.string.isRequired,
 
     text: PropTypes.arrayOf(PropTypes.string),
-
     formatting: PropTypes.object, //formatting example:
     /*
     {
@@ -30,6 +29,11 @@ export default class Card extends Component {
     url: PropTypes.string,
   }
 
+  constructor(a,b,c){
+    super(a,b,c);
+    this.tag=this.props.titles
+  }
+
   render(){
     const {
       author,
@@ -41,10 +45,16 @@ export default class Card extends Component {
     },10)
 
     return (
-      <div ref={x=>this.dom=x} className="card animate-height">
+      <div draggable="false" ref={x=>this.dom=x} className="card animate-max-height">
         <div className="cardHead">
-          <div className="cardHeadUpper">
-            Tag Placeholder
+          <div
+            ref={
+              x=> x.addEventListener("input",()=>{
+                this.tag=x.textContent
+              }, false)
+            }
+            contentEditable="plaintext-only" className="cardHeadUpper">
+            {this.tag}
           </div>
           <div className="cardHeadLower">
             <div className="cardAuthor">

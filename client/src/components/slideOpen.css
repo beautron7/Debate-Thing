@@ -1,7 +1,14 @@
-.animate-height {
+.animate-max-height {
   max-height: 0;
   -webkit-transition: max-height 1.35s ease-in-out;
   -moz-transition: max-height 1.35s ease-in-out;
   -o-transition: max-height 1.35s ease-in-out;
   transition: max-height 1.35s ease-in-out;
+}
+
+.animate-margin-top {
+  -webkit-transition: margin-top 0.35s ease-in-out;
+  -moz-transition: margin-top 0.35s ease-in-out;
+  -o-transition: margin-top 0.35s ease-in-out;
+  transition: margin-top 0.35s ease-in-out;
 }

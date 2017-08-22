@@ -31,16 +31,15 @@ export default class CardPreview extends Component {
         </span>
       ):null
 
-    var onDragStart=function (ev) {
-      // ev.prevenev.dataTransfer.dropEffect = "move"tDefault()
+    var onDragStart=(ev)=> {
       ev.dataTransfer.setData(
         "text/plain",
-        "cardRef:"+ev.target.getElementsByClassName('url')[0].textContent
+        "cardRef:"+this.props.url//ev.target.getElementsByClassName('url')[0].textContent
       )
       console.log(
         "DragStart",
         "Card",
-        ev.target.getElementsByClassName('url')[0].textContent,
+        this.props.url,
       );
     }
 
@@ -50,7 +49,6 @@ export default class CardPreview extends Component {
         <div className="author" draggable="false">{author}</div>
         <div className="title" draggable="false">{title}</div>
         <div className="keywordContainer" draggable="false">{keywordNodes}</div>
-        <div className="url">{url}</div>
       </div>
     )
   }

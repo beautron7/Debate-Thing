@@ -10,17 +10,18 @@
     "react-scripts": "0.8.5"
   },
   "dependencies": {
+    "bootstrap": "^3.3.0",
+    "hasha": "^3.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-scripts": "1.0.10",
-    "bootstrap": "^3.3.0"
+    "react-scripts": "1.0.10"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "dev" : "nf start",
+    "dev": "nf start",
     "electron": "electron .",
     "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron ."
   }
