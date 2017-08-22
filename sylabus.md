@@ -21,14 +21,14 @@ Data structures will be useful in this because I don’t know how I will store t
 
 #### Work plan:
 
-| Week |             Events              |                    Description                    |
-| ---  | ------------------------------- | --------------------------------------------------|
-| W1:  |                                 | Decide on filesystem storage structure            |
-| W2:  |                                 | Decide on internal handling of cards, metadata etc|
-| W3:  | Quiz on advanced datastructures | Card editing  (#5)                                |
-| W4:  |                                 | Navbar (#1) and CardBar (#3)                      |
-| W5:  | Test on ???                     | Editor (#2)                                       |  
-| W6:  |                                 | Ribbon (#4)                                       |
-| W7:  |                                 | Ribbon (#4)                                       |
-| W8:  |                                 | Production Style sheet (sass)                     |
-| W9:  | Quiz on ???                     | Fixing max, linux bugs                            |
+| Week | Events| Description|
+|:-----:| --- | --- |
+| W1: | | Decide on filesystem storage structure |
+| W2: | | Decide on internal handling of cards, metadata etc |
+| W3: | Quiz on advanced datastructures | Card editing (#5) |
+| W4: | | Navbar (#1) and CardBar (#3) |
+| W5: | Test on ??? | Editor (#2) |
+| W6: | | Ribbon (#4) |
+| W7: | | Ribbon (#4) |
+| W8: | | Production Style sheet (sass) |
+| W9: | Quiz on ??? | Fixing max, linux bugs |
