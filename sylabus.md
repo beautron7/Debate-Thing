@@ -1,8 +1,8 @@
-[//]: # (Written in markdown)
 ## Sylabus for Advanced Topics in CS:
 #### Topics:
 * Advanced data structures
-* data science
+* Data science
+* Neural networks
 
 #### CS Tech:
 * `Node.js` (definitely)
@@ -21,14 +21,46 @@ Data structures will be useful in this because I don’t know how I will store t
 
 #### Work plan:
 
-| Week | Events| Description|
-|:-----:| --- | --- |
-| W1: | | Decide on filesystem storage structure |
-| W2: | | Decide on internal handling of cards, metadata etc |
-| W3: | Quiz on advanced datastructures | Card editing (#5) |
-| W4: | | Navbar (#1) and CardBar (#3) |
-| W5: | Test on ??? | Editor (#2) |
-| W6: | | Ribbon (#4) |
-| W7: | | Ribbon (#4) |
-| W8: | | Production Style sheet (sass) |
-| W9: | Quiz on ??? | Fixing max, linux bugs |
+| Week | Quizzes | Project Things |
+|:-----:|:---:| --- |
+| W1: | | Finish sylabus |
+| W2: | | CoffeeScript
+|~|||
+| W3: | CoffeeScript Quiz | Datascience
+| W4: | | ^
+|~|||
+| W5: | Data science test | Databases
+| W6: | | ^
+| W7: | | ^
+| W8: | Quiz on databases | ^
+|~|||
+| W9: | | Machine learning
+| W10:| | ^
+| W11:| Quiz | ^
+| W12:| | ^
+| W13:| Test | ^
+|~|||
+| W14:| | Side project
+| W15:| | ^
+| W16:| | ^
+
+
+#### Side project:
+###### Main goals:
+- Decide on filesystem storage structure  
+- Decide on internal handling of cards, metadata etc  
+- Card editing (#5)  
+- Navbar (#1) and Card-bar (#3)  
+- Editor (#2)  
+- Ribbon (#4)  
+- Ribbon (#4)  
+- Production Style sheet (sass)  
+- Fixing max, linux bugs  
+- Begin learning about machine learning, finishing touches on project  
+- Quiz on machine learning fundamentals?  
+
+###### Secondary goals:
+- Make a version of the file that can be saved to a flash drive and has the cards already on it
+- Allow for the importing of word docs
+- Update math app and fix some bugs
+- Make a gui for the Sceduling thing
