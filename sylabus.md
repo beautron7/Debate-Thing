@@ -24,9 +24,9 @@ Data structures will be useful in this because I don’t know how I will store t
 | Week | Quizzes | Project Things |
 |:-----:|:---:| --- |
 | W1: | | Finish sylabus |
-| W2: | | CoffeeScript
+| W2: | | Work on app
 |~|||
-| W3: | CoffeeScript Quiz | Datascience
+| W3: | Datascience diagnostic quiz? | Datascience
 | W4: | | ^
 |~|||
 | W5: | Data science test | Databases
