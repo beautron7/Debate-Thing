@@ -35,13 +35,15 @@ export default class Card extends Component {
   }
 
   render(){
+    var self = this
     const {
       author,
       year
     } = this.props.data
 
     setTimeout(() => {
-      this.dom.style.maxHeight="100em"
+      if(this.dom !== null)
+        this.dom.style.maxHeight="100em"
     },10)
 
     return (
@@ -49,9 +51,13 @@ export default class Card extends Component {
         <div className="cardHead">
           <div
             ref={
-              x=> x.addEventListener("input",()=>{
-                this.tag=x.textContent
-              }, false)
+              (x)=> {
+                if (x !== null && x !== undefined){
+                  x.addEventListener("input",()=>{
+                    this.tag=x.textContent
+                  }, false)
+                }
+              }
             }
             contentEditable="plaintext-only" className="cardHeadUpper">
             {this.tag}

@@ -24,7 +24,7 @@ export default class Circle extends Component {
         insertionPointParent = insertionPointParent[index]
       }
       var insertToIndex = self.props.path[self.props.path.length-1]
-      insertionPointParent.splice(insertToIndex,0,window.App.getCardDataByUrl(text))
+      insertionPointParent.splice(insertToIndex,0,window.App.getCardFullData(text))
       parentReactElement.forceUpdate()
     } else if (text.slice(0,8) == "secPath:") {
       console.log("HI");

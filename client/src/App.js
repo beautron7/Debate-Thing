@@ -6,12 +6,11 @@ import CardsFrame from './components/CardsFrame'
 import Editor from './components/Editor'
 import Tabbar from './components/Tabbar'
 import Ribbon from './components/Ribbon'
+import appStorage from './Storage'
 import './App.css';
 
-
-
 window.electron = window.electron||window.nodeRequire('electron');
-
+window.appStorage=appStorage
 
 var CARDS = [{
   url:'www.vox.com',
@@ -27,13 +26,24 @@ var CARDS = [{
   keywords:['One','Five'],
 }]
 
+
+
 class App extends Component {
-  getCardDataByUrl(url){
+  getCardFullDataFromDB(id){
     return {
-      author:'May Dupnaim',
-      title:'Example Card',
-      text:'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-      url:url,
+      id:"//Hash of URL or Title",
+      title:"Global warming",
+      tag:"Example web page",
+      dateCaught:"2017-08-22T18:09:51.520Z",
+      datePublished:"2017-08-22T18:09:51.520Z",
+      text:[
+        "//This is where the paragraphs go"
+      ],
+      author:"Maid upname",
+      url:"Example.com/index.html",
+      formatting:{},
+      quals:"",
+      authorID:"//Authors id in the database",
       key:(()=>(
         String.fromCharCode(65 + Math.floor(Math.random() * 26)) + Date.now()//generates a time code with
       ))()
@@ -50,6 +60,7 @@ class App extends Component {
     this.leftBar = {toggleVis:()=>(0),show:true}
     this.rightBar = {toggleVis:()=>(0),show:true}
     window.App = this
+    window.appStorage.init()
     // this.updateGUI()
   }
 

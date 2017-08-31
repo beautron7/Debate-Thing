@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.0",
+    "bson": "^1.0.4",
+    "co": "^4.6.0",
     "hasha": "^3.0.0",
+    "mz": "^2.6.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-scripts": "1.0.10"
