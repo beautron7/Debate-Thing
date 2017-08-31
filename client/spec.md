@@ -10,25 +10,32 @@ The raw text of cards is saved as an array of paragraphs:
 ]
 ```
 Whenever a card is added, it is also added to a cloud repository.
-The whole card is saved as follows:
+The whole card is saved as two separate objects:
 ```json
 {
   "ID":"//Hash of URL or Title",
   "title":"Example web page",
   "dateCaught":"2017-08-22T18:09:51.520Z",
   "datePublished":"2017-08-22T18:09:51.520Z",
-  "text":[
-    "//This is where the paragraphs go"
-  ],
   "author":"Maid upname",
   "url":"Example.com/index.html",
   "keywords":["China","US","(...)"],
   "dbSignature":"(none or signature)"
 }
+
+{
+  "ID":"//Hash of url or Title",
+  "text":[
+    "//Text goes here"
+  ]
+}
 ```
-These cards are saved in a `.cardCollection.json` file, which is referenced by a `usrSettings.json` file, which are defined below.
+
+
+These cards are collectivly saved in a folder containing a single `cardMetadata.json` file and many `{cardID}.cardText.json` files. All Metadata files are referenced by a single `usrSettings.json` file. Both are defined below.
+
 ```json
-*.cardCollection.json
+folder/cardMetadata.json
 {
   "collectionName":"Beau-VanDenburgh-19-Dropbox",
   "lastUpdated":"2017-08-22T18:09:51.520Z",
@@ -37,8 +44,16 @@ These cards are saved in a `.cardCollection.json` file, which is referenced by a
     "//This is where the card JSON goes, sorted by id"
   ]
 }
-```
-```json
+
+
+folder/cards/(cardID).cardText.json
+{
+  "ID":"//Same as filename",
+  "text":[
+    "//text"
+  ]
+}
+
 usrSettings.json
 {
   "cardSrces":[
