@@ -13,7 +13,7 @@ Whenever a card is added, it is also added to a cloud repository.
 The whole card is saved as two separate objects:
 ```json
 {
-  "ID":"//Hash of URL or Title",
+  "ID":"//Hash of obj with URL, author, title, and text",
   "title":"Example web page",
   "dateCaught":"2017-08-22T18:09:51.520Z",
   "datePublished":"2017-08-22T18:09:51.520Z",
@@ -25,6 +25,7 @@ The whole card is saved as two separate objects:
 
 {
   "ID":"//Hash of url or Title",
+  "textHash":"//Hash of text",
   "text":[
     "//Text goes here"
   ]

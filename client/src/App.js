@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import Hash from 'hasha'
+import Hash from 'object-hash'
 import Sidebar from './components/Sidebar'
 import Searchbar from './components/Searchbar'
 import CardsFrame from './components/CardsFrame'
 import Editor from './components/Editor'
 import Tabbar from './components/Tabbar'
 import Ribbon from './components/Ribbon'
-import appStorage from './Storage'
+import cache from './cache'
 import './App.css';
 
+window.appStorage = cache
+window.hash = Hash
 window.electron = window.electron||window.nodeRequire('electron');
-window.appStorage=appStorage
 
 var CARDS = [{
   url:'www.vox.com',
@@ -60,7 +61,6 @@ class App extends Component {
     this.leftBar = {toggleVis:()=>(0),show:true}
     this.rightBar = {toggleVis:()=>(0),show:true}
     window.App = this
-    window.appStorage.init()
     // this.updateGUI()
   }
 

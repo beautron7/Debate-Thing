@@ -34,12 +34,12 @@ export default class CardPreview extends Component {
     var onDragStart=(ev)=> {
       ev.dataTransfer.setData(
         "text/plain",
-        "cardRef:"+this.props.url//ev.target.getElementsByClassName('url')[0].textContent
+        "cardRef:"+this.props.ID//ev.target.getElementsByClassName('url')[0].textContent
       )
       console.log(
         "DragStart",
         "Card",
-        this.props.url,
+        this.props.ID,
       );
     }
 
