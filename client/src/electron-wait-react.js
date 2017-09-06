@@ -21,6 +21,7 @@ const tryConnection = () => client.connect({port: port}, () => {
 
             app.on('exit', function (code) {
               console.log('electron exited with code ' + code.toString());
+              process.exit(0)
             });
         }
     }

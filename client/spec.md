@@ -13,7 +13,7 @@ Whenever a card is added, it is also added to a cloud repository.
 The whole card is saved as two separate objects:
 ```json
 {
-  "ID":"//Hash of obj with URL, author, title, and text",
+  "ID":"",
   "title":"Example web page",
   "dateCaught":"2017-08-22T18:09:51.520Z",
   "datePublished":"2017-08-22T18:09:51.520Z",
@@ -24,7 +24,7 @@ The whole card is saved as two separate objects:
 }
 
 {
-  "ID":"//Hash of url or Title",
+  "ID":"//Card id",
   "textHash":"//Hash of text",
   "text":[
     "//Text goes here"
@@ -33,7 +33,7 @@ The whole card is saved as two separate objects:
 ```
 
 
-These cards are collectivly saved in a folder containing a single `cardMetadata.json` file and many `{cardID}.cardText.json` files. All Metadata files are referenced by a single `usrSettings.json` file. Both are defined below.
+These cards are collectivly saved in a folder containing a single `cardMetadata.json` file and a subfolder containing many `{cardID}.cardText.json` files. All Metadata files are referenced by a single `usrSettings.json` file. All three files are defined below.
 
 ```json
 folder/cardMetadata.json
@@ -49,7 +49,7 @@ folder/cardMetadata.json
 
 folder/cards/(cardID).cardText.json
 {
-  "ID":"//Same as filename",
+  "ID":"//Card ID",
   "text":[
     "//text"
   ]
@@ -134,4 +134,19 @@ What's stored on disk in a file that mentions a card:
   "formatting":{},
   "quals":"",
 }
+```
+
+## Files
+Files / documents / speeches are stored as json objects, and sections are stored as arrays, with the first element being the title. eg:
+
+```json
+[
+  "Document title",
+  [
+    "Subsection 1",
+    {
+      "_":"Card Goes here"
+    }
+  ]
+]
 ```

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script>window.nodeRequire = require; delete window.require; delete window.exports; delete window.module;</script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="./DBImporter.manifest.json">
+    <link rel="shortcut icon" href="./favicon.ico">
+    <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="./libs/font-awesome-4.7.0/css/font-awesome.min.css">
+    <script src="./libs/jquery/dist/jquery.js" type="text/javascript"></script>
+    <script src="./libs/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+
+    <title>Import Database</title>
+  </head>
+  <body>
+    <div class="viewport">
+      <span>HEY</span>
+
+      <div class="database-dropdown dropdown">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Database:</span>
+          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="text">Select Database</span>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+            <!--Here goes the databases-->
+            <li role="separator" class="divider"></li>
+            <li><a href="#">New Database</a></li>
+          </ul>
+        </div>
+      </div><br>
+
+
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Title" aria-describedby="basic-addon1">
+      </div><br>
+
+      <div class="input-group date-published">
+        <span class="input-group-addon" id="basic-addon1">Date Published:</span>
+        <div class="month dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="text">Month</span>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+            <!--Add this in post-->
+          </ul>
+        </div>
+        <div class="day dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="text">Day</span>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+            <!--Add this in post-->
+          </ul>
+        </div>
+        <div class="year dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="text">Year</span>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+            <!--Add this in post-->
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+var database_picker = {
+  items:["a","b","c"],
+  dom: $(".database-dropdown"),
+  items_dom: $(".database-dropdown").find("ul"),
+  button_dom: $(".database-dropdown").find("button"),
+  button_text: $(".database-dropdown").find("button").find(".text"),
+  selected:-1,
+
+  update(){
+    database_picker.items.forEach((x,i)=>{
+      database_picker.items_dom.prepend(`<li><a href="javascript:database_picker.select(${i})">${x}</a></li>`)
+    })
+  },
+
+  select(i){
+    date_picker.clearhtmliforgotthemethodnamezalgowillrise
+    database_picker.button_text.html(database_picker.items[i])
+  }
+}
+database_picker.update()
+
+var date_picker = {
+  months:[
+    "January",
+    "Febuary",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ],
+  dom: $(".date-published"),
+  selected:{
+    month:-1,
+    day:-1,
+    year:-1,
+  }
+
+  select(field,val){
+    date_picker[field]=value
+
+  }
+
+  render(){
+    date_picker.months.forEach((x,i)=>{
+      date_picker.dom.find(".month").find("ul").prepend(`<li><a href="javascript:date_picker.select("month",${i})">${x}</a></li>`)
+    })
+  },
+
+  select(i){
+    database_picker.button_text.html(database_picker.items[i])
+  }
+}
+date_picker.render()
+
+</script>

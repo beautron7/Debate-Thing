@@ -11,14 +11,6 @@ var self = {
   }
 }
 
-// function PromiseWrapper(fn){
-//   return function(...args){
-//     return new Promise(function(resolve, reject) {
-//       fn(...args,resolve)
-//     });
-//   }
-// }
-
 function callMainStorage(args,callback){
   var uniqueChannel = window.hash(new Date)
   args.replyChannel=uniqueChannel

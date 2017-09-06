@@ -1,5 +1,4 @@
 const electron = require('electron')
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function Loader(name,path,defaultdata) {
   return async ()=>{
@@ -37,7 +36,7 @@ class CardCollection {
     }
   }
 
-  async getCard(card){//Method
+  async getCard(card){
     var ID = card.ID
     var cardTextPath = this.path+"/cards/"+ID+".cardText.json"
     var fileExists = await self.fs.exists(cardTextPath)
