@@ -31,7 +31,13 @@ appStorage.init()
 const windows = []
 
 function createAnImporterWindow(){
-  const theWindow = new BrowserWindow({width: 800, height: 600, frame: true})
+  const theWindow = new BrowserWindow({
+    maxWidth: 350,
+    minWidth: 350,
+    width: 350,
+    height: 600,
+    toolbar: false,
+  })
   windows.push(theWindow)
 
   const startUrl = process.env.ELECTRON_START_URL+'/DBimporter.index.html' || url.format({

@@ -1,38 +1,17 @@
 var self = {
   get usrSettings(){
     return new Promise(function(resolve, reject) {
-      callMainStorage({
-        action:"getUsrSettings"
-      },resolve)
+      callMainStorage({usrSettings:true},resolve)
     });
   },
   getCard(cardID,collectionID){
     return new Promise(function(resolve, reject) {
-      callMainStorage({
-        action:"getCard",
-        params:{
-          cardID:cardID,
-          collectionID:collectionID
-        }
-      },resolve)
+      callMainStorage({cardID:cardID,collectionID:collectionID},resolve)
     });
   },
   get DBlist(){
     return new Promise(function(resolve, reject) {
-      callMainStorage({
-        action:"DBlist"
-      },resolve)
-    });
-  },
-  addCard(cardData,collectionID){
-    return new Promise(function(resolve, reject) {
-      callMainStorage({
-        action:"addCard",
-        params:{
-          cardData:cardData,
-          collectionID:collectionID,
-        }
-      },resolve)
+      callMainStorage({DBlist:true},resolve)
     });
   },
 }

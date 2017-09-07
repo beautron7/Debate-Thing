@@ -13,7 +13,7 @@ Whenever a card is added, it is also added to a cloud repository.
 The whole card is saved as two separate objects:
 ```json
 {
-  "ID":"",
+  "ID":"Currently, a hash of {title:<>,author:<>,url:<>,text:[<>]}",
   "title":"Example web page",
   "dateCaught":"2017-08-22T18:09:51.520Z",
   "datePublished":"2017-08-22T18:09:51.520Z",

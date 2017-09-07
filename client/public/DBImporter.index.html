@@ -12,126 +12,198 @@
     <link rel="stylesheet" href="./libs/font-awesome-4.7.0/css/font-awesome.min.css">
     <script src="./libs/jquery/dist/jquery.js" type="text/javascript"></script>
     <script src="./libs/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="./DBimporter.css">
 
     <title>Import Database</title>
   </head>
   <body>
     <div class="viewport">
-      <span>HEY</span>
+      <div class="form-div">
 
-      <div class="database-dropdown dropdown">
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon1">Database:</span>
-          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="text">Select Database</span>
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-            <!--Here goes the databases-->
-            <li role="separator" class="divider"></li>
-            <li><a href="#">New Database</a></li>
-          </ul>
-        </div>
-      </div><br>
+        <form name="default" class="X" action="#">
+          <span class="h1">Add a card</span><br><br>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Select database:</label>
+            <div class="database-dropdown dropdown">
+              <div class="input-group">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="text">Select Database</span>
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                  <!--Here goes the databases-->
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#">New Database</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
+          <input type="hidden" name="database" value="">
 
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Title" aria-describedby="basic-addon1">
-      </div><br>
+          <!-- <div class="newDatabase">
+            <form>
+              <div class="title-input input-group">
+                <label for="exampleInputEmail1">Title:</label>
+                <input type="text" class="form-control" placeholder="Title" aria-describedby="basic-addon1">
+              </div><br>
+            </form>
+          </div> -->
 
-      <div class="input-group date-published">
-        <span class="input-group-addon" id="basic-addon1">Date Published:</span>
-        <div class="month dropdown">
-          <button class="btn btn-default dropdown-toggle" type="button" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="text">Month</span>
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-            <!--Add this in post-->
-          </ul>
-        </div>
-        <div class="day dropdown">
-          <button class="btn btn-default dropdown-toggle" type="button" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="text">Day</span>
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-            <!--Add this in post-->
-          </ul>
-        </div>
-        <div class="year dropdown">
-          <button class="btn btn-default dropdown-toggle" type="button" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="text">Year</span>
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-            <!--Add this in post-->
-          </ul>
-        </div>
+          <div class="title-input input-group">
+            <label for="exampleInputEmail1">Title:</label>
+            <input name="title" type="text" class="form-control" placeholder="Title" aria-describedby="basic-addon1">
+          </div><br>
+
+          <div class="input-group date-published">
+            <label for="exampleInputEmail1">Date Published</label>
+            <select name="month" class="form-control">
+              <option>Month:</option>
+              <option>January</option>
+              <option>Febuary</option>
+              <option>March</option>
+              <option>April</option>
+              <option>May</option>
+              <option>June</option>
+              <option>July</option>
+              <option>August</option>
+              <option>September</option>
+              <option>October</option>
+              <option>November</option>
+              <option>December</option>
+            </select>
+            <input name="day" type="text" class="form-control col-sm-6" id="exampleInputAmount" placeholder="Day">
+            <input name="year" type="text" class="form-control col-sm-6" id="exampleInputAmount" placeholder="Year">
+          </div><br>
+
+          <div class="author input-group">
+            <label for="exampleInputEmail1">Author[s]</label>
+
+            <input name="author" type="text" class="form-control" placeholder="Doe John, Trump Donald, ..." aria-describedby="basic-addon1">
+          </div><br>
+
+          <div class="keywords input-group">
+            <label for="exampleInputEmail1">Keywords</label>
+
+            <input name="keywords" type="text" class="form-control" placeholder="US, China, Neg..." aria-describedby="basic-addon1">
+          </div><br>
+
+          <div class="url input-group">
+            <label for="exampleInputEmail1">URL</label>
+
+            <input name="url" type="url" class="form-control" placeholder="www.example.com" aria-describedby="basic-addon1">
+          </div><br>
+
+          <div class="full-text">
+            <label for="exampleInputEmail1">Full text</label>
+            <textarea name="fulltext" class="form-control col-sm-12" rows="8"></textarea>
+          </div><br>
+          <button type="button" onclick="javascript:submitForm()" class="btn btn-primary btn-block">Add Card</button>
+        </form>
       </div>
     </div>
   </body>
 </html>
-
 <script>
+window.appStorage = {
+  get usrSettings(){
+    return new Promise(function(resolve, reject) {
+      callMainStorage({
+        action:"getUsrSettings"
+      },resolve)
+    });
+  },
+  getCard(cardID,collectionID){
+    return new Promise(function(resolve, reject) {
+      callMainStorage({
+        action:"getCard",
+        params:{
+          cardID:cardID,
+          collectionID:collectionID
+        }
+      },resolve)
+    });
+  },
+  get DBlist(){
+    return new Promise(function(resolve, reject) {
+      callMainStorage({
+        action:"DBlist"
+      },resolve)
+    });
+  },
+  addCard(cardData,collectionID){
+    return new Promise(function(resolve, reject) {
+      callMainStorage({
+        action:"addCard",
+        params:{
+          cardData:cardData,
+          collectionID:collectionID,
+        }
+      },resolve)
+    });
+  },
+}
+
+function callMainStorage(args,callback){
+  var uniqueChannel = window.hash(new Date)
+  args.replyChannel=uniqueChannel
+  window.electron.ipcRenderer.once("appStorage"+uniqueChannel,(event,reply)=>{
+    console.log(reply)
+    if(reply.status=="ok")
+      callback(reply.data);
+    else
+      console.error("ThErE's aN eRrOr",reply.status)
+  })
+  args.replyChannel=uniqueChannel
+  window.electron.ipcRenderer.send("appStorage",args)
+}
+</script>
+<script>
+window.electron = nodeRequire("electron")
+window.hash = nodeRequire("object-hash")
+
 var database_picker = {
-  items:["a","b","c"],
+  labels:[],
+  hashes:[],
   dom: $(".database-dropdown"),
   items_dom: $(".database-dropdown").find("ul"),
   button_dom: $(".database-dropdown").find("button"),
   button_text: $(".database-dropdown").find("button").find(".text"),
   selected:-1,
 
-  update(){
-    database_picker.items.forEach((x,i)=>{
-      database_picker.items_dom.prepend(`<li><a href="javascript:database_picker.select(${i})">${x}</a></li>`)
-    })
+  update(data){
+    if (data.status="ok"){
+      console.log(data)
+      for (var i = 0; i < data.length; i++) {
+        database_picker.labels[i]=data[i].collectionName
+        database_picker.hashes[i]=data[i].collectionID
+      }
+      [...database_picker.labels].reverse().forEach((x,i)=>{
+        database_picker.items_dom.prepend(`<li><a href="javascript:database_picker.select(${i})">${x}</a></li>`)
+      })
+    }
   },
 
   select(i){
-    date_picker.clearhtmliforgotthemethodnamezalgowillrise
-    database_picker.button_text.html(database_picker.items[i])
+    database_picker.button_text.html(database_picker.labels[database_picker.labels.length-1-i])
+    document.forms.default["database"].value=i
   }
 }
-database_picker.update()
+window.appStorage.DBlist.then(database_picker.update)
 
-var date_picker = {
-  months:[
-    "January",
-    "Febuary",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ],
-  dom: $(".date-published"),
-  selected:{
-    month:-1,
-    day:-1,
-    year:-1,
+function submitForm(){
+  var form = document.forms.default
+  var database= database_picker.hashes[database_picker.labels.length - 1 - form["database"].value]
+  var data = {
+    author: form["author"],
+    datePublished: new Date(form.year.value,form.month.selectedIndex-1,form.day.value),
+    dateCaught: new Date(),
+    text: form["fulltext"].value.split(/\n+/),
+    title: form["title"].value,
+    url: form["url"].value,
+    keywords: form["keywords"].value.split(/\s*,\s*/)
   }
-
-  select(field,val){
-    date_picker[field]=value
-
-  }
-
-  render(){
-    date_picker.months.forEach((x,i)=>{
-      date_picker.dom.find(".month").find("ul").prepend(`<li><a href="javascript:date_picker.select("month",${i})">${x}</a></li>`)
-    })
-  },
-
-  select(i){
-    database_picker.button_text.html(database_picker.items[i])
-  }
+  appStorage.addCard(data,database)
 }
-date_picker.render()
 
 </script>
