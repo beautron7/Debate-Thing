@@ -19,35 +19,6 @@ function Loader(name,path,defaultdata) {
 }
 
 class CardCollection {
-  class Card {
-    constructor() {
-
-    }
-    getText(){
-      console.log("Card text is being accessed".cyan)
-      if(this.cachedText){
-        return this.cachedText
-      }
-      var cardTextPath = this.collection.path+"/cards/"+this.ID+".cardText.json"
-      var fileExists = await self.fs.exists(cardTextPath)
-      if (fileExists){
-        var cardTextFileTxt = (await self.fs.readFile(cardTextPath)).toString()
-        var cardTextFileObj = JSON.parse(cardTextFileTxt)
-        if (cardTextFileObj.ID && cardTextFileObj.ID === this.ID && cardTextFileObj.text){
-          if (!cardTextFileObj.textHash || self.hash(cardTextFileObj.text)!=cardTextFileObj.textHash) {
-            console.error("Hashing Error --- Text was modified")
-          }
-          this.cachedText = obj.text
-          return card.cachedText
-        } else {
-          console.error("Card was malformatted")
-        }
-      } else {
-        console.error("Card couldn't be looked up --- File doesn't exist")
-      }
-    }
-  }
-
   constructor(data,path){
     this.path=path
     this.data=data
