@@ -21,8 +21,9 @@ function Loader(name,path,defaultdata) {
 class CardCollection {
   class Card {
     constructor() {
-
+      //TODO: Fix this
     }
+
     getText(){
       console.log("Card text is being accessed".cyan)
       if(this.cachedText){
@@ -49,9 +50,26 @@ class CardCollection {
   }
 
   constructor(data,path){
-    this.path=path
-    this.data=data
+    this.path=path;
+    this.pull()
+  }
 
+  push(){
+    //TODO: fix this
+  }
+
+  pull(){
+    var fileExists = await self.fs.exists(this.path+"/cardMetadata.json")
+    var cardCollectionTXT, data;
+    if (fileExists){
+      cardCollectionTXT = await self.fs.readFile(this.path+"/cardMetadata.json")
+      data = JSON.parse(cardCollectionTXT)
+    } else {
+      throw new Error("cardMetadata.json was missing")
+    }
+    this.collectionName=data.collectionName;
+    this.lastUpdated=new Date(data.lastUpdated);
+    this.created = new Date(data.created);
     if( self.hash({
       collectionName:this.data.collectionName,
       created:this.data.created
@@ -59,18 +77,7 @@ class CardCollection {
       console.error("Card DB hash doesnt match with its name and creation date")
     }
 
-    this.updateData()
-  }
-
-  updateData(){
-    for (var i = 0; i < this.data.cards.length; i++){
-      var currentCard = this.data.cards[i]
-      Object.defineProperty(currentCard,"text",{
-        get:x=> this.getCard(currentCard)
-      })
-      currentCard.dateCaught=new Date(currentCard.dateCaught)
-      currentCard.datePublished=new Date(currentCard.datePublished)
-    }
+    //TODO: Iterate through cards to make object
   }
 
   async addCard(cardData){
@@ -80,60 +87,22 @@ class CardCollection {
       url:cardData.url,
       text:cardData.text,
     })
-    //eventually, verify metadata here
-    var fileExists = await self.fs.exists(this.path+"/cardMetadata.json")
-    if (fileExists){
-      var cardCollectionTXT = await self.fs.readFile(this.path+"/cardMetadata.json")
-      var cardCollectionData = JSON.parse(cardCollectionTXT)
-      this.data=cardCollectionData //This works bec we are replacing the getters with the actual text, so there is no difference
-      var cardText = cardData.text;
-      delete cardData.text; //Only delete the one because we are reading from json anyways
-      this.data.cards.push(cardData)
-      this.data.lastUpdated=new Date();
-      await Promise.all([
-        self.fs.writeFile(
-          this.path+"/cardMetadata.json",
-          JSON.stringify(this.data)
-        ),
-        self.fs.writeFile(
-          this.path+"/cards/"+cardData.ID+".cardText.json",
-          JSON.stringify({
-            ID:cardData.ID,
-            textHash:self.hash(cardData.text),
-            text:cardData.text
-          })
-        )
-      ])
-      this.updateData()
-      return "success"
-    } else {
-      throw new Error("cardMetadata.json was missing")
-    }
-  }
 
-  async getCard(card){
-    console.log("Card text is being accessed".cyan)
-    if(card.lazyText){
-      return card.lazyText
-    }
-    var ID = card.ID
-    var cardTextPath = this.path+"/cards/"+ID+".cardText.json"
-    var fileExists = await self.fs.exists(cardTextPath)
-    if (fileExists){
-      var txt = (await self.fs.readFile(cardTextPath)).toString()
-      var obj = JSON.parse(txt)
-      if (obj.ID && obj.ID === ID && obj.text){
-        if (!obj.textHash || self.hash(obj.text)!=obj.textHash) {
-          console.error("Hashing Error --- Text was modified")
-        }
-        card.lazyText = obj.text
-        return card.lazyText
-      } else {
-        console.error("Card was malformatted")
-      }
-    } else {
-      console.error("Card couldn't be looked up --- File doesn't exist")
-    }
+    await this.pull()
+    this.cards.push(new Card(cardData))
+    this.lastUpdated=new Date();
+    await this.push()
+
+    await self.fs.writeFile(
+      this.path+"/cards/"+cardData.ID+".cardText.json",
+      JSON.stringify({
+        ID:cardData.ID,
+        textHash:self.hash(cardData.text),
+        text:cardData.text
+      })
+    );
+
+    return "success"
   }
 }
 
