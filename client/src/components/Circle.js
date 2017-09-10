@@ -24,8 +24,12 @@ export default class Circle extends Component {
         insertionPointParent = insertionPointParent[index]
       }
       var insertToIndex = self.props.path[self.props.path.length-1]
-      insertionPointParent.splice(insertToIndex,0,window.App.getCardFullData(text))
-      parentReactElement.forceUpdate()
+      var cardInfo = JSON.parse(text.slice(8))
+      window.appStorage.getCard(cardInfo.cardID,cardInfo.collectionID).then(function (card) {
+        card.tag = card.tag? card.tag:card.title
+        insertionPointParent.splice(insertToIndex,0,card)
+        parentReactElement.forceUpdate()
+      });
     } else if (text.slice(0,8) == "secPath:") {
       console.log("HI");
       var insertionPointParentArray = window.App.editor.data

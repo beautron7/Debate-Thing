@@ -13,19 +13,19 @@ window.appStorage = cache
 window.hash = Hash
 window.electron = window.electron||window.nodeRequire('electron');
 
-var CARDS = [{
-  url:'www.vox.com',
-  image:'./img/vox.com.png',
-  author:'Klien 14',
-  title:'Panasonic',
-  keywords:['One','Two'],
-},{
-  url:'www.google.com',
-  image:'',
-  author:'Klien 14',
-  title:'Panasonic',
-  keywords:['One','Five'],
-}]
+// var CARDS = [{
+//   url:'www.vox.com',
+//   image:'./img/vox.com.png',
+//   author:'Klien 14',
+//   title:'Panasonic',
+//   keywords:['One','Two'],
+// },{
+//   url:'www.google.com',
+//   image:'',
+//   author:'Klien 14',
+//   title:'Panasonic',
+//   keywords:['One','Five'],
+// }]
 
 
 
@@ -60,6 +60,8 @@ class App extends Component {
     this.Tabbar = {paneNumber:0}
     this.leftBar = {toggleVis:()=>(0),show:true}
     this.rightBar = {toggleVis:()=>(0),show:true}
+    this.cardFrame= {}
+
     window.App = this
     // this.updateGUI()
   }
@@ -106,7 +108,9 @@ class App extends Component {
           shrinkTopMargin={this.shrinkTopMargin}
         >
           <Searchbar title="Search Cards" id="cardsSearch"/>
-          <CardsFrame data={CARDS} />
+          <CardsFrame
+            ref={self => this.cardFrame = self}
+          />
         </Sidebar>
       </div>
     );

@@ -27,7 +27,7 @@
 }
 
 .card > .cardHead > .cardHeadLower {
-  background: #af0;
+  background: #dddde0;
   position: relative;
   height: 2.75em;
 }
@@ -39,7 +39,12 @@
   text-align: left;
   left:0em;
 
-  background: #ad0;
+  border-style:groove;
+  border-top-right-radius: 1em;
+  border-bottom-right-radius: 1em;
+  padding-right: 0.5em;
+
+  background: #ccc;
 
   position: absolute;
   top: 50%;

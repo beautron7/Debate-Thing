@@ -17,7 +17,9 @@
     "object-hash": "1.1.8",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-scripts": "1.0.10"
+    "react-scripts": "1.0.10",
+    "react-tinymce": "^0.6.0",
+    "tinymce": "^4.6.6"
   },
   "scripts": {
     "start": "react-scripts start",

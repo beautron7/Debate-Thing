@@ -9,7 +9,14 @@ export default class Editor extends Component {
     shrinkLeftMargin:PropTypes.bool,
     shrinkRightMargin:PropTypes.bool,
   }
-
+  static traverse(array) {
+    array.key=array.key? array.key:Math.random()
+    if (Array.isArray(array)){
+      for(var i = 1; i < array.length; i++){
+        Editor.traverse(array[i])
+      }
+    }
+  }
   constructor(a,b,c){
     super(a,b,c)
     this.data = [
@@ -50,16 +57,9 @@ export default class Editor extends Component {
 
   render(){
     //DEBUG fn
-    var traverse =(array)=> {
-      array.key=array.key? array.key:Math.random()
-      if (Array.isArray(array)){
-        for(var i = 1; i < array.length; i++){
-          traverse(array[i])
-        }
-      }
-    }
 
-    traverse(this.data)
+
+    Editor.traverse(this.data)
     //END DEBUG FN
     var style={
       top: window.App.Ribbon.show? '7.8em':'1.8em',

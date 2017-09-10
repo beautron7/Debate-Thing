@@ -195,7 +195,7 @@ function submitForm(){
   var form = document.forms.default
   var database= database_picker.hashes[database_picker.labels.length - 1 - form["database"].value]
   var data = {
-    author: form["author"],
+    author: form["author"].value,
     datePublished: new Date(form.year.value,form.month.selectedIndex-1,form.day.value),
     dateCaught: new Date(),
     text: form["fulltext"].value.split(/\n+/),

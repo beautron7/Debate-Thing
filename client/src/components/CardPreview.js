@@ -34,20 +34,18 @@ export default class CardPreview extends Component {
     var onDragStart=(ev)=> {
       ev.dataTransfer.setData(
         "text/plain",
-        "cardRef:"+this.props.ID//ev.target.getElementsByClassName('url')[0].textContent
+        "cardRef:"+JSON.stringify({
+          cardID: this.props.ID,
+          collectionID: this.props.collectionID,
+        })
       )
-      console.log(
-        "DragStart",
-        "Card",
-        this.props.ID,
-      );
     }
 
     return (
       <div className="card-preview" draggable="true" onDragStart={onDragStart}>
         <img src={img} draggable="false" alt="" />
-        <div className="author" draggable="false">{author}</div>
-        <div className="title" draggable="false">{title}</div>
+        <div className="author" draggable="false"><span>{author}</span></div>
+        <div className="title" draggable="false"><span>{title}</span></div>
         <div className="keywordContainer" draggable="false">{keywordNodes}</div>
       </div>
     )

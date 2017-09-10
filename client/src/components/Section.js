@@ -52,7 +52,7 @@ export default class Section extends Component {
 
     content.push(
       ...rest.map((x,i)=> (
-        <div key={x.key}>
+        <div key={x.key?x.key:(()=>{x.key=Math.random(); return x.key})()}>
           {
             Array.isArray(x)?
               <Section

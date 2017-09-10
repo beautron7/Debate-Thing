@@ -6,21 +6,42 @@ var self = {
       },resolve)
     });
   },
-  getCard(cardID,collectionID){
+  getCard(cardID,collectionID,justMeta){
     return new Promise(function(resolve, reject) {
       callMainStorage({
         action:"getCard",
         params:{
           cardID:cardID,
-          collectionID:collectionID
+          collectionID:collectionID,
+          justMeta:justMeta
         }
       },resolve)
+    });
+  },
+  getRecentCards(number){
+    return new Promise(function(resolve, reject) {
+        callMainStorage({
+          action:"getRecentCards",
+          params:{
+            numResults:number
+          }
+        },resolve)
     });
   },
   get DBlist(){
     return new Promise(function(resolve, reject) {
       callMainStorage({
         action:"DBlist"
+      },resolve)
+    });
+  },
+  DBmeta(id){
+    return new Promise(function(resolve, reject) {
+      callMainStorage({
+        action:"getDBmeta",
+        params:{
+          collectionID:id
+        }
       },resolve)
     });
   },
@@ -38,14 +59,13 @@ var self = {
 }
 
 function callMainStorage(args,callback){
-  var uniqueChannel = window.hash(new Date)
+  var uniqueChannel = window.hash([new Date,Math.random()])
   args.replyChannel=uniqueChannel
   window.electron.ipcRenderer.once("appStorage"+uniqueChannel,(event,reply)=>{
-    console.log(reply)
     if(reply.status=="ok")
       callback(reply.data);
     else
-      console.error("ThErE's aN eRrOr",reply.status)
+      console.error("ThErE's aN eRrOr: ",reply)
   })
   window.electron.ipcRenderer.send("appStorage",{
     replyChannel:uniqueChannel,

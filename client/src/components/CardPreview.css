@@ -3,6 +3,7 @@
   width: auto;
   height: 6em;
   background-color: #AAA;
+  /*overflow-y: hidden;*/
 }
 .card-preview > img {
   height: 5em;
@@ -13,20 +14,36 @@
 }
 .card-preview > .author {
   text-align: left;
+  font-size: 1.5em;
+
   margin: 0;
   margin-top: 0.5em;
-  font-size: 1.5em;
+
   width: 100%;
+  height: 1.25em;
 }
 .card-preview > .title {
-  text-align: left;
-  margin: 0;
+  line-height: 1.2em;
   font-size: 1em;
   font-style: italic;
-  width:100%;
+  text-align: left;
+
+  margin: 0;
+  margin-left:5.0em;
+  margin-right:0;
+
+  height: 2.4em;
+  overflow: hidden;
 }
+.card-preview > .title > span {
+  overflow-y: hidden;
+  text-overflow: clip;
+}
+
 .card-preview > .keywordContainer {
   text-align: left;
+  max-width:90%;
+  overflow-x: hidden;
 }
 .card-preview > .keywordContainer > .keyword {
   background-color: #FB0;
