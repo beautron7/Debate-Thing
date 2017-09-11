@@ -18,47 +18,62 @@ function Loader(name,path,defaultdata) {
   }
 }
 
-class CardCollection {
-  class Card {
-    constructor() {
-      //TODO: Fix this
-    }
+class Card {
+  constructor(data,path) {
+    this.ID = data.ID;
+    this.title = data.title;
+    this.dateCaught = new Date(data.dateCaught);
+    this.datePublished = new Date(data.datePublished);
+    this.author = data.author;
+    this.url = data.url;
+    this.keywords = data.keywords;
+    this.dbSignature = data.dbSignature;
+    this.quals = data.quals;
+  }
 
-    getText(){
-      console.log("Card text is being accessed".cyan)
-      if(this.cachedText){
-        return this.cachedText
-      }
-      var cardTextPath = this.collection.path+"/cards/"+this.ID+".cardText.json"
-      var fileExists = await self.fs.exists(cardTextPath)
-      if (fileExists){
-        var cardTextFileTxt = (await self.fs.readFile(cardTextPath)).toString()
-        var cardTextFileObj = JSON.parse(cardTextFileTxt)
-        if (cardTextFileObj.ID && cardTextFileObj.ID === this.ID && cardTextFileObj.text){
-          if (!cardTextFileObj.textHash || self.hash(cardTextFileObj.text)!=cardTextFileObj.textHash) {
-            console.error("Hashing Error --- Text was modified")
-          }
-          this.cachedText = obj.text
-          return card.cachedText
-        } else {
-          console.error("Card was malformatted")
+  async getText(){
+    console.log("Card text is being accessed".cyan);
+    if(this.text){
+      return this.text;
+    }
+    var cardTextPath = this.collection.path+"/cards/"+this.ID+".cardText.json";
+    var fileExists = await self.fs.exists(cardTextPath);
+    if (fileExists){
+      var cardTextFileTxt = (await self.fs.readFile(cardTextPath)).toString();
+      var cardTextFileObj = JSON.parse(cardTextFileTxt);
+      if (cardTextFileObj.ID && cardTextFileObj.ID === this.ID && cardTextFileObj.text){
+        if (!cardTextFileObj.textHash || self.hash(cardTextFileObj.text)!=cardTextFileObj.textHash) {
+          console.error("Hashing Error --- Text was modified");
         }
+        this.text = obj.text;
+        return card.text;
       } else {
-        console.error("Card couldn't be looked up --- File doesn't exist")
+        console.error("Card was malformatted");
       }
+    } else {
+      console.error("Card couldn't be looked up --- File doesn't exist");
     }
   }
+}
+
+class CardCollection {
 
   constructor(data,path){
     this.path=path;
-    this.pull()
+    this.pull();
   }
 
-  push(){
-    //TODO: fix this
+  async push(){
+    var fileExists = await self.fs.exists(this.path+"/cardMetadata.json")
+    if (!fileExists){throw new Error("cardMetadata.json was missing")}
+    for (var i = 0; i < this.cards.length; i++) {
+      delete this.cards[i].text
+    }
+    var data = JSON.stringify(this)
+    return await self.fs.writeFile(this.path+"/cardMetadata.json",data)
   }
 
-  pull(){
+  async pull(){
     var fileExists = await self.fs.exists(this.path+"/cardMetadata.json")
     var cardCollectionTXT, data;
     if (fileExists){
@@ -68,16 +83,21 @@ class CardCollection {
       throw new Error("cardMetadata.json was missing")
     }
     this.collectionName=data.collectionName;
+    this.collectionID=data.collectionID
     this.lastUpdated=new Date(data.lastUpdated);
     this.created = new Date(data.created);
+    this.cards = []
+
     if( self.hash({
-      collectionName:this.data.collectionName,
-      created:this.data.created
-    }) !== this.data.collectionID) {
+      collectionName:this.collectionName,
+      created:this.created.toJSON(),
+    }) !== this.collectionID) {
       console.error("Card DB hash doesnt match with its name and creation date")
     }
 
-    //TODO: Iterate through cards to make object
+    for (var i = 0; i < data.cards.length; i++) {
+      this.cards[i] = new Card(data.cards[i],this.path)
+    }
   }
 
   async addCard(cardData){
@@ -185,11 +205,11 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
           var DB = -1
           for (var i = 0; i < self.data.cardDBs.length; i++) {
             if(arg.params.collectionID){
-              DB = self.data.cardDBs[i].data.collectionID==arg.params.collectionID? i:DB
+              DB = self.data.cardDBs[i].collectionID==arg.params.collectionID? i:DB
             } else {
               var myfoo = self.data.cardDBs[i]//THIS MAKES NO SENSE BUT WHEN I DO IT THE NORMAL WAY IT DOESNT WORK
-              for (var j = 0; j < (myfoo).data.cards.length; j++) {
-                if(self.data.cardDBs[i].data.cards[j].ID === arg.params.cardID){
+              for (var j = 0; j < (myfoo).cards.length; j++) {
+                if(self.data.cardDBs[i].cards[j].ID === arg.params.cardID){
                   DB = i;
                   i=Infinity
                   j=Infinity
@@ -200,7 +220,7 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
           if (DB === -1){
             throw new Error("DB can't be found")
           }
-          DB = self.data.cardDBs[DB].data;
+          DB = self.data.cardDBs[DB];
 
 
           for (var i = 0; i < DB.cards.length; i++) {
@@ -232,7 +252,8 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
         try {
           var cardDatabases = []
           for (var i = 0; i < self.data.cardDBs.length; i++) {
-            var tmp = self.data.cardDBs[i].data
+            var tmp = self.data.cardDBs[i]
+            console.log("HEYHEY",tmp)
             cardDatabases.push({
               collectionID:tmp.collectionID,
               collectionName:tmp.collectionName,
@@ -261,7 +282,7 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
         }
       break; case "getDBmeta":
         for (var i = 0; i < self.data.cardDBs.length; i++) {
-          if(self.data.cardDBs[i].data.collectionID == arg.params.collectionID){
+          if(self.data.cardDBs[i].collectionID == arg.params.collectionID){
             (async (i)=>{
               var fileExists = await self.fs.exists(self.data.cardDBs[i].path+"/cardMetadata.json")
               if (fileExists){
@@ -283,13 +304,13 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
 
         for (var i = 0; i < self.data.cardDBs.length; i++) {
           var tmp_db = self.data.cardDBs[i]
-          for (var j = 0; j < tmp_db.data.cards.length; j++) {
-            var tmp_card = tmp_db.data.cards[j]
+          for (var j = 0; j < tmp_db.cards.length; j++) {
+            var tmp_card = tmp_db.cards[j]
             if(tmp_card.dateCaught > results[results.length-1].dateCaught){
               results.push({
                 ID:tmp_card.ID,
                 dateCaught:tmp_card.dateCaught,
-                collectionID:self.data.cardDBs[i].data.collectionID
+                collectionID:self.data.cardDBs[i].collectionID
               })
               for (var k = results.length-1; k > 0; k--) {//sort tmp
                 if(results[k].dateCaught > results[k-1].dateCaught){
