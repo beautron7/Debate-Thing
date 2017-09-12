@@ -29,10 +29,11 @@ export default class Card extends Component {
   toggleMode(){
     if(this.mode == "view"){
       this.mode="edit"
+      this.forceUpdate()
     } else {
-      this.text = this.MCEform["cardTextEdit"].value;
-      console.log(data)
+      var tmp = this.MCEform["cardTextEdit"].value;
       this.mode="view"
+      this.forceUpdate()
     }
   }
 
@@ -106,14 +107,33 @@ export default class Card extends Component {
           </div>
         </div>
         <div className="cardBody">
-          <form ref={x=>this.MCEform=x}>
-            <TinyMCE
-              name="cardTextEdit"
-              content={this.MCEtxt}
-              config={TinyMCEinit}
-            >
-            </TinyMCE>
-          </form>
+          {
+            this.mode === "edit"?
+            (
+              <form ref={x=>this.MCEform=x}>
+                <TinyMCE
+                  name="cardTextEdit"
+                  content={this.text}
+                  config={TinyMCEinit}
+                  onChange={e=>{
+                    this.text=e.target.getContent()
+                  }}
+                >
+                </TinyMCE>
+                <button
+                  type="submit"
+                >
+                  Submit
+                </button>
+              </form>
+            ):(
+              <div
+                dangerouslySetInnerHTML={{__html:this.text/*May lead to xss*/}}
+                style={{fontSize:"12"}}
+              >
+              </div>
+            )
+          }
         </div>
       </div>
     )

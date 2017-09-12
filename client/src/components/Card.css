@@ -60,4 +60,6 @@
 }
 .card .cardBody {
   min-height: 10em;
+  text-align: left;
+  font-family: Calibri;
 }
