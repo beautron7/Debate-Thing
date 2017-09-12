@@ -2,6 +2,7 @@
   display: block;
   width: 90%;
   background-color: #0fa;
+  background-color: #ddd;
   margin:auto;
   /*min-height: 5em;*/
   /*height: 0em;*/
@@ -58,5 +59,5 @@
   transform: translateY(-50%);
 }
 .card .cardBody {
-  text-align: left;
+  min-height: 10em;
 }

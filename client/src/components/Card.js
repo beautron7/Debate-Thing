@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import './Card.css'
 import './slideOpen.css'
 import TinyMCE from 'react-tinymce'
+import TinyMCEinit from './TinyMCEinit'
 
 export default class Card extends Component {
   static propTypes = {
@@ -29,6 +30,8 @@ export default class Card extends Component {
     if(this.mode == "view"){
       this.mode="edit"
     } else {
+      this.text = this.MCEform["cardTextEdit"].value;
+      console.log(data)
       this.mode="view"
     }
   }
@@ -37,6 +40,11 @@ export default class Card extends Component {
     super(a,b,c);
     this.tag=this.props.data.title
     this.text = this.props.data.text
+    var tmp_str = ""
+    for (var i = 0; i < this.text.length; i++) {
+      tmp_str+=this.text[i]+"<br>"
+    }
+    this.text=tmp_str
     this.mode="view"
   }
 
@@ -97,22 +105,16 @@ export default class Card extends Component {
             </div>
           </div>
         </div>
-        <TinyMCE
-          content={this.text}
-          config={{
-            selector: ".tinymce",
-            plugins: [
-              'textcolor colorpicker',
-            ],
-            menu: {},
-            toolbar1: 'undo redo | fontsizeselect | bold italic underline |  forecolor backcolor | removeformat',
-            image_advtab: true,
-            branding:false,
-            height: 10,
-            elementpath:false,
-          }}
-        >
-        </TinyMCE>
+        <div className="cardBody">
+          <form ref={x=>this.MCEform=x}>
+            <TinyMCE
+              name="cardTextEdit"
+              content={this.MCEtxt}
+              config={TinyMCEinit}
+            >
+            </TinyMCE>
+          </form>
+        </div>
       </div>
     )
   }

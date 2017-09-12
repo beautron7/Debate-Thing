@@ -82,6 +82,11 @@
             <input name="author" type="text" class="form-control" placeholder="Doe John, Trump Donald, ..." aria-describedby="basic-addon1">
           </div><br>
 
+          <div class="quals">
+            <label for="exampleInputEmail1">Author Qualifcations</label>
+            <textarea name="quals" class="form-control col-sm-12" rows="3"></textarea>
+          </div><br>
+          
           <div class="keywords input-group">
             <label for="exampleInputEmail1">Keywords</label>
 
@@ -93,6 +98,7 @@
 
             <input name="url" type="url" class="form-control" placeholder="www.example.com" aria-describedby="basic-addon1">
           </div><br>
+
 
           <div class="full-text">
             <label for="exampleInputEmail1">Full text</label>
@@ -201,7 +207,8 @@ function submitForm(){
     text: form["fulltext"].value.split(/\n+/),
     title: form["title"].value,
     url: form["url"].value,
-    keywords: form["keywords"].value.split(/\s*,\s*/)
+    keywords: form["keywords"].value.split(/\s*,\s*/),
+    quals: form["quals"].value,
   }
   appStorage.addCard(data,database)
 }

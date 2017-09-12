@@ -29,6 +29,7 @@ class Card {
     this.keywords = data.keywords;
     this.dbSignature = data.dbSignature;
     this.quals = data.quals;
+    this.path=path
   }
 
   async getText(){
@@ -36,7 +37,7 @@ class Card {
     if(this.text){
       return this.text;
     }
-    var cardTextPath = this.collection.path+"/cards/"+this.ID+".cardText.json";
+    var cardTextPath = this.path+"/cards/"+this.ID+".cardText.json";
     var fileExists = await self.fs.exists(cardTextPath);
     if (fileExists){
       var cardTextFileTxt = (await self.fs.readFile(cardTextPath)).toString();
@@ -45,13 +46,13 @@ class Card {
         if (!cardTextFileObj.textHash || self.hash(cardTextFileObj.text)!=cardTextFileObj.textHash) {
           console.error("Hashing Error --- Text was modified");
         }
-        this.text = obj.text;
-        return card.text;
+        this.text = cardTextFileObj.text;
+        return this.text;
       } else {
         console.error("Card was malformatted");
       }
     } else {
-      console.error("Card couldn't be looked up --- File doesn't exist");
+      console.error("Card couldn't be looked up --- File doesn't exist at path "+cardTextPath);
     }
   }
 }
@@ -109,7 +110,7 @@ class CardCollection {
     })
 
     await this.pull()
-    this.cards.push(new Card(cardData))
+    this.cards.push(new Card(cardData,this.path))
     this.lastUpdated=new Date();
     await this.push()
 
@@ -207,8 +208,8 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
             if(arg.params.collectionID){
               DB = self.data.cardDBs[i].collectionID==arg.params.collectionID? i:DB
             } else {
-              var myfoo = self.data.cardDBs[i]//THIS MAKES NO SENSE BUT WHEN I DO IT THE NORMAL WAY IT DOESNT WORK
-              for (var j = 0; j < (myfoo).cards.length; j++) {
+              var babelIsDumb = self.data.cardDBs[i]//THIS MAKES NO SENSE BUT WHEN I DO IT THE NORMAL WAY IT DOESNT WORK
+              for (var j = 0; j < (babelIsDumb).cards.length; j++) {
                 if(self.data.cardDBs[i].cards[j].ID === arg.params.cardID){
                   DB = i;
                   i=Infinity
@@ -227,17 +228,14 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
             if(DB.cards[i].ID === arg.params.cardID){
               var card = DB.cards[i];
               (async ()=>{
-                if(!arg.params.justMeta){
-                  var text = await card.text
-                  card = JSON.parse(JSON.stringify(card))//Duplicate it
-                  card.text = text //Set the duplicate
+                if(arg.params.justMeta){
+                  var tmp = card.text
+                  delete card.text
                   event.sender.send("appStorage"+arg.replyChannel,{status:"ok",data:card})
+                  card.text = tmp
                 } else {
-                  var newCard = {}
-                  for (var prop in card)
-                    if (card.hasOwnProperty(prop) && prop !== "text" || prop !=="lazyText")
-                      newCard[prop]=card[prop];
-                  event.sender.send("appStorage"+arg.replyChannel,{status:"ok",data:newCard})
+                  await card.getText()
+                  event.sender.send("appStorage"+arg.replyChannel,{status:"ok",data:card})
                 }
               })();
               return
@@ -253,7 +251,6 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
           var cardDatabases = []
           for (var i = 0; i < self.data.cardDBs.length; i++) {
             var tmp = self.data.cardDBs[i]
-            console.log("HEYHEY",tmp)
             cardDatabases.push({
               collectionID:tmp.collectionID,
               collectionName:tmp.collectionName,
@@ -270,14 +267,12 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
       break; case "addCard":
         for (var i = 0; i < self.data.cardDBs.length; i++) {
           if(self.data.cardDBs[i].collectionID = arg.params.collectionID){
-            console.log(arg )
             self.data.cardDBs[i].addCard(arg.params.cardData).then((result)=>{
               if (result == "success")
                 event.sender.send("appStorage"+arg.replyChannel,{status:"ok"})
               else
                 event.sender.send("appStorage"+arg.replyChannel,{status:"failed"})
             })
-
           }
         }
       break; case "getDBmeta":
@@ -298,7 +293,7 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
       break; case "getRecentCards":
         var results = [{
           ID:false,
-          dateCaught: new Date(1800,0,0),//Chances are nobody will catch a card before this date.
+          dateCaught: new Date(1800,0,0),//Chances are nobody will catch a card before this date, even if their os is wierd.
         }]
         var numResults = arg.params.numResults || 10
 
@@ -330,9 +325,6 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
         console.error("Unknown action")
       break;
     }
-
-
-
   }
 })
 exports.default = self

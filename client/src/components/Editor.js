@@ -20,39 +20,8 @@ export default class Editor extends Component {
   constructor(a,b,c){
     super(a,b,c)
     this.data = [
-      "1AC Space",
-      // {
-      //   title:"Grab'em",
-      //   author:"Trump",
-      //   text:"Grab'em.",
-      // },
-      [
-        "Contention 1",
-        {
-          title:"Fraking",
-          author:"Rajan",
-          text:"yolo",
-        },
-        {
-          title:"Fraking",
-          author:"Rajan",
-          text:"yolo",
-        },
-      ],
-      [
-        "Contention 2",
-        {
-          title:"What Nuclear War?",
-          author:"Jackson",
-          text:"hi",
-        },
-        {
-          title:"No",
-          author:"Yes",
-          text:"meh",
-        },
-      ],
-    ]
+      "Title"
+    ]      
   }
 
   render(){
