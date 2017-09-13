@@ -5,25 +5,13 @@ import './slideOpen.css'
 import TinyMCE from 'react-tinymce'
 import TinyMCEinit from './TinyMCEinit'
 
+//moved stuff to paragraph component
+
 export default class Card extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
-
     text: PropTypes.arrayOf(PropTypes.string),
-    formatting: PropTypes.object, //formatting example:
-    /*
-    {
-      styles:[
-        "b12",//bold,12pt font. font numbers come at end
-        "ic12"//italic, cyan highlithing. 12 pt font.
-      ]
-      text:[
-        [10,1], //means chars 0-10 have style 1
-        [100,0], //means chars 10-110 have style 0
-      ]
-    }
-    */
   }
 
   toggleMode(){
@@ -40,12 +28,7 @@ export default class Card extends Component {
   constructor(a,b,c){
     super(a,b,c);
     this.tag=this.props.data.title
-    this.text = this.props.data.text
-    var tmp_str = ""
-    for (var i = 0; i < this.text.length; i++) {
-      tmp_str+=this.text[i]+"<br>"
-    }
-    this.text=tmp_str
+    this.CTT = new CardTextTracker(this.props.data.text);
     this.mode="view"
   }
 
@@ -107,33 +90,7 @@ export default class Card extends Component {
           </div>
         </div>
         <div className="cardBody">
-          {
-            this.mode === "edit"?
-            (
-              <form ref={x=>this.MCEform=x}>
-                <TinyMCE
-                  name="cardTextEdit"
-                  content={this.text}
-                  config={TinyMCEinit}
-                  onChange={e=>{
-                    this.text=e.target.getContent()
-                  }}
-                >
-                </TinyMCE>
-                <button
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </form>
-            ):(
-              <div
-                dangerouslySetInnerHTML={{__html:this.text/*May lead to xss*/}}
-                style={{fontSize:"12"}}
-              >
-              </div>
-            )
-          }
+          {this.textDOM}
         </div>
       </div>
     )
