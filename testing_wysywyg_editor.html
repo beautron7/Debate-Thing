@@ -1,0 +1,38 @@
+<html>
+<head>
+  <style media="screen">
+    iframe {
+      border: none;
+      width: 300px;
+      height: 150px;
+    }
+    textarea {
+      width: 300px;
+      height: 150px;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="root">
+    Example of pressing a button and keeping selection.<br>
+    (this took a while)<br>
+    I might actually put the buttons in the iframe, but im not sure<br>
+    <button>Bold</button><button>Italic</button><br>
+    <textarea readonly>This is a plain old textarea and it can't have text highlighted / selected if you press a button.</textarea><br>
+    <iframe srcdoc="
+    <html>
+        <style>
+          textarea {
+            position: absolute;
+            top: 0; left: 0; bottom:0; right:0;  border:0;
+            padding:0.5em;
+            width:calc(100% - 1em);;
+          }
+        </style>
+        <textarea readonly>This is nested in an iframe and can have text highlighted / selected even if you press a button. note that you can also select text in the above textarea and click here and see a similar effect</textarea>
+    </html>
+    "/>
+  </div>
+</body>
+</html>

@@ -2,16 +2,28 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import './Paragraph.css'
 
-export default class Paragraph extends Component {
-  static propTypes = {
-    text:PropTypes.string.isRequired,
-  }
-
+export default class CardText extends Component {
   constructor(a,b,c){
     super(a,b,c)
-    this.text = this.props.text
+    this.props
+  }
+  render(){
+    return (
+      <div>
+      </div>
+    )
+  }
+}
+
+class Paragraph {
+  constructor(a,b,c){
+    this.text = this.text
     this.dom = -1;
     this.spans = []
+    this.spans[0]={
+      text:this.props.text
+
+    }
   }
 
   autoMergeSpans(){
@@ -30,14 +42,20 @@ export default class Paragraph extends Component {
     return (
       <div>
         {
-          new Proxy(this.spans,{get:(spans,i)=>(spans[i].dom)})
+          new Proxy(this.spans,{
+            get:(spans,i)=>(
+              typeof i === "number"?
+                spans[i].dom:
+                spans[i]//this makes this object indisinguishable from a normal arrray, even to methods like Array.isArray().
+            )
+          })
         }
       </div>
     )
   }
 }
 
-
+/*
 class Paragraph{
   constructor(txt){
     this.text = txt;
@@ -54,6 +72,7 @@ class Paragraph{
     //"https://stackoverflow.com/questions/27241281/what-is-anchornode-basenode-extentnode-and-focusnode-in-the-object-returned"
     //for more
     this.paragraphs = []
+
 
     this.text = arr_of_strings//Array of strings
     this.spans=[]//2d array because one paragraph has multiple spans
@@ -87,3 +106,6 @@ class Paragraph{
     }
   }
 }
+
+
+*/
