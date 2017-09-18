@@ -33,6 +33,27 @@
   height: 2.75em;
 }
 
+.card > .cardHead > .cardHeadFormatingBar {
+  background: #bbbbc0;
+  height: 2.75em;
+  text-align: left;
+
+
+  display: flex;
+  align-items: flex-end;
+  flex-direction: row;
+  justify-content: center;
+}
+
+
+.card > .cardHead > .cardHeadFormatingBar > .ribbon-button{
+  padding-left: 0.5em;
+}
+
+.card >  i {
+  float: left;
+}
+
 .card > .cardHead > .cardHeadLower > .cardAuthor{
   padding-left: 0.5em;
   font-size: 1.5em;

@@ -4,6 +4,7 @@ import './Card.css'
 import './slideOpen.css'
 import TinyMCE from 'react-tinymce'
 import TinyMCEinit from './TinyMCEinit'
+import RibbonButton from './RibbonButton'
 
 //moved stuff to paragraph component
 
@@ -19,7 +20,6 @@ export default class Card extends Component {
       this.mode="edit"
       this.forceUpdate()
     } else {
-      var tmp = this.MCEform["cardTextEdit"].value;
       this.mode="view"
       this.forceUpdate()
     }
@@ -28,7 +28,6 @@ export default class Card extends Component {
   constructor(a,b,c){
     super(a,b,c);
     this.tag=this.props.data.title
-    this.CTT = new CardTextTracker(this.props.data.text);
     this.mode="view"
   }
 
@@ -62,6 +61,9 @@ export default class Card extends Component {
       this.dom.style.maxHeight="100em"
     })
 
+    var editBar = 3.141
+    this.textDOM = this.props.data.text.map((x,i)=>(<p key={i/*Ok because paragraph order is constant*/}>{x}</p>))
+
     return (
       <div draggable="false" ref={x=>this.dom=x} className="card animate-max-height">
         <div className="cardHead">
@@ -85,8 +87,22 @@ export default class Card extends Component {
             <div className="cardButtons btn-group">
               <button className="btn btn-sm btn-primary">Quals</button>
               <button className="btn btn-sm btn-primary">Source</button>
-              <button onClick={scope => this.toggleMode()} className="btn btn-sm btn-primary">Edit</button>
+              <button onClick={scope => this.toggleMode()} className="btn btn-sm btn-primary">{this.mode=="view"? "Edit":"View"}</button>
             </div>
+          </div>
+
+          <div className="cardHeadFormatingBar">
+            <RibbonButton
+              icon={<i className="fa fa-bold fa-2x"></i>}
+            / >
+            <RibbonButton
+              icon={<i className="fa fa-italic fa-2x"></i>}
+            / >
+            <RibbonButton
+              icon={<i className="fa fa-underline fa-2x"></i>}
+            / >
+            {/*<i className="fa fa-italic"></i>
+            <i className="fa fa-underline"></i>*/}
           </div>
         </div>
         <div className="cardBody">

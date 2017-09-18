@@ -1,0 +1,43 @@
+.ribbon-button {
+  display: inline;
+  --baseheight:2em;
+  --height:var(--baseheight);
+}
+
+.ribbon-button.sm {
+  --height: calc(0.5 * var(--baseheight))
+}
+
+.ribbon-button.lg {
+  --height: calc(2 * var(--baseheight))
+}
+
+
+.ribbon-button > table {
+  display:inline-block;
+  height: var(--height);
+  margin:0
+}
+
+.ribbon-button > table tr {
+  margin:0;
+  height: var(--height);
+}
+
+.ribbon-button > table .icon {
+  min-width: var(--height);
+  padding: 0;
+  background-color:#0fa;
+  position: relative;
+}
+
+.ribbon-button > table .icon * {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ribbon-button > table .title {
+  background-color:#0af;
+}

@@ -4,24 +4,25 @@ import './RibbonButtons.css'
 
 export default class RibbonButton extends Component {
   static propTypes = {
-    group:PropTypes.bool,
-    children:PropTypes.node,
+    title:PropTypes.string,
+    dropdown:PropTypes.node,
+    icon:PropTypes.node,
   }
 
   render(){
-    const {
-      group,
-      children,
+    var {
+      title,
+      icon,
+      dropdown,
+      size,
     } = this.props
-
-    return group?
-    (
-      <div className="ribbon-button-group">
-        {children}
-      </div>
-    ):(
-      <div>
-        
+    size = size || "md"
+    return (
+      <div className={"ribbon-button "+size}>
+        <table><tbody><tr>
+          {icon? <th className="icon">{icon}</th>:null}
+          {title? <th className="title">{title}</th>:null}
+        </tr></tbody></table>
       </div>
     )
   }
