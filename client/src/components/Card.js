@@ -5,7 +5,7 @@ import './slideOpen.css'
 import TinyMCE from 'react-tinymce'
 import TinyMCEinit from './TinyMCEinit'
 import RibbonButton from './RibbonButton'
-
+import Frame from 'react-frame-component'
 //moved stuff to paragraph component
 
 export default class Card extends Component {
@@ -18,9 +18,12 @@ export default class Card extends Component {
   toggleMode(){
     if(this.mode == "view"){
       this.mode="edit"
+      this.dom.children[0].children[2].style.height="2.75em"
+      // cardHeadFormatingBar
       this.forceUpdate()
     } else {
       this.mode="view"
+      this.dom.children[0].children[2].style.height="0"
       this.forceUpdate()
     }
   }
@@ -58,7 +61,7 @@ export default class Card extends Component {
 
     setTimeout(() => {//Animation
       if(this.dom !== null)
-      this.dom.style.maxHeight="100em"
+      this.dom.style.maxHeight="1000em" //well, 100em sounds large but not for debate standards.
     })
 
     var editBar = 3.141
@@ -90,19 +93,19 @@ export default class Card extends Component {
               <button onClick={scope => this.toggleMode()} className="btn btn-sm btn-primary">{this.mode=="view"? "Edit":"View"}</button>
             </div>
           </div>
-
           <div className="cardHeadFormatingBar">
             <RibbonButton
-              icon={<i className="fa fa-bold fa-2x"></i>}
-            / >
+              icon={<i className="fa fa-bold fa-2x" />}
+              size="lg"
+            />
             <RibbonButton
               icon={<i className="fa fa-italic fa-2x"></i>}
-            / >
+              size="lg"
+            />
             <RibbonButton
               icon={<i className="fa fa-underline fa-2x"></i>}
-            / >
-            {/*<i className="fa fa-italic"></i>
-            <i className="fa fa-underline"></i>*/}
+              size="lg"
+            />
           </div>
         </div>
         <div className="cardBody">

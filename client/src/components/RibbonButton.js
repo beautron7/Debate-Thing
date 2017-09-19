@@ -19,10 +19,12 @@ export default class RibbonButton extends Component {
     size = size || "md"
     return (
       <div className={"ribbon-button "+size}>
-        <table><tbody><tr>
-          {icon? <th className="icon">{icon}</th>:null}
-          {title? <th className="title">{title}</th>:null}
-        </tr></tbody></table>
+
+        {icon? <div className="icon">{icon}</div>:null}
+        {title? <div className="title">{title}</div>:null}
+        {/* <table><tbody><tr>
+        </tr></tbody></table>*/}
+
       </div>
     )
   }

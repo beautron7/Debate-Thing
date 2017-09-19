@@ -46,7 +46,22 @@ export default class Section extends Component {
     this.children = []
 
     var content = [<div key={0}>
-      <span className="heading" ref={self=>this.children.push(self)}>{first}</span>
+      <span
+        className="heading"
+        contentEditable="true"
+        ref={self=>{
+          // for path
+          this.children.push(self)
+          // if (self !== null && self !== undefined){
+          //   self.textContent=
+          //   self.addEventListener("input",()=>{
+          //     this.tag=self.textContent
+          //   }, false)
+          // }
+        }}
+      >
+        {first}
+      </span>
       <Circle path={path.concat(1)} />
     </div>]
 

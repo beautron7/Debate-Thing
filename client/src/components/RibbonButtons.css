@@ -1,7 +1,15 @@
 .ribbon-button {
-  display: inline;
-  --baseheight:2em;
+  display: inline-block;
+  --baseheight:1em;
   --height:var(--baseheight);
+  border-style: solid;
+  border-color: rgba(0,0,0,0);
+  margin:0em;
+}
+
+.ribbon-button:hover {
+  border-color: gray;
+  background-color: gray;
 }
 
 .ribbon-button.sm {
@@ -12,32 +20,24 @@
   --height: calc(2 * var(--baseheight))
 }
 
-
-.ribbon-button > table {
-  display:inline-block;
+.ribbon-button .icon {
+  display: inline-block;
   height: var(--height);
-  margin:0
-}
-
-.ribbon-button > table tr {
-  margin:0;
-  height: var(--height);
-}
-
-.ribbon-button > table .icon {
-  min-width: var(--height);
+  width: var(--height);
   padding: 0;
   background-color:#0fa;
-  position: relative;
+
+  line-height: var(--height);
+  text-align: center;
 }
 
-.ribbon-button > table .icon * {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.ribbon-button > table .title {
+.ribbon-button .title {
+  /*margin: 0;*/
+  display: inline-block;
+  height: var(--height);
+  padding: 0;
   background-color:#0af;
+
+  line-height: var(--height);
+  text-align: center;
 }

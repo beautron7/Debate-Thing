@@ -21,7 +21,7 @@ export default class Editor extends Component {
     super(a,b,c)
     this.data = [
       "Title"
-    ]      
+    ]
   }
 
   render(){
