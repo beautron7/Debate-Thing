@@ -67,7 +67,7 @@ export default class Card extends Component {
     var editBar = 3.141
     this.textDOM = this.props.data.text.map((x,i)=>(<p key={i/*Ok because paragraph order is constant*/}>{x}</p>))
 
-    return (
+    return(
       <div draggable="false" ref={x=>this.dom=x} className="card animate-max-height">
         <div className="cardHead">
           <div

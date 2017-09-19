@@ -30,7 +30,7 @@ export default class Circle extends Component {
         insertionPointParent.splice(insertToIndex,0,card)
         parentReactElement.forceUpdate()
       });
-    } else if (text.slice(0,8) == "secPath:") {
+    } else if (text.slice(0,8) == "secPath:") {//ABANDONED PROBABLY IDK
       console.log("HI");
       var insertionPointParentArray = window.App.editor.data
       for (var i = 0; i < self.props.path.length-1; i++) {//stop before the final point so splicing can occour.
@@ -110,7 +110,17 @@ export default class Circle extends Component {
 
     self.clickID = setTimeout(()=>{
       Circle.endClick(self)
-      alert("You have held click")
+
+      var insertionPointParent = window.App.editor.data
+      var parentReactElement = window.App.editor.primarySection //used to forceUpdate
+      for (var i = 0; i < self.props.path.length-1; i++) {//stop before the final point so splicing can occour.
+        var index = self.props.path[i]
+        parentReactElement = parentReactElement.children[index]
+        insertionPointParent = insertionPointParent[index]
+      }
+      var insertToIndex = self.props.path[self.props.path.length-1]
+      insertionPointParent.splice(insertToIndex,0,["New Section"])
+      parentReactElement.forceUpdate()
     },1000)
   }
 
