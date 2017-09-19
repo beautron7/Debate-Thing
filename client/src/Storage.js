@@ -18,29 +18,86 @@ function Loader(name,path,defaultdata) {
   }
 }
 
-class CardCollection {
-  constructor(data,path){
+class Card {
+  constructor(data,path) {
+    this.ID = data.ID;
+    this.title = data.title;
+    this.dateCaught = new Date(data.dateCaught);
+    this.datePublished = new Date(data.datePublished);
+    this.author = data.author;
+    this.url = data.url;
+    this.keywords = data.keywords;
+    this.dbSignature = data.dbSignature;
+    this.quals = data.quals;
     this.path=path
-    this.data=data
+  }
+
+  async getText(){
+    console.log("Card text is being accessed".cyan);
+    if(this.text){
+      return this.text;
+    }
+    var cardTextPath = this.path+"/cards/"+this.ID+".cardText.json";
+    var fileExists = await self.fs.exists(cardTextPath);
+    if (fileExists){
+      var cardTextFileTxt = (await self.fs.readFile(cardTextPath)).toString();
+      var cardTextFileObj = JSON.parse(cardTextFileTxt);
+      if (cardTextFileObj.ID && cardTextFileObj.ID === this.ID && cardTextFileObj.text){
+        if (!cardTextFileObj.textHash || self.hash(cardTextFileObj.text)!=cardTextFileObj.textHash) {
+          console.error("Hashing Error --- Text was modified");
+        }
+        this.text = cardTextFileObj.text;
+        return this.text;
+      } else {
+        console.error("Card was malformatted");
+      }
+    } else {
+      console.error("Card couldn't be looked up --- File doesn't exist at path "+cardTextPath);
+    }
+  }
+}
+
+class CardCollection {
+
+  constructor(data,path){
+    this.path=path;
+    this.pull();
+  }
+
+  async push(){
+    var fileExists = await self.fs.exists(this.path+"/cardMetadata.json")
+    if (!fileExists){throw new Error("cardMetadata.json was missing")}
+    for (var i = 0; i < this.cards.length; i++) {
+      delete this.cards[i].text
+    }
+    var data = JSON.stringify(this)
+    return await self.fs.writeFile(this.path+"/cardMetadata.json",data)
+  }
+
+  async pull(){
+    var fileExists = await self.fs.exists(this.path+"/cardMetadata.json")
+    var cardCollectionTXT, data;
+    if (fileExists){
+      cardCollectionTXT = await self.fs.readFile(this.path+"/cardMetadata.json")
+      data = JSON.parse(cardCollectionTXT)
+    } else {
+      throw new Error("cardMetadata.json was missing")
+    }
+    this.collectionName=data.collectionName;
+    this.collectionID=data.collectionID
+    this.lastUpdated=new Date(data.lastUpdated);
+    this.created = new Date(data.created);
+    this.cards = []
 
     if( self.hash({
-      collectionName:this.data.collectionName,
-      created:this.data.created
-    }) !== this.data.collectionID) {
+      collectionName:this.collectionName,
+      created:this.created.toJSON(),
+    }) !== this.collectionID) {
       console.error("Card DB hash doesnt match with its name and creation date")
     }
 
-    this.updateData()
-  }
-
-  updateData(){
-    for (var i = 0; i < this.data.cards.length; i++){
-      var currentCard = this.data.cards[i]
-      Object.defineProperty(currentCard,"text",{
-        get:x=> this.getCard(currentCard)
-      })
-      currentCard.dateCaught=new Date(currentCard.dateCaught)
-      currentCard.datePublished=new Date(currentCard.datePublished)
+    for (var i = 0; i < data.cards.length; i++) {
+      this.cards[i] = new Card(data.cards[i],this.path)
     }
   }
 
@@ -51,60 +108,22 @@ class CardCollection {
       url:cardData.url,
       text:cardData.text,
     })
-    //eventually, verify metadata here
-    var fileExists = await self.fs.exists(this.path+"/cardMetadata.json")
-    if (fileExists){
-      var cardCollectionTXT = await self.fs.readFile(this.path+"/cardMetadata.json")
-      var cardCollectionData = JSON.parse(cardCollectionTXT)
-      this.data=cardCollectionData //This works bec we are replacing the getters with the actual text, so there is no difference
-      var cardText = cardData.text;
-      delete cardData.text; //Only delete the one because we are reading from json anyways
-      this.data.cards.push(cardData)
-      this.data.lastUpdated=new Date();
-      await Promise.all([
-        self.fs.writeFile(
-          this.path+"/cardMetadata.json",
-          JSON.stringify(this.data)
-        ),
-        self.fs.writeFile(
-          this.path+"/cards/"+cardData.ID+".cardText.json",
-          JSON.stringify({
-            ID:cardData.ID,
-            textHash:self.hash(cardData.text),
-            text:cardData.text
-          })
-        )
-      ])
-      this.updateData()
-      return "success"
-    } else {
-      throw new Error("cardMetadata.json was missing")
-    }
-  }
 
-  async getCard(card){
-    console.log("Card text is being accessed".cyan)
-    if(card.lazyText){
-      return card.lazyText
-    }
-    var ID = card.ID
-    var cardTextPath = this.path+"/cards/"+ID+".cardText.json"
-    var fileExists = await self.fs.exists(cardTextPath)
-    if (fileExists){
-      var txt = (await self.fs.readFile(cardTextPath)).toString()
-      var obj = JSON.parse(txt)
-      if (obj.ID && obj.ID === ID && obj.text){
-        if (!obj.textHash || self.hash(obj.text)!=obj.textHash) {
-          console.error("Hashing Error --- Text was modified")
-        }
-        card.lazyText = obj.text
-        return card.lazyText
-      } else {
-        console.error("Card was malformatted")
-      }
-    } else {
-      console.error("Card couldn't be looked up --- File doesn't exist")
-    }
+    await this.pull()
+    this.cards.push(new Card(cardData,this.path))
+    this.lastUpdated=new Date();
+    await this.push()
+
+    await self.fs.writeFile(
+      this.path+"/cards/"+cardData.ID+".cardText.json",
+      JSON.stringify({
+        ID:cardData.ID,
+        textHash:self.hash(cardData.text),
+        text:cardData.text
+      })
+    );
+
+    return "success"
   }
 }
 
@@ -187,11 +206,11 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
           var DB = -1
           for (var i = 0; i < self.data.cardDBs.length; i++) {
             if(arg.params.collectionID){
-              DB = self.data.cardDBs[i].data.collectionID==arg.params.collectionID? i:DB
+              DB = self.data.cardDBs[i].collectionID==arg.params.collectionID? i:DB
             } else {
-              var myfoo = self.data.cardDBs[i]//THIS MAKES NO SENSE BUT WHEN I DO IT THE NORMAL WAY IT DOESNT WORK
-              for (var j = 0; j < (myfoo).data.cards.length; j++) {
-                if(self.data.cardDBs[i].data.cards[j].ID === arg.params.cardID){
+              var babelIsDumb = self.data.cardDBs[i]//THIS MAKES NO SENSE BUT WHEN I DO IT THE NORMAL WAY IT DOESNT WORK
+              for (var j = 0; j < (babelIsDumb).cards.length; j++) {
+                if(self.data.cardDBs[i].cards[j].ID === arg.params.cardID){
                   DB = i;
                   i=Infinity
                   j=Infinity
@@ -202,24 +221,21 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
           if (DB === -1){
             throw new Error("DB can't be found")
           }
-          DB = self.data.cardDBs[DB].data;
+          DB = self.data.cardDBs[DB];
 
 
           for (var i = 0; i < DB.cards.length; i++) {
             if(DB.cards[i].ID === arg.params.cardID){
               var card = DB.cards[i];
               (async ()=>{
-                if(!arg.params.justMeta){
-                  var text = await card.text
-                  card = JSON.parse(JSON.stringify(card))//Duplicate it
-                  card.text = text //Set the duplicate
+                if(arg.params.justMeta){
+                  var tmp = card.text
+                  delete card.text
                   event.sender.send("appStorage"+arg.replyChannel,{status:"ok",data:card})
+                  card.text = tmp
                 } else {
-                  var newCard = {}
-                  for (var prop in card)
-                    if (card.hasOwnProperty(prop) && prop !== "text" || prop !=="lazyText")
-                      newCard[prop]=card[prop];
-                  event.sender.send("appStorage"+arg.replyChannel,{status:"ok",data:newCard})
+                  await card.getText()
+                  event.sender.send("appStorage"+arg.replyChannel,{status:"ok",data:card})
                 }
               })();
               return
@@ -234,7 +250,7 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
         try {
           var cardDatabases = []
           for (var i = 0; i < self.data.cardDBs.length; i++) {
-            var tmp = self.data.cardDBs[i].data
+            var tmp = self.data.cardDBs[i]
             cardDatabases.push({
               collectionID:tmp.collectionID,
               collectionName:tmp.collectionName,
@@ -251,19 +267,17 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
       break; case "addCard":
         for (var i = 0; i < self.data.cardDBs.length; i++) {
           if(self.data.cardDBs[i].collectionID = arg.params.collectionID){
-            console.log(arg )
             self.data.cardDBs[i].addCard(arg.params.cardData).then((result)=>{
               if (result == "success")
                 event.sender.send("appStorage"+arg.replyChannel,{status:"ok"})
               else
                 event.sender.send("appStorage"+arg.replyChannel,{status:"failed"})
             })
-
           }
         }
       break; case "getDBmeta":
         for (var i = 0; i < self.data.cardDBs.length; i++) {
-          if(self.data.cardDBs[i].data.collectionID == arg.params.collectionID){
+          if(self.data.cardDBs[i].collectionID == arg.params.collectionID){
             (async (i)=>{
               var fileExists = await self.fs.exists(self.data.cardDBs[i].path+"/cardMetadata.json")
               if (fileExists){
@@ -279,19 +293,19 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
       break; case "getRecentCards":
         var results = [{
           ID:false,
-          dateCaught: new Date(1800,0,0),//Chances are nobody will catch a card before this date.
+          dateCaught: new Date(1800,0,0),//Chances are nobody will catch a card before this date, even if their os is wierd.
         }]
         var numResults = arg.params.numResults || 10
 
         for (var i = 0; i < self.data.cardDBs.length; i++) {
           var tmp_db = self.data.cardDBs[i]
-          for (var j = 0; j < tmp_db.data.cards.length; j++) {
-            var tmp_card = tmp_db.data.cards[j]
+          for (var j = 0; j < tmp_db.cards.length; j++) {
+            var tmp_card = tmp_db.cards[j]
             if(tmp_card.dateCaught > results[results.length-1].dateCaught){
               results.push({
                 ID:tmp_card.ID,
                 dateCaught:tmp_card.dateCaught,
-                collectionID:self.data.cardDBs[i].data.collectionID
+                collectionID:self.data.cardDBs[i].collectionID
               })
               for (var k = results.length-1; k > 0; k--) {//sort tmp
                 if(results[k].dateCaught > results[k-1].dateCaught){
@@ -311,9 +325,6 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
         console.error("Unknown action")
       break;
     }
-
-
-
   }
 })
 exports.default = self

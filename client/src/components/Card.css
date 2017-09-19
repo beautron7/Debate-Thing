@@ -1,17 +1,19 @@
 .card {
   display: block;
   width: 90%;
-  background-color: #0fa;
+  background-color: #ddd;
   margin:auto;
-  /*min-height: 5em;*/
-  /*height: 0em;*/
   border-radius: 1em;
   border-style: solid;
-  /*margin-bottom: 1em;*/
-  overflow: hidden;
+  /*overflow: hidden;*/ /*To allow for sticky*/
 }
 
 .card > .cardHead {
+  border-radius: 0.9em;
+  border-style: solid;
+  overflow: hidden;
+  position: sticky;
+  top:0em;
   background: #fff;
 }
 
@@ -30,6 +32,21 @@
   background: #dddde0;
   position: relative;
   height: 2.75em;
+}
+
+.card > .cardHead > .cardHeadFormatingBar {
+  background: #bbbbc0;
+  height: 0;
+  text-align: left;
+  overflow-y: hidden;
+  transition: height 1s;
+}
+
+
+.card > .cardHead > .cardHeadFormatingBar > .ribbon-button {
+  margin-left: 0.5em;
+  margin-top: 0.25em;
+  float: left;
 }
 
 .card > .cardHead > .cardHeadLower > .cardAuthor{
@@ -58,5 +75,7 @@
   transform: translateY(-50%);
 }
 .card .cardBody {
+  min-height: 10em;
   text-align: left;
+  font-family: Calibri;
 }

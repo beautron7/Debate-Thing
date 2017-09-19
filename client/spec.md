@@ -85,26 +85,31 @@ Here is an example of style definitions
 In the editor, styles are rendered with html like this
 ```html
 <!-- Style excluded -->
-<div>
+<p>
   <span>Hi </span><span class="yellow-hi">Hello</span>
-</div>
-<div>
+</p>
+<p>
   <span>This is a new Para</span><span class="yellow-hi">graph</span>
-</div>
+</p>
 ```
 Which looks like this:
 <div>
   <style>
     .yellow-hi {
       background-color: #FFFF00;
+      color:black;
+    }
+    p.nobreak {
+      display: inline;
     }
   </style>
-  <div>
+
+  <p>
     <span>Hi </span><span class="yellow-hi">Hello</span>
-  </div>
-  <div>
+  </p>
+  <p>
     <span>This is a new Para</span><span class="yellow-hi">graph</span>
-  </div>
+  </p>
 </div>
 #### Card Instances  
 

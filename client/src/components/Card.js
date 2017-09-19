@@ -3,40 +3,34 @@ import PropTypes from 'prop-types';
 import './Card.css'
 import './slideOpen.css'
 import TinyMCE from 'react-tinymce'
+import TinyMCEinit from './TinyMCEinit'
+import RibbonButton from './RibbonButton'
+import Frame from 'react-frame-component'
+//moved stuff to paragraph component
 
 export default class Card extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
-
     text: PropTypes.arrayOf(PropTypes.string),
-    formatting: PropTypes.object, //formatting example:
-    /*
-    {
-      styles:[
-        "b12",//bold,12pt font. font numbers come at end
-        "ic12"//italic, cyan highlithing. 12 pt font.
-      ]
-      text:[
-        [10,1], //means chars 0-10 have style 1
-        [100,0], //means chars 10-110 have style 0
-      ]
-    }
-    */
   }
 
   toggleMode(){
     if(this.mode == "view"){
       this.mode="edit"
+      this.dom.children[0].children[2].style.height="2.75em"
+      // cardHeadFormatingBar
+      this.forceUpdate()
     } else {
       this.mode="view"
+      this.dom.children[0].children[2].style.height="0"
+      this.forceUpdate()
     }
   }
 
   constructor(a,b,c){
     super(a,b,c);
     this.tag=this.props.data.title
-    this.text = this.props.data.text
     this.mode="view"
   }
 
@@ -67,10 +61,13 @@ export default class Card extends Component {
 
     setTimeout(() => {//Animation
       if(this.dom !== null)
-      this.dom.style.maxHeight="100em"
+      this.dom.style.maxHeight="1000em" //well, 100em sounds large but not for debate standards.
     })
 
-    return (
+    var editBar = 3.141
+    this.textDOM = this.props.data.text.map((x,i)=>(<p key={i/*Ok because paragraph order is constant*/}>{x}</p>))
+
+    return(
       <div draggable="false" ref={x=>this.dom=x} className="card animate-max-height">
         <div className="cardHead">
           <div
@@ -93,26 +90,27 @@ export default class Card extends Component {
             <div className="cardButtons btn-group">
               <button className="btn btn-sm btn-primary">Quals</button>
               <button className="btn btn-sm btn-primary">Source</button>
-              <button onClick={scope => this.toggleMode()} className="btn btn-sm btn-primary">Edit</button>
+              <button onClick={scope => this.toggleMode()} className="btn btn-sm btn-primary">{this.mode=="view"? "Edit":"View"}</button>
             </div>
           </div>
+          <div className="cardHeadFormatingBar">
+            <RibbonButton
+              icon={<i className="fa fa-bold fa-2x" />}
+              size="lg"
+            />
+            <RibbonButton
+              icon={<i className="fa fa-italic fa-2x"></i>}
+              size="lg"
+            />
+            <RibbonButton
+              icon={<i className="fa fa-underline fa-2x"></i>}
+              size="lg"
+            />
+          </div>
         </div>
-        <TinyMCE
-          content={this.text}
-          config={{
-            selector: ".tinymce",
-            plugins: [
-              'textcolor colorpicker',
-            ],
-            menu: {},
-            toolbar1: 'undo redo | fontsizeselect | bold italic underline |  forecolor backcolor | removeformat',
-            image_advtab: true,
-            branding:false,
-            height: 10,
-            elementpath:false,
-          }}
-        >
-        </TinyMCE>
+        <div className="cardBody">
+          {this.textDOM}
+        </div>
       </div>
     )
   }
