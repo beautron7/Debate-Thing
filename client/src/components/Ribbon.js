@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 // import PropTypes from 'prop-types';
 import './Ribbon.css'
+import RibbonButton from './RibbonButton.js'
 
 export default class Ribbon extends Component {
 
@@ -9,7 +10,23 @@ export default class Ribbon extends Component {
 
     Ribbon.spools = [
       <div>
-        <span>File</span>
+          <div className="section">
+            <RibbonButton
+              title="Open"
+              icon={<i className="glyphicon glyphicon-open-file"></i>}
+              size="md"
+            />
+            <RibbonButton
+              title="Save"
+              icon={<i className="glyphicon glyphicon-save-file"></i>}
+              size="md"
+            />
+            <RibbonButton
+              title="4"
+              icon={<i className="glyphicon glyphicon-save-file"></i>}
+              size="md"
+            />
+          <div className="terminator"></div></div>
       </div>,
       <div>
         <span>Edit</span>
@@ -18,10 +35,15 @@ export default class Ribbon extends Component {
         <span>Settings</span>
       </div>,
       <div>
-        <div className="btn-group">
-          <span onClick={x=>window.App.leftBar.toggleVis()} className="btn btn-primary btn-xs">Toggle Left sidebar</span>
-          <span onClick={x=>window.App.rightBar.toggleVis()}  className="btn btn-primary btn-xs">Toggle Right sidebar</span>
-        </div>
+
+          <RibbonButton
+            onClick={x=>window.App.leftBar.toggleVis()}
+            title="Nav"
+          />
+        <RibbonButton
+            onClick={x=>window.App.rightBar.toggleVis()}
+            title="Research"
+          />
       </div>,
     ]
   }
