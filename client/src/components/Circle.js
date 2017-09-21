@@ -28,6 +28,7 @@ export default class Circle extends Component {
       self.domCtxReady=true
       return true
     } catch (e) {
+      console.error(e)
       return false
     }
   }

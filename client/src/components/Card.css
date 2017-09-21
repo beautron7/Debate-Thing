@@ -1,17 +1,21 @@
 .card {
   display: block;
+  position: static;
+  display:block;
   width: 90%;
   background-color: #ddd;
   margin:auto;
   border-radius: 1em;
   border-style: solid;
-  /*overflow: hidden;*/ /*To allow for sticky*/
+  /*overflow: hidden;*/
+  /*To allow for sticky*/
 }
 
 .card > .cardHead {
   border-radius: 0.9em;
   border-style: solid;
   overflow: hidden;
+  display:block;
   position: sticky;
   top:0em;
   background: #fff;

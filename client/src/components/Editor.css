@@ -6,13 +6,17 @@
   margin: auto;
 }
 #editor {
-  position: fixed;
+  position: static;
+  flex-grow: 999999999999999999999999999;
+  /*width: 540%;*/
+  /*order: 0;*/
   background-color: rgba(255,0,0,0.5);
-  overflow-y: scroll;
-  overflow-x: hidden;
+  /*overflow-y: scroll;
+  overflow-x: hidden;*/
 }
 
 #editor > .section {
+  position: static;
   width:100%;
   margin:auto;
 }
