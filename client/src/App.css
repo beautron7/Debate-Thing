@@ -2,6 +2,16 @@
   text-align: center;
 }
 
+.app-body {
+  height: auto;
+  overflow-y: hidden;
+  box-orient: horizontal;
+  /*flex-wrap: nowrap;*/
+  position:absolute;
+  display: flex;
+  flex-flow: row;
+}
+
 html {
   height:100%;
 }

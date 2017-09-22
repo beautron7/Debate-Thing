@@ -15,13 +15,13 @@ export default class RibbonButton extends Component {
       icon,
       dropdown,
       size,
+      onClick,
     } = this.props
     size = size || "md"
     return (
-      <div className={"ribbon-button "+size}>
-
+      <div onClick={onClick} className={"ribbon-button "+size}>
         {icon? <div className="icon">{icon}</div>:null}
-        {title? <div className="title">{title}</div>:null}
+        {title? <span className="title">{title}</span>:null}
         {/* <table><tbody><tr>
         </tr></tbody></table>*/}
 

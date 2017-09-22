@@ -30,14 +30,14 @@ export default class Editor extends Component {
 
     Editor.traverse(this.data)
     //END DEBUG FN
-    var style={
-      top: window.App.Ribbon.show? '7.8em':'1.8em',
-      left: window.App.leftBar.show? '23%':'0',
-      right: window.App.rightBar.show? '23%':'0',
-      bottom: '0em',
-    }
+    // var style={
+    //   top: window.App.Ribbon.show? '7.8em':'1.8em',
+    //   left: window.App.leftBar.show? '23%':'0',
+    //   right: window.App.rightBar.show? '23%':'0',
+    //   bottom: '0em',
+    // }
     return (
-      <div id="editor" className="scrollbar" style={style}>
+      <div id="editor" className="scrollbar">
         <Section
           ref={self=>this.primarySection=self}
           path={[]}

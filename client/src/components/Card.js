@@ -30,18 +30,24 @@ export default class Card extends Component {
 
   constructor(a,b,c){
     super(a,b,c);
-    this.tag=this.props.data.title
     this.mode="view"
+
+    this.data = window.App.editor.data
+    for (var i = 0; i < this.props.path.length; i++) {//stop before the final point so splicing can occour.
+      var index = this.props.path[i]
+      this.data = this.data[index]
+    }
+    this.tag=this.data.title
+    console.log("HEYEHEEYEEYEY")
   }
 
   render(){
-    var self = this
     var year
     var {
       author,
       datePublished,
       tag
-    } = this.props.data
+    } = this.data
 
 
     author = author? author:"(No author)"//Author
@@ -65,7 +71,7 @@ export default class Card extends Component {
     })
 
     var editBar = 3.141
-    this.textDOM = this.props.data.text.map((x,i)=>(<p key={i/*Ok because paragraph order is constant*/}>{x}</p>))
+    this.textDOM = this.data.text.map((x,i)=>(<p key={i/*Ok because paragraph order is constant*/}>{x}</p>))
 
     return(
       <div draggable="false" ref={x=>this.dom=x} className="card animate-max-height">

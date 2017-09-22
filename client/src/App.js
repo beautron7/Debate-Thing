@@ -30,27 +30,6 @@ window.electron = window.electron||window.nodeRequire('electron');
 
 
 class App extends Component {
-  getCardFullDataFromDB(id){
-    return {
-      id:"//Hash of URL or Title",
-      title:"Global warming",
-      tag:"Example web page",
-      dateCaught:"2017-08-22T18:09:51.520Z",
-      datePublished:"2017-08-22T18:09:51.520Z",
-      text:[
-        "//This is where the paragraphs go"
-      ],
-      author:"Maid upname",
-      url:"Example.com/index.html",
-      formatting:{},
-      quals:"",
-      authorID:"//Authors id in the database",
-      key:(()=>(
-        String.fromCharCode(65 + Math.floor(Math.random() * 26)) + Date.now()//generates a time code with
-      ))()
-    }
-  }
-
   constructor(a,b,c){
     if (window.App)
       throw new Error('App may only be instanciated once')
@@ -72,17 +51,20 @@ class App extends Component {
   }
 
   updateGUI(){
-    console.log("GUI UPDATE");
+    console.log("GUI UPDATE IS DEPRICATED");
     var self = window.App
     self.rightBar.forceUpdate()
     self.leftBar.forceUpdate()
     self.Tabbar.forceUpdate()
     self.Ribbon.forceUpdate()
     self.editor.forceUpdate()
+    self.Body.updateHeight()
     // self.forceUpdate()
   }
 
   render() {
+
+
     return (
       <div className="App">
         <Tabbar
@@ -91,29 +73,56 @@ class App extends Component {
         <Ribbon
           ref={x=>this.Ribbon=x}
         />
+        <App.Body
+          ref={x=>this.Body=x}
+        />
+      </div>
+    );
+  }
+}
+
+App.Body = class Body extends Component {
+  updateHeight(){
+    this.dom.style.top= window.App.Ribbon.show? "7.8em":'1.8em'
+  }
+
+  render() {
+    var appBodyStyle={
+      top: window.App.Ribbon.show? '7.8em':'1.8em',
+      bottom: '0em',
+    }
+
+    return (
+      <div
+        className="app-body"
+        style={appBodyStyle}
+        ref={x=>this.dom=x}
+      >
         <Sidebar left
-          ref={self => this.leftBar=self}
-          shrinkTopMargin={this.shrinkTopMargin}
+          ref={self => window.App.leftBar=self}
+          shrinkTopMargin={window.App.shrinkTopMargin}
         >
-          <Searchbar title="Find Section" id="docsearch"/>
+          <Searchbar
+            title="Find Section"
+            id="docsearch"
+          />
         </Sidebar>
 
         <Editor
-          ref={self => this.editor=self}
-          shrinkTopMargin={this.shrinkTopMargin}
+          ref={self => window.App.editor=self}
         />
 
         <Sidebar right
-          ref={self => this.rightBar=self}
-          shrinkTopMargin={this.shrinkTopMargin}
+          ref={self => window.App.rightBar=self}
+          shrinkTopMargin={window.App.shrinkTopMargin}
         >
           <Searchbar title="Search Cards" id="cardsSearch"/>
           <CardsFrame
-            ref={self => this.cardFrame = self}
+            ref={self => window.App.cardFrame = self}
           />
         </Sidebar>
       </div>
-    );
+    )
   }
 }
 

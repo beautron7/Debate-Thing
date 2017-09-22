@@ -77,13 +77,12 @@ export default class Section extends Component {
               :<Card
                 path={path.concat(...[i+1])}
                 ref={self=>this.children[i+1]=self}
-                data={x}
+                iiiiidata={x}
               />
           }
           <Circle
             path={path.concat(...[i+2])}
           />
-        <div className="terminator" ></div>
         </div>
       ))
     )
@@ -91,6 +90,7 @@ export default class Section extends Component {
     return (
       <div draggable="false" className="section" onDragStart={_onDragStart}>
         {content}
+        <div className="terminator" ></div>
       </div>
     )
   }

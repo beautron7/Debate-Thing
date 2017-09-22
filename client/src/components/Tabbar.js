@@ -28,6 +28,8 @@ export default class Tabbar extends Component {
     }
   }
 
+
+
   render(){
 
     const {updateGUI} = window.App

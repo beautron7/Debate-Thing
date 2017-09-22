@@ -1,11 +1,14 @@
 .side-bar {
-  position: fixed;
-  top: 7.8em;
-  bottom:0em;
-
-  width:23%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 23%;
   min-width:15em;
-
   background-color: lightgray;
+  /*position: fixed;*/
+  /*width: 23%;*/
+  /*-webkit-box-flex: 1;
+  box-flex: 1;*/
+  /*height: 100%;*/
   /*padding-top: 0.5em;*/
+  float:none;
 }

@@ -27,14 +27,22 @@ export default class Sidebar extends Component {
     } = this.props;
 
     var style = {}
-    if(right){style.right='0em'}
-    if(left){style.left='0em'}
-    if(!window.App.Ribbon.show){style.top='1.8em'}
-    if(!this.show){style.visibility='hidden'}
-    return (
+    if(right){style.order='1'}
+    if(left){style.order='-1'}
+    // if(!window.App.Ribbon.show){style.top='1.8em
+    // if(!this.show){
+    //   style.flexBasis="0.1em";
+    //   style.maxWidth="0";
+    //   style.visibility="hidden"
+    // } else {
+    //   style.flexBasis="23%"
+    //   style.visibility="visible"
+    //   style.maxWidth="9999999em";
+    // }
+    return this.show? (
       <div className="side-bar" style={style}>
         {children}
       </div>
-    )
+    ):null
   }
 }

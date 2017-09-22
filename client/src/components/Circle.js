@@ -8,47 +8,52 @@ export default class Circle extends Component {
     path:PropTypes.arrayOf(PropTypes.number).isRequired
   }
 
-  // constructor(a,b,c){
-  //   super(a,b,c)
-  // }
+  constructor(a,b,c){
+    super(a,b,c)
+    this.domCtxReady=false;
+  }
+
+  static getDomCtx(self) {
+    if (self.domCtxReady){return true}
+    try {
+      self.dataContainer = window.App.editor.data
+      console.log(window.App.editor.primarySection,self.props.path)
+      self.parentReactElement = window.App.editor.primarySection //used to forceUpdate
+      for (var i = 0; i < self.props.path.length-1; i++) {//stop before the final point so splicing can occour.
+        var index = self.props.path[i]
+        self.parentReactElement = self.parentReactElement.children[index]
+        self.dataContainer = self.dataContainer[index]
+      }
+      self.insertToIndex = self.props.path[self.props.path.length-1]
+      self.domCtxReady=true
+      return true
+    } catch (e) {
+      console.error(e)
+      return false
+    }
+  }
+
 
   static onDrop(ev,self) {
     var text = ev.dataTransfer.getData("text/plain")
     if (text.slice(0,8) == "cardRef:") {
       ev.preventDefault();
-      var insertionPointParent = window.App.editor.data
-      var parentReactElement = window.App.editor.primarySection //used to forceUpdate
-      for (var i = 0; i < self.props.path.length-1; i++) {//stop before the final point so splicing can occour.
-        var index = self.props.path[i]
-        parentReactElement = parentReactElement.children[index]
-        insertionPointParent = insertionPointParent[index]
-      }
-      var insertToIndex = self.props.path[self.props.path.length-1]
+      Circle.getDomCtx(self) || console.error("Something messed up with the dom"); //short circuit
+      // var datacontainer = window.App.editor.data
+      // var parentReactElement = window.App.editor.primarySection //used to forceUpdate
+      // for (var i = 0; i < self.props.path.length-1; i++) {//stop before the final point so splicing can occour.
+      //   var index = self.props.path[i]
+      //   parentReactElement = parentReactElement.children[index]
+      //   datacontainer = datacontainer[index]
+      // }
+      // var insertToIndex = self.props.path[self.props.path.length-1]
       var cardInfo = JSON.parse(text.slice(8))
       window.appStorage.getCard(cardInfo.cardID,cardInfo.collectionID).then(function (card) {
         card.tag = card.tag? card.tag:card.title
-        insertionPointParent.splice(insertToIndex,0,card)
-        parentReactElement.forceUpdate()
+        self.dataContainer.splice(self.insertToIndex,0,card)
+        console.log(self)
+        self.parentReactElement.forceUpdate()
       });
-    } else if (text.slice(0,8) == "secPath:") {//ABANDONED PROBABLY IDK
-      console.log("HI");
-      var insertionPointParentArray = window.App.editor.data
-      for (var i = 0; i < self.props.path.length-1; i++) {//stop before the final point so splicing can occour.
-        var destinationIndex = self.props.path[i]
-        insertionPointParentArray = insertionPointParentArray[destinationIndex]
-      }
-
-      var senderPath=JSON.parse(text.slice(8))
-      var sourceSection = window.App.editor.data
-      for (var i = 0; i < senderPath.length-1; i++) {
-        var originIndex = senderPath[i]
-        sourceSection=sourceSection[originIndex]
-      }
-
-      insertionPointParentArray.splice(insertToIndex,0,sourceSection[senderPath[senderPath.length-1]])
-      sourceSection.splice(senderPath[senderPath.length-1],1)
-
-      window.App.editor.forceUpdate()
     }
     Circle.shrink(ev.target)
   }
@@ -110,17 +115,9 @@ export default class Circle extends Component {
 
     self.clickID = setTimeout(()=>{
       Circle.endClick(self)
-
-      var insertionPointParent = window.App.editor.data
-      var parentReactElement = window.App.editor.primarySection //used to forceUpdate
-      for (var i = 0; i < self.props.path.length-1; i++) {//stop before the final point so splicing can occour.
-        var index = self.props.path[i]
-        parentReactElement = parentReactElement.children[index]
-        insertionPointParent = insertionPointParent[index]
-      }
-      var insertToIndex = self.props.path[self.props.path.length-1]
-      insertionPointParent.splice(insertToIndex,0,["New Section"])
-      parentReactElement.forceUpdate()
+      Circle.getDomCtx(self) || console.error("Something messed up with the dom"); //short circuit
+      self.dataContainer.splice(self.insertToIndex,0,["New Section"])
+      self.parentReactElement.forceUpdate()
     },1000)
   }
 
@@ -138,6 +135,7 @@ export default class Circle extends Component {
     btn.style.marginBottom="1em"
     btn.style.width="1em"
     btn.style.height="1em"
+
     clearTimeout(self.clickID)
   }
 
