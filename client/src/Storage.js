@@ -321,10 +321,69 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
           }
         }
         event.sender.send("appStorage"+arg.replyChannel,{status:"ok",data:results})
+      break; case "createNewDB":
+        (async(name,path)=>{
+          // if(!alert("Hey, are you sure you want to add a database?")){return}
+          path = path.replace(/\/$/, "")
+          if(self.fs.exists(path)){
+            if( (await self.fs.readdir(path) ).length !== 0  ){
+              console.log("Dir is not empty, assuming path like dropbox/databases");
+              var foldername = name.replace(/[^A-Za-z0-9 \+\-\: \\ \/]/g,"")
+              console.log("---making folder")
+              await self.fs.mkdir(path+"/"+foldername)
+              path+="/"+foldername
+            }
+            var tmp = new Date()
+            console.log("---making cardMetadata")
+            await self.fs.writeFile(
+              path+"/cardMetadata.json",
+              JSON.stringify({
+                path:path,
+                collectionName:name,
+                created: tmp,
+                cards: [],
+                lastUpdated: tmp,
+                collectionID: self.hash({
+                  collectionName:name,
+                  created:tmp.toJSON(),
+                })
+              })
+            )
+            console.log("---making cards folder")
+            await self.fs.mkdir(path+"/cards")
+            await openDB(path)
+            event.sender.send("appStorage"+arg.replyChannel,{status:"ok"})
+          } else {
+            console.error("Cant make new DB because path doesn't exist")
+          }
+        })(arg.params.name,arg.params.path);
+      break; case "openDB":
+        (async(path)=>{
+          if (self.fs.exists(path+"/cardMetadata.json")) {
+            openDB(path)
+            event.sender.send("appStorage"+arg.replyChannel,{status:"ok"})
+          }
+        })(arg.params.path)
       break; default:
-        console.error("Unknown action")
+        console.error("Unknown action: `"+arg.action+"`, params given were:",arg.params)
       break;
     }
   }
 })
+
+async function openDB(path) {
+  console.log("---opening metadata")
+  var txt = await self.fs.readFile(path+"/cardMetadata.json",'utf8')
+  var obj = JSON.parse(txt)
+  for (var i = 0; i < self.data.cardDBs.length; i++) {
+    if(obj.collectionID == self.data.cardDBs[i].ID){
+      return false
+    }
+  }
+  self.data.usrSettings.cardSrces.push(path)
+  await self.save.usrSettings()
+  self.data.cardDBs.push(new CardCollection(obj,path))
+  // var fileExists = await self.fs.exists(path+"/cardMetadata.json")
+}
+
 exports.default = self
