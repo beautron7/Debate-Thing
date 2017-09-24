@@ -40,12 +40,15 @@ function createAnImporterWindow(){
   })
   windows.push(theWindow)
 
-  const startUrl = process.env.ELECTRON_START_URL+'/DBimporter.index.html' || url.format({
-    pathname: path.join(__dirname, '/../build/DBimporter.index.html'),
-    protocol: 'file:',
-    slashes: true
-  });
+  const startUrl = process.env.ELECTRON_START_URL?
+    process.env.ELECTRON_START_URL+'/DBimporter.index.html' :
+    url.format({
+      pathname: path.join(__dirname, '/../public/DBimporter.index.html'),//TODO: for production, change /public/ to /build/
+      protocol: 'file:',
+      slashes: true
+    });
 
+  console.log(startUrl)
   theWindow.loadURL(startUrl);
 
   theWindow.on('closed', function () {

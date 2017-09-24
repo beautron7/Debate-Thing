@@ -16,13 +16,17 @@ form {
   max-height: 100%;
 }
 
-form form {
+form #newDB-root {
   width: 90%;
   margin: auto;
   background-color:#bbb;
   padding: 1em;
   border-radius: 0.5em;
   max-height: 100%;
+
+  height:0;
+  overflow-y:hidden;
+  visibility: hidden;
 }
 /*input.hidden {
   visibility: hidden;

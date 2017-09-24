@@ -23,17 +23,18 @@
         <form name="default" class="X" action="#">
           <span class="h1">Add a card</span><br><br>
           <div class="form-group">
-            <label for="exampleInputEmail1">Select database:</label>
+            <label>Select database:</label>
             <div class="database-dropdown dropdown">
               <div class="input-group">
                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="text">Select Database</span>
                   <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                <ul class="dropdown-menu database-dropdown-menu" aria-labelledby="dropdownMenu">
                   <!--Here goes the databases-->
                   <li role="separator" class="divider"></li>
-                  <li><a href="#">New Database</a></li>
+                  <li><a href="#" onclick="openDB()"><i class="glyphicon glyphicon-open"></i> Open Pre-Existing Database</a></li>
+                  <li><a href="#" onclick="newDB.show()"><i class="glyphicon glyphicon-save"></i> Create New Database</a></li>
                 </ul>
               </div>
             </div>
@@ -41,22 +42,32 @@
 
           <input type="hidden" name="database" value="">
 
-          <!-- <div class="newDatabase">
-            <form>
-              <div class="title-input input-group">
-                <label for="exampleInputEmail1">Title:</label>
-                <input type="text" class="form-control" placeholder="Title" aria-describedby="basic-addon1">
-              </div><br>
-            </form>
-          </div> -->
+          <div id="newDB-root">
+            <h3 style="text-align:center">New Database</h3>
 
-          <div class="title-input input-group">
-            <label for="exampleInputEmail1">Title:</label>
-            <input name="title" type="text" class="form-control" placeholder="Title" aria-describedby="basic-addon1">
-          </div><br>
+            <div class="alert alert-warning" role="alert">
+              <strong>Dropbox, Google Drive, and OneDrive users:</strong><br>If your team syncs cards in your Dropbox/Google Drive, you should have a different database for each teammember's device to prevent data conflicts
+            </div>
+
+            <label>Name of DB</label>
+            <div class="input-group new-db-path">
+              <input type="text" class="form-control"  placeholder="Type a name here" name="newDBname" value=""></input>
+            </div><br>
+
+
+            <label>Path</label>
+            <div class="input-group new-db-path">
+              <input type="text" class="form-control" name="newDBpath" value=""></input>
+              <span class="input-group-addon btn" onclick="javascript:newDB.selectFile()" name="newDBfileSelect">Browse</span>
+            </div><br>
+
+
+            <button type="button" name="newDBbtn" onclick="javascript:newDB.submit()" class="btn btn-primary btn-block">Create Database</button>
+          </div>
+
 
           <div class="input-group date-published">
-            <label for="exampleInputEmail1">Date Published</label>
+            <label>Date Published</label>
             <select name="month" class="form-control">
               <option>Month:</option>
               <option>January</option>
@@ -77,41 +88,107 @@
           </div><br>
 
           <div class="author input-group">
-            <label for="exampleInputEmail1">Author[s]</label>
+            <label>Author[s]</label>
 
             <input name="author" type="text" class="form-control" placeholder="Doe John, Trump Donald, ..." aria-describedby="basic-addon1">
           </div><br>
 
           <div class="quals">
-            <label for="exampleInputEmail1">Author Qualifcations</label>
+            <label>Author Qualifcations</label>
             <textarea name="quals" class="form-control col-sm-12" rows="3"></textarea>
           </div><br>
-          
+
           <div class="keywords input-group">
-            <label for="exampleInputEmail1">Keywords</label>
+            <label>Keywords</label>
 
             <input name="keywords" type="text" class="form-control" placeholder="US, China, Neg..." aria-describedby="basic-addon1">
           </div><br>
 
           <div class="url input-group">
-            <label for="exampleInputEmail1">URL</label>
+            <label>URL</label>
 
             <input name="url" type="url" class="form-control" placeholder="www.example.com" aria-describedby="basic-addon1">
           </div><br>
 
 
           <div class="full-text">
-            <label for="exampleInputEmail1">Full text</label>
+            <label>Full text</label>
             <textarea name="fulltext" class="form-control col-sm-12" rows="8"></textarea>
           </div><br>
-          <button type="button" onclick="javascript:submitForm()" class="btn btn-primary btn-block">Add Card</button>
+          <button type="button" name="submit-btn" onclick="javascript:submitForm()" class="btn btn-primary btn-block">Add Card</button>
         </form>
       </div>
     </div>
   </body>
 </html>
 <script>
+function openDB(){
+  window.electron=window.nodeRequire("electron")
+  var remote = electron.remote;
+  var path = remote.dialog.showOpenDialog({
+    properties: ['openDirectory']
+  })[0];
+  document.forms.default["newDBpath"].value=path[0]
+  window.appStorage.openDB(path)
+    .then(database_picker.update)
+    .error(function () {console.error("Couldn't open the database")});
+}
+var newDB = {
+  show(){
+    document.getElementById("newDB-root").style.height="auto"
+    document.getElementById("newDB-root").style.visibility="visible"
+  },
+
+  selectFile(){
+    window.electron=window.nodeRequire("electron")
+    var remote = electron.remote;
+    var path = remote.dialog.showOpenDialog({
+      properties: ['openDirectory']
+    });
+    document.forms.default["newDBpath"].value=path[0]
+  },
+
+  submit(){
+    var path = document.forms.default["newDBpath"].value
+    var name = document.forms.default["newDBname"].value
+    if (name === ""){document.forms.default["newDBbtn"].innerHTML = "Please enter a name.";return}
+    if (path === ""){document.forms.default["newDBbtn"].innerHTML = "Please enter a path.";return}
+    //spinner todo
+    window.appStorage.newDB(name,path)
+      .then(()=>{console.log("HEY HEY YOU YOU")})
+      .then(database_picker.update)
+      .then(()=>{
+        database_picker.select([...database_picker.labels].reverse().indexOf(name))
+      })
+  },
+
+}
+
 window.appStorage = {
+  async openDB(path){
+    await new Promise(function(resolve, reject) {
+      callMainStorage({
+        action:"openDB",
+        params: {
+          path:path
+        }
+      },resolve)
+    });
+    location.reload()
+  },
+  async newDB(name,path){
+    await new Promise(function(resolve, reject) {
+      callMainStorage({
+        action: "createNewDB",
+        params: {
+          name:name,
+          path:path,
+        }
+      },resolve)
+    });
+    location.reload()
+    // await database_picker.update()
+  },
   get usrSettings(){
     return new Promise(function(resolve, reject) {
       callMainStorage({
@@ -163,8 +240,9 @@ function callMainStorage(args,callback){
   args.replyChannel=uniqueChannel
   window.electron.ipcRenderer.send("appStorage",args)
 }
-</script>
-<script>
+
+
+
 window.electron = nodeRequire("electron")
 window.hash = nodeRequire("object-hash")
 
@@ -177,14 +255,34 @@ var database_picker = {
   button_text: $(".database-dropdown").find("button").find(".text"),
   selected:-1,
 
-  update(data){
+  async update(){
+    this.labels = [];
+    this.hashes = [];
+    var data = await window.appStorage.DBlist;
     if (data.status="ok"){
       console.log(data)
+      // database_picker.items_dom = document.getElementsByClassName('database-dropdown-menu')[0]
+      //
       for (var i = 0; i < data.length; i++) {
         database_picker.labels[i]=data[i].collectionName
         database_picker.hashes[i]=data[i].collectionID
       }
-      [...database_picker.labels].reverse().forEach((x,i)=>{
+      // // database_picker.items_dom.innerHTML = ""
+      // while(database_picker.items_dom.hasChildNodes()){
+      //   database_picker.items_dom.removeChild(database.items_dom.firstChild)
+      // }
+      //
+      // var anchor = document.createElement('div');
+      // database_picker.items_dom.appendChild(anchor);
+      //
+      // database_picker.items_dom.prepend (`
+      //   <li role="separator" class="divider"></li>
+      //   <li><a href="#" onclick="openDB()"><i class="glyphicon glyphicon-open"></i> Open Pre-Existing Database</a></li>
+      //   <li><a href="#" onclick="newDB.show()"><i class="glyphicon glyphicon-save"></i> Create New Database</a></li>
+      // `);
+      // [database_picker.labels]
+
+      database_picker.labels.slice().reverse().forEach((x,i)=>{
         database_picker.items_dom.prepend(`<li><a href="javascript:database_picker.select(${i})">${x}</a></li>`)
       })
     }
@@ -195,7 +293,7 @@ var database_picker = {
     document.forms.default["database"].value=i
   }
 }
-window.appStorage.DBlist.then(database_picker.update)
+database_picker.update()
 
 function submitForm(){
   var form = document.forms.default
@@ -209,6 +307,21 @@ function submitForm(){
     url: form["url"].value,
     keywords: form["keywords"].value.split(/\s*,\s*/),
     quals: form["quals"].value,
+  }
+  if(database===""){
+    form["submit-btn"].innerHTML = ("Please choose a database");
+    return
+  }
+  for (var thing in data) {
+    if (data.hasOwnProperty(thing)) {
+      if (data[thing] === ""){
+        form["submit-btn"].innerHTML = ("Please enter a(n) "+thing)
+        setTimeout(()=>{
+          form["submit-btn"].innerHTML = ("Add Card")
+        },3000)
+        return
+      }
+    }
   }
   appStorage.addCard(data,database)
 }
