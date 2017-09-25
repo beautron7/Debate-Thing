@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import './Card.css'
 import './slideOpen.css'
 import TinyMCE from 'react-tinymce'
@@ -9,12 +8,6 @@ import Frame from 'react-frame-component'
 //moved stuff to paragraph component
 
 export default class Card extends Component {
-  static propTypes = {
-    title: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
-    text: PropTypes.arrayOf(PropTypes.string),
-  }
-
   toggleMode(){
     if(this.mode == "view"){
       this.mode="edit"
@@ -28,6 +21,49 @@ export default class Card extends Component {
     }
   }
 
+  formatText(action){
+    //bold,italic,highlight,underline
+    const {baseNode, focusNode, baseOffset, focusOffset} = window.getSelection()
+    if (baseNode === focusNode){
+      console.log("The selection is a single element, so the program will subdivide the")
+      //var start = min(baseOffset,focusNode)
+      //var end = max(baseOffset,focusNode)
+      //take the tet from 0 to start
+      //take the text from start to end and postpend it with the class
+      //take the text from start to end and postpone it with the same class as the begiing
+    } else {
+      console.log("The selection spans multiple elements, so the program will split each half")
+      if(baseNode.parentNode !== focusNode.parentNode){return false}
+
+      var [baseNodeIndex,focusNodeIndex] = [baseNode,focusNode].map(child =>
+        Array.prototype.indexOf.call(baseNode.parentNode.children, child)
+      );
+
+      var selection_is_backwards = baseNodeIndex < focusNodeIndex
+      var baseGroup = [baseNode,baseNodeIndex, baseOffset];
+      var focusGroup = [focusNode, focusNodeIndex, focusOffset]
+
+      var [
+        firstNode, firstNodeIndex,  firstOffset,
+        lastNode, lastNodeIndex, lastOffset
+      ] =
+        selection_is_backwards?
+          [
+            ...focusGroup,
+            ...baseGroup,
+          ]:[
+            ...baseGroup,
+            ...focusGroup,
+          ]
+      //now, postpend a new span to the firstNode,
+      //split the text at the firstIndex,
+      //style the second span,
+      //run through the spans in between and merge when applicable,
+      //prepend a new span to the lastnode and do the styles
+    }
+    console.log(window.getSelection());
+  }
+
   constructor(a,b,c){
     super(a,b,c);
     this.mode="view"
@@ -38,7 +74,6 @@ export default class Card extends Component {
       this.data = this.data[index]
     }
     this.tag=this.data.title
-    console.log("HEYEHEEYEEYEY")
   }
 
   render(){
@@ -103,6 +138,7 @@ export default class Card extends Component {
             <RibbonButton
               icon={<i className="fa fa-bold fa-2x" />}
               size="lg"
+              onClick={this.formatText}
             />
             <RibbonButton
               icon={<i className="fa fa-italic fa-2x"></i>}

@@ -5,16 +5,17 @@
   font-size: var(--baseheight);
 
   border-style: solid;
-  border-color: rgba(0,0,0,0);
+  border-color: var(--btn-default);
+  background-color: var(--btn-default);
   margin:0em;
   user-select: none !important;
-  background-color: rgba(0,0,0,0.0)
+  color: var(--text-color)
   /*height: var(--height);*/
 }
 
 .ribbon-button:hover {
-  border-color: gray;
-  background-color: gray;
+  border-color: var(--btn-hover);
+  background-color: var(--btn-hover);
 }
 
 .ribbon-button.lg {

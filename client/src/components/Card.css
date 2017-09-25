@@ -3,7 +3,7 @@
   position: static;
   display:block;
   width: 90%;
-  background-color: #ddd;
+  background-color: var(--canvas-1);
   margin:auto;
   border-radius: 1em;
   border-style: solid;
@@ -18,13 +18,12 @@
   display:block;
   position: sticky;
   top:0em;
-  background: #fff;
 }
 
 .card > .cardHead > .cardHeadUpper {
   min-width: 100%;
   min-height: 1em;
-  background: #ddd;
+  background: var(--canvas-1);
   font-size: 1.5em;
   font-weight: bold;
   padding-left: 0.5em;
@@ -33,13 +32,13 @@
 }
 
 .card > .cardHead > .cardHeadLower {
-  background: #dddde0;
+  background: var(--canvas-1);
   position: relative;
   height: 2.75em;
 }
 
 .card > .cardHead > .cardHeadFormatingBar {
-  background: #bbbbc0;
+  background: var(--canvas-2);
   height: 0;
   text-align: left;
   overflow-y: hidden;
@@ -65,7 +64,7 @@
   border-bottom-right-radius: 1em;
   padding-right: 0.5em;
 
-  background: #ccc;
+  background: var(--canvas-3);
 
   position: absolute;
   top: 50%;
@@ -83,3 +82,34 @@
   text-align: left;
   font-family: Calibri;
 }
+.card .cardBody {font-size: 12;}
+.card .cardBody .hi{background-color: var(--highlight)}
+.card .cardBody .bold {font-weight: bold;}
+.card .cardBody .ital {font-style: italic;}
+.card .cardBody .udln {text-decoration: underline;}
+.card .cardBody .cptl {text-transform: uppercase;}
+.card .cardBody .s4 {font-size: 4;}
+.card .cardBody .s6 {font-size: 6;}
+.card .cardBody .s8 {font-size: 8;}
+.card .cardBody .s10 {font-size: 10;}
+.card .cardBody .s12 {font-size: 12;}
+.card .cardBody .s12 {font-size: 12;}
+.card .cardBody .s12 {font-size: 12;}
+.card .cardBody .s14 {font-size: 14;}
+.card .cardBody .s16 {font-size: 16;}
+.card .cardBody .s18 {font-size: 18;}
+.card .cardBody .s20 {font-size: 20;}
+.card .cardBody .s22 {font-size: 22;}
+.card .cardBody .s24 {font-size: 24;}
+.card .cardBody .s26 {font-size: 26;}
+.card .cardBody .s28 {font-size: 28;}
+.card .cardBody .s30 {font-size: 30;}
+.card .cardBody .s32 {font-size: 32;}
+.card .cardBody .s34 {font-size: 34;}
+.card .cardBody .s38 {font-size: 38;}
+.card .cardBody .s40 {font-size: 40;}
+.card .cardBody .s42 {font-size: 42;}
+.card .cardBody .s44 {font-size: 44;}
+.card .cardBody .s46 {font-size: 46;}
+.card .cardBody .s48 {font-size: 48;}
+.card .cardBody .s50 {font-size: 50;}

@@ -45,8 +45,8 @@ export default class Section extends Component {
     var [first, ...rest] = data
     this.children = []
 
-    var content = [<div key={0}>
-      <span
+    var content = [
+      <div><span
         className="heading"
         contentEditable="true"
         ref={self=>{
@@ -61,9 +61,9 @@ export default class Section extends Component {
         }}
       >
         {first}
-      </span>
+      </span></div>,
       <Circle path={path.concat(1)} />
-    </div>]
+    ]
 
     content.push(
       ...rest.map((x,i)=> (
