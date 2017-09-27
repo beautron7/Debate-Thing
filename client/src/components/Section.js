@@ -14,10 +14,6 @@ export default class Section extends Component {
   //   this.forceUpdate()
   // }
 
-  // constructor(a,b,c){
-  //   super(a,b,c)
-  //   console.log(a,b,c);
-  // }
 
   render(){
     const {
@@ -46,23 +42,27 @@ export default class Section extends Component {
     this.children = []
 
     var content = [
-      <div><span
+      <div key={-1}><span
         className="heading"
-        contentEditable="true"
+        contentEditable="plaintext-only"
         ref={self=>{
           // for path
           this.children.push(self)
-          // if (self !== null && self !== undefined){
-          //   self.textContent=
-          //   self.addEventListener("input",()=>{
-          //     this.tag=self.textContent
-          //   }, false)
-          // }
+          if (self !== null && self !== undefined){
+            self.textContent = first
+            self.addEventListener("input",()=>{
+              var data = window.App.editor.data;
+              for (var i = 0; i < this.props.path.length; i++) {//stop before the final point so splicing can occour.
+                var index = this.props.path[i]
+                data = data[index]
+              }
+              data[0]=self.textContent
+            }, false)
+          }
         }}
       >
-        {first}
       </span></div>,
-      <Circle path={path.concat(1)} />
+      <Circle key={0} path={path.concat(1)} />
     ]
 
     content.push(

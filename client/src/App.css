@@ -17,6 +17,10 @@ html {
 
 }
 
+body {
+  /*filter: blur(0.1px);*/
+}
+
 html,*, body {
   --theme: light-dev;
 
@@ -51,9 +55,9 @@ html,*, body {
 /*html,*, body {
   --theme: dark-dev;
 
-  --section0: #600;
-  --section1: #006;
-  --section2: #060;
+  --section0: radial-gradient(ellipse at center, rgba(0,75,120,1) 0%, rgba(0,117,170,1) 100%);;
+  --section1: radial-gradient(ellipse at center, #075 0%, #094 100%);;
+  --section2: #508;
   --section3: black;
 
   --accent-primary: #0AF;
@@ -73,8 +77,8 @@ html,*, body {
   --canvas-scroll-bkg: #0000;
   --canvas-img-background: gray;
 
-  --canvas-1: #444;
-  --canvas-2: #333;
-  --canvas-3: #222;
-  --canvas-4: #111;
+  --canvas-1: #004560;
+  --canvas-2: #111;
+  --canvas-3: #035;
+  --canvas-4: #911;
 }*/

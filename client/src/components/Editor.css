@@ -3,7 +3,7 @@
   flex-grow: 999999999999999999999999999;
   /*width: 540%;*/
   /*order: 0;*/
-  background-color: var(--section0);
+  background: var(--section0);
   /*overflow-y: scroll;
   overflow-x: hidden;*/
   color: var(--text-color)
@@ -18,12 +18,12 @@
 
 #editor > .section .section {
   width:90%;
-  background-color: var(--section1);
+  background: var(--section1);
   margin:auto
 }
 
 #editor > .section .section .section{
-  background-color: var(--section2);
+  background: var(--section2);
 }
 
 

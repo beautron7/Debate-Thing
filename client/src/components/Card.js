@@ -7,6 +7,34 @@ import RibbonButton from './RibbonButton'
 import Frame from 'react-frame-component'
 //moved stuff to paragraph component
 
+class Style {
+  toJSON(){
+    return ""
+      + this.fontSize || ""
+      + this.textSettings || ""
+      + this.backgroundColor || this.textColor?
+        ("{"
+          + (this.backgroundColor || "")
+          + (",")
+          + (this.textColor || "") +
+        "}"):""
+  }
+
+  constructor(data){
+    var [
+      fontSize,
+      textSettings,
+      backgroundColor,
+      textColor,
+    ] = data.match(/^(?:\((\d+)\w*?\))?(?:\<(.+?)\>)?(?:\{(.*),(.*)\})?$/gm)
+
+    this.fontSize = fontSize;
+    this.textSettings = textSettings;
+    this.backgroundColor = backgroundColor;
+    this.textColor = textColor;
+  }
+}
+
 export default class Card extends Component {
   toggleMode(){
     if(this.mode == "view"){
@@ -23,50 +51,107 @@ export default class Card extends Component {
 
   formatText(action){
     //bold,italic,highlight,underline
-    const {baseNode, focusNode, baseOffset, focusOffset} = window.getSelection()
-    if (baseNode === focusNode){
-      console.log("The selection is a single element, so the program will subdivide the")
-      //var start = min(baseOffset,focusNode)
-      //var end = max(baseOffset,focusNode)
-      //take the tet from 0 to start
-      //take the text from start to end and postpend it with the class
-      //take the text from start to end and postpone it with the same class as the begiing
-    } else {
-      console.log("The selection spans multiple elements, so the program will split each half")
-      if(baseNode.parentNode !== focusNode.parentNode){return false}
+    var currentChild;
+    var {baseNode, focusNode, baseOffset, focusOffset} = window.getSelection()
 
-      var [baseNodeIndex,focusNodeIndex] = [baseNode,focusNode].map(child =>
-        Array.prototype.indexOf.call(baseNode.parentNode.children, child)
-      );
+    console.log(window.getSelection())
 
-      var selection_is_backwards = baseNodeIndex < focusNodeIndex
-      var baseGroup = [baseNode,baseNodeIndex, baseOffset];
-      var focusGroup = [focusNode, focusNodeIndex, focusOffset]
+    if(//nothing selected
+      [baseNode,focusNode,baseOffset,focusOffset]
+        .map(x=>
+          x === null ||
+          x === undefined ||
+          typeof x === "undefined" ||
+          typeof x === "null"
+        )
+        .indexOf(true) !== -1
+    ) {return}
 
-      var [
-        firstNode, firstNodeIndex,  firstOffset,
-        lastNode, lastNodeIndex, lastOffset
-      ] =
-        selection_is_backwards?
-          [
-            ...focusGroup,
-            ...baseGroup,
-          ]:[
-            ...baseGroup,
-            ...focusGroup,
-          ]
-      //now, postpend a new span to the firstNode,
-      //split the text at the firstIndex,
-      //style the second span,
-      //run through the spans in between and merge when applicable,
-      //prepend a new span to the lastnode and do the styles
+
+    var [baseNodeIndex,focusNodeIndex] = [baseNode,focusNode].map(parent => {//pass thu a child and climb up till you get to the parent
+      var child;
+      while (parent.constructor !== HTMLDivElement){
+        child = parent
+        parent = parent.parentNode
+      }
+      return  Array.prototype.indexOf.call(parent.children, child)
+    });
+
+    var selection_is_backwards = baseNodeIndex > focusNodeIndex
+    var baseGroup = [baseNode,baseNodeIndex, baseOffset];
+    var focusGroup = [focusNode, focusNodeIndex, focusOffset]
+    var [
+      firstNode, firstNodeIndex,  firstOffset,
+      lastNode, lastNodeIndex, lastOffset
+    ] =
+      selection_is_backwards?
+        [
+          ...focusGroup,
+          ...baseGroup,
+        ]:[
+          ...baseGroup,
+          ...focusGroup,
+        ]
+    console.log("foobarbbb",lastNode,firstNode)
+    //split off last node
+    var [firstSpan,lastSpan]=[firstNode.parentNode,lastNode.parentNode]
+
+    lastNode.splitText( lastOffset )
+    var postLastSpan = lastSpan.cloneNode(true)
+    postLastSpan.childNodes[0].remove()
+    postLastSpan = lastSpan.insertAdjacentElement("afterend",postLastSpan)
+    lastSpan.childNodes[1].remove()
+
+    firstNode .splitText( firstOffset )
+    var preFirstSpan = firstSpan.cloneNode(true)
+    preFirstSpan.childNodes[1].remove()
+    preFirstSpan = firstSpan.insertAdjacentElement("beforebegin",preFirstSpan)
+    firstSpan.childNodes[0].remove()
+
+    //see if anyhting is not (bold/ital), and if everything is bold/ital, then we toggle it instead
+
+    currentChild = FirstSpan
+    var text_already___ed = true
+    while(currentChild != lastSpan) {
+      if(!currentChild.classList.contains(action)){
+        text_already___ed = false
+        break
+      }
+      currentChild = currentChild.nextSibling
     }
-    console.log(window.getSelection());
+
+    // currentChild is now the first non (bold/ital/etc)ed text 
+    while(currentChild !== postLastSpan){
+      currentChild.classList.add(action)
+      currentChild = currentChild.nextSibling
+    }
+
+    currentChild = preFirstSpan
+
+    while(currentChild !== postLastSpan) {
+      if(currentChild.classList == currentChild.nextSibling.classList){
+        //take the
+        currentChild.appendChild(currentChild.nextSibling.childNodes[0])
+        currentChild.normalize()
+        var breakafterthis = currentChild.nextSibling == postLastSpan
+        currentChild.nextSibling.remove()
+        if (breakafterthis){break}
+      }
+      currentChild = currentChild.nextSibling
+    }
+
+    //split off the first node
+
+    // this.generateTextDom()
+    //now, we iterate from [lastNodeIndex --> firstNodeIndex and do the style]
+    //now, we iterate from [lastNodeIndex+1 -> firstNodeIndex and check for i and i-1 to see if they can be merged]
+    //this.forceUpdate()
   }
 
   constructor(a,b,c){
     super(a,b,c);
     this.mode="view"
+    this.hideLinebreaks=false;
 
     this.data = window.App.editor.data
     for (var i = 0; i < this.props.path.length; i++) {//stop before the final point so splicing can occour.
@@ -74,71 +159,84 @@ export default class Card extends Component {
       this.data = this.data[index]
     }
     this.tag=this.data.title
+
+    this.generateTextDom()
   }
 
-  render(){
-    var year
-    var {
-      author,
-      datePublished,
-      tag
-    } = this.data
-
-
-    author = author? author:"(No author)"//Author
+  get formattedYear(){
+    var year = "[No Date]"
     try { //date
       function pad(n, width, z) {
         z = z || '0';
         n = n + '';
         return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
       }
-      year = pad(new Date(datePublished).getFullYear()%100,2)
+      year = pad(new Date(this.data.datePublished).getFullYear()%100,2)
       if (year == "NaN"){
         throw new Error()
       }
     } catch (e) {
       year = "[No Date]"
     }
+    return year
+  }
 
+  animate_open(){
     setTimeout(() => {//Animation
       if(this.dom !== null)
       this.dom.style.maxHeight="1000em" //well, 100em sounds large but not for debate standards.
     })
+  }
 
-    var editBar = 3.141
-    this.textDOM = this.data.text.map((x,i)=>(<p key={i/*Ok because paragraph order is constant*/}>{x}</p>))
+  generateTextDom(){
+    var str = ""
+    for (var i = 0; i < this.data.text.length; i++) {
+      str+= this.data.text[i]+"¶"
+    }
+    this.textDOM = <span>{str}</span>
+  }
+
+  tagListener(x){
+    if (x !== null && x !== undefined){
+      x.textContent=this.tag
+      x.addEventListener("input",()=>{
+        this.tag=x.textContent
+      }, false)
+    }
+  }
+
+  render(){
+    var editBar;
+
+    this.animate_open()
 
     return(
       <div draggable="false" ref={x=>this.dom=x} className="card animate-max-height">
         <div className="cardHead">
           <div
-            ref={
-              (x)=> {
-                if (x !== null && x !== undefined){
-                  x.textContent=this.tag
-                  x.addEventListener("input",()=>{
-                    this.tag=x.textContent
-                  }, false)
-                }
-              }
-            }
+            ref={scope => this.tagListener(scope)}
             contentEditable="plaintext-only" className="cardHeadUpper">
           </div>
           <div className="cardHeadLower">
             <div className="cardAuthor">
-              {author} {year}
+              {this.data.author} {this.formattedYear}
             </div>
             <div className="cardButtons btn-group">
               <button className="btn btn-sm btn-primary">Quals</button>
               <button className="btn btn-sm btn-primary">Source</button>
-              <button onClick={scope => this.toggleMode()} className="btn btn-sm btn-primary">{this.mode=="view"? "Edit":"View"}</button>
+              <button
+                onClick={scope => this.toggleMode()}
+                className="btn btn-sm btn-primary"
+              >
+                {this.mode=="view"? "Edit":"View"}
+              </button>
             </div>
           </div>
           <div className="cardHeadFormatingBar">
             <RibbonButton
               icon={<i className="fa fa-bold fa-2x" />}
               size="lg"
-              onClick={this.formatText}
+              onClick={scope => this.formatText("bold")}
             />
             <RibbonButton
               icon={<i className="fa fa-italic fa-2x"></i>}
