@@ -20,18 +20,26 @@ class Style {
         "}"):""
   }
 
-  constructor(data){
-    var [
-      fontSize,
-      textSettings,
-      backgroundColor,
-      textColor,
-    ] = data.match(/^(?:\((\d+)\w*?\))?(?:\<(.+?)\>)?(?:\{(.*),(.*)\})?$/gm)
+  toStyleObj(){
+    return false //to be implemented
+  }
 
-    this.fontSize = fontSize;
-    this.textSettings = textSettings;
-    this.backgroundColor = backgroundColor;
-    this.textColor = textColor;
+  constructor(data){
+    if (typeof data === "string"){
+      var [
+        fontSize,
+        textSettings,
+        backgroundColor,
+        textColor,
+      ] = data.match(/^(?:\((\d+)\w*?\))?(?:\<(.+?)\>)?(?:\{(.*),(.*)\})?$/gm)
+
+      this.fontSize = fontSize;
+      this.textSettings = textSettings;
+      this.backgroundColor = backgroundColor;
+      this.textColor = textColor;
+    } else {
+      //now we make it from a style object
+    }
   }
 }
 
@@ -49,103 +57,184 @@ export default class Card extends Component {
     }
   }
 
-  formatText(action){
-    //bold,italic,highlight,underline
-    var currentChild;
+  formatText(style,altStyle){
+    if(this.blocking){return}
+    this.blocking=true
+    var
+      postLastSpan,
+      preFirstSpan;
+
     var {baseNode, focusNode, baseOffset, focusOffset} = window.getSelection()
+    //SUBROUTINE: CHECK IF SELECTION IS VALID
+      if(~[baseNode, focusNode, baseOffset, focusOffset].map(isNull).indexOf(true)) {
+        console.log("Cant select because null")
+        return false
+      }
 
-    console.log(window.getSelection())
+      if(~[baseNode,focusNode].map((x) => {
+        while(x = x.parentElement){
+          if(x==this.cardBodyDom){
+            return true
+          }
+        }
+        return false
+      }).indexOf(false)){
+        console.log("Cant select because one of the selections is outside of the card")
+        return false
+      }
 
-    if(//nothing selected
-      [baseNode,focusNode,baseOffset,focusOffset]
-        .map(x=>
-          x === null ||
-          x === undefined ||
-          typeof x === "undefined" ||
-          typeof x === "null"
-        )
-        .indexOf(true) !== -1
-    ) {return}
+      //if selectionend is at begining, move back 1 node
+    //END SUBROUTINE
+
+    //SUBROUTINE ADD ANCHOR_START AND ANCHOR_END
+      var headAnchor = document.createElement("label");
+      var tailAnchor = document.createElement("label");
+      this.cardBodyDom.insertAdjacentElement('afterbegin', headAnchor);
+      this.cardBodyDom.insertAdjacentElement('beforeend', tailAnchor);
+    //end SUBROUTINE
+
+    //SUBROUTINE CORRECT DOM ERRORS
+      var [baseSpan,focusSpan]=[baseNode,focusNode].map((x) => {
+        if(x.constructor == Text){
+          return x.parentNode;
+        } else {
+          return x;
+        }
+      });
+      [baseNode,focusNode] = [baseSpan,focusSpan].map(x => {
+        return x.childNodes[0]
+      })
+      var [baseNodeIndex,focusNodeIndex] = [baseNode,focusNode].map(getIndex);
 
 
-    var [baseNodeIndex,focusNodeIndex] = [baseNode,focusNode].map(parent => {//pass thu a child and climb up till you get to the parent
+    //END SUBROUTINE
+
+    //SUBROUTINE ASSIGN FIRST AND LAST NODE VALUES
+      var selection_is_backwards = (baseNodeIndex == focusNodeIndex)?
+        focusOffset < baseOffset:
+        focusNodeIndex < baseNodeIndex
+      var baseGroup =  [baseNode,  baseNodeIndex,  baseOffset,  baseSpan];
+      var focusGroup = [focusNode, focusNodeIndex, focusOffset, focusSpan];
+      var [
+        firstNode, firstNodeIndex,  firstOffset, firstSpan,
+        lastNode, lastNodeIndex, lastOffset, lastSpan
+      ] =
+        selection_is_backwards?
+          [
+            ...focusGroup,
+            ...baseGroup,
+          ]:[
+            ...baseGroup,
+            ...focusGroup,
+          ];
+    //END SUBROUTINE
+
+    //SUBROUTINE SPLIT LAST AND FIRST TEXT
+      lastNode.splitText( lastOffset );
+      postLastSpan = lastSpan.cloneNode(true);
+      postLastSpan.childNodes[0].remove();
+      postLastSpan = lastSpan.insertAdjacentElement("afterend",postLastSpan);
+      lastSpan.childNodes[1].remove();
+
+      firstNode .splitText( firstOffset );
+      preFirstSpan = firstSpan.cloneNode(true);
+      preFirstSpan.childNodes[1].remove();
+      preFirstSpan = firstSpan.insertAdjacentElement("beforebegin",preFirstSpan);
+      firstSpan.childNodes[0].remove();
+    //END SUBROUITNE
+
+    //SUBROUTINE CHECK FOR FIRST NON-FORMATTED DOM ELEMENT
+      var currentChild = firstSpan
+      var text_already_formated = true
+
+      while(currentChild != lastSpan) {
+        if(!styleEqual(currentChild.style,style)){
+          text_already_formated=false
+          break
+        }
+        currentChild = currentChild.nextSibling
+      }
+    //END SUBROUTINE
+
+    //SUBROUTINE FORMAT TEXT
+      if(text_already_formated && altStyle !== false) {
+        currentChild = firstSpan
+        while(currentChild != postLastSpan){
+          for (var prop in style) {
+            currentChild.style[prop]=altStyle[prop]
+          }
+          currentChild = currentChild.nextSibling
+        }
+      } else {
+        while(currentChild !== postLastSpan){
+          for (var prop in style) {
+            currentChild.style[prop]=style[prop]
+          }
+          currentChild = currentChild.nextSibling
+        }
+      }
+    //END SUBROUTINE
+
+    //SUBROUTINE MERGE SIMILAR TEXT
+      currentChild = preFirstSpan
+      while(currentChild !== postLastSpan) {
+        if(currentChild.classList == currentChild.nextSibling.classList){
+          //take the
+          currentChild.appendChild(currentChild.nextSibling.childNodes[0])
+          currentChild.normalize()
+          var breakafterthis = currentChild.nextSibling == postLastSpan
+          currentChild.nextSibling.remove()
+          if (breakafterthis){break}
+        }
+        currentChild = currentChild.nextSibling
+      }
+    //END SUBROUTINE
+
+    //SUBROUTINE CLEANING UP EMPTY ELEMENTS
+      [firstSpan,firstNode,lastSpan,lastNode,preFirstSpan,postLastSpan].forEach(x=>
+        x.textContent.length || x.remove()
+      )
+      this.blocking = false;
+      headAnchor.remove()
+      tailAnchor.remove()
+    //END SUBROUTINE
+
+    function isNull(x){
+      return (
+        x === null ||
+        x === undefined ||
+        typeof x === "undefined" ||
+        typeof x === "null"
+      )
+    }
+
+    function styleEqual(style1,style2) {
+      var styles = [
+        "fontSize",
+        "backgroundColor",
+        "fontWeight",
+        "fontStyle",
+        "textDecoration",
+        "textTransform"
+      ]
+      var result = styles.map(x=>{
+        console.log(style1);
+        return style1[x]==style2[x]
+      });
+      var index =result.indexOf(false);
+      console.log(result,style1[index]==style2[index],result[index])
+      return  !~index
+    }
+
+    function getIndex(el){
+      var parent = el
       var child;
       while (parent.constructor !== HTMLDivElement){
         child = parent
         parent = parent.parentNode
       }
       return  Array.prototype.indexOf.call(parent.children, child)
-    });
-
-    var selection_is_backwards = baseNodeIndex > focusNodeIndex
-    var baseGroup = [baseNode,baseNodeIndex, baseOffset];
-    var focusGroup = [focusNode, focusNodeIndex, focusOffset]
-    var [
-      firstNode, firstNodeIndex,  firstOffset,
-      lastNode, lastNodeIndex, lastOffset
-    ] =
-      selection_is_backwards?
-        [
-          ...focusGroup,
-          ...baseGroup,
-        ]:[
-          ...baseGroup,
-          ...focusGroup,
-        ]
-    console.log("foobarbbb",lastNode,firstNode)
-    //split off last node
-    var [firstSpan,lastSpan]=[firstNode.parentNode,lastNode.parentNode]
-
-    lastNode.splitText( lastOffset )
-    var postLastSpan = lastSpan.cloneNode(true)
-    postLastSpan.childNodes[0].remove()
-    postLastSpan = lastSpan.insertAdjacentElement("afterend",postLastSpan)
-    lastSpan.childNodes[1].remove()
-
-    firstNode .splitText( firstOffset )
-    var preFirstSpan = firstSpan.cloneNode(true)
-    preFirstSpan.childNodes[1].remove()
-    preFirstSpan = firstSpan.insertAdjacentElement("beforebegin",preFirstSpan)
-    firstSpan.childNodes[0].remove()
-
-    //see if anyhting is not (bold/ital), and if everything is bold/ital, then we toggle it instead
-
-    currentChild = FirstSpan
-    var text_already___ed = true
-    while(currentChild != lastSpan) {
-      if(!currentChild.classList.contains(action)){
-        text_already___ed = false
-        break
-      }
-      currentChild = currentChild.nextSibling
     }
-
-    // currentChild is now the first non (bold/ital/etc)ed text 
-    while(currentChild !== postLastSpan){
-      currentChild.classList.add(action)
-      currentChild = currentChild.nextSibling
-    }
-
-    currentChild = preFirstSpan
-
-    while(currentChild !== postLastSpan) {
-      if(currentChild.classList == currentChild.nextSibling.classList){
-        //take the
-        currentChild.appendChild(currentChild.nextSibling.childNodes[0])
-        currentChild.normalize()
-        var breakafterthis = currentChild.nextSibling == postLastSpan
-        currentChild.nextSibling.remove()
-        if (breakafterthis){break}
-      }
-      currentChild = currentChild.nextSibling
-    }
-
-    //split off the first node
-
-    // this.generateTextDom()
-    //now, we iterate from [lastNodeIndex --> firstNodeIndex and do the style]
-    //now, we iterate from [lastNodeIndex+1 -> firstNodeIndex and check for i and i-1 to see if they can be merged]
-    //this.forceUpdate()
   }
 
   constructor(a,b,c){
@@ -191,7 +280,7 @@ export default class Card extends Component {
   generateTextDom(){
     var str = ""
     for (var i = 0; i < this.data.text.length; i++) {
-      str+= this.data.text[i]+"¶"
+      str+= this.data.text[i]+"¶\n"
     }
     this.textDOM = <span>{str}</span>
   }
@@ -236,19 +325,43 @@ export default class Card extends Component {
             <RibbonButton
               icon={<i className="fa fa-bold fa-2x" />}
               size="lg"
-              onClick={scope => this.formatText("bold")}
+              onClick={scope => this.formatText({fontWeight:"bold"},{fontWeight:"normal"})}
             />
             <RibbonButton
               icon={<i className="fa fa-italic fa-2x"></i>}
               size="lg"
+              onClick={scope => this.formatText({fontStyle:"italic"},{fontStyle:"normal"})}
+            />
+            <RibbonButton
+              title="Emphasis"
+              size="lg"
+              onClick={scope => this.formatText({
+                fontWeight:"bold",
+                fontStyle:"normal",
+                textDecoration:"underline",
+              },false)}
             />
             <RibbonButton
               icon={<i className="fa fa-underline fa-2x"></i>}
               size="lg"
+              onClick={scope => this.formatText({
+                textDecoration:"underline",
+                fontWeight:"normal",
+                fontStyle:"normal",
+              },false)}
+            />
+            <RibbonButton
+              title="Clear Formatting"
+              size="lg"
+              onClick={scope => this.formatText({
+                textDecoration:"normal",
+                fontWeight:"normal",
+                fontStyle:"normal",
+              },false)}
             />
           </div>
         </div>
-        <div className="cardBody">
+        <div className="cardBody" ref={self => this.cardBodyDom = self}>
           {this.textDOM}
         </div>
       </div>
