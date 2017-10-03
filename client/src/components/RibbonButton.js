@@ -13,13 +13,13 @@ export default class RibbonButton extends Component {
     var {
       title,
       icon,
-      dropdown,
       size,
       onClick,
+      tooltip,
     } = this.props
     size = size || "md"
     return (
-      <div onClick={onClick} className={"ribbon-button "+size}>
+      <div onClick={onClick} title={tooltip} className={"ribbon-button "+size}>
         {icon? <div className="icon">{icon}</div>:null}
         {title? <span className="title">{title}</span>:null}
         {/* <table><tbody><tr>

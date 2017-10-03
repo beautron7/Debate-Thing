@@ -36,7 +36,7 @@ export default class Circle extends Component {
 
   static onDrop(ev,self) {
     var text = ev.dataTransfer.getData("text/plain")
-    if (text.slice(0,8) == "cardRef:") {
+    if (text.slice(0,8) === "cardRef:") {
       ev.preventDefault();
       Circle.getDomCtx(self) || console.error("Something messed up with the dom"); //short circuit
       // var datacontainer = window.App.editor.data

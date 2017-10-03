@@ -21,7 +21,7 @@ export default class Tabbar extends Component {
 
   toggleMaximize(){
     var browserWindow = window.electron.remote.getCurrentWindow()
-    if(window.state=="maximized"){
+    if(window.state==="maximized"){
       browserWindow.unmaximize()
     } else {
       browserWindow.maximize()
@@ -54,9 +54,9 @@ export default class Tabbar extends Component {
     return (
       <div className='tab-container'>
         {tabs}
-        <a className="fa fa-window-thing fa-window-close"    onClick={x=>window.electron.remote.getCurrentWindow().close()}></a>
-        <a className={"fa fa-window-thing fa-window-"+(window.state=='maximized'?'restore':'maximize')} onClick={this.toggleMaximize}></a>
-        <a className="fa fa-window-thing fa-window-minimize" onClick={x=>window.electron.remote.getCurrentWindow().minimize()}></a>
+        <i ariaLabel="close window" className="fa fa-window-thing fa-window-close"    onClick={x=>window.electron.remote.getCurrentWindow().close()}></i>
+        <i ariaLabel="restore-down / maximize window" className={"fa fa-window-thing fa-window-"+(window.state==='maximized'?'restore':'maximize')} onClick={this.toggleMaximize}></i>
+        <i ariaLabel="minimize window" className="fa fa-window-thing fa-window-minimize" onClick={x=>window.electron.remote.getCurrentWindow().minimize()}></i>
 
         <i style={{'float':'right'}} onClick={()=>{this.paneNumber=-1;updateGUI()}} className="tab glyphicon glyphicon-eject"></i>
       </div>

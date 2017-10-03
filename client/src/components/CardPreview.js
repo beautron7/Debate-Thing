@@ -17,7 +17,7 @@ export default class CardPreview extends Component {
       author,
       title,
       keywords,
-      url,
+      // url,
     } = this.props;
 
     const keywordNodes = keywords? keywords.map(

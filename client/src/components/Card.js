@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import './Card.css'
 import './slideOpen.css'
-import TinyMCE from 'react-tinymce'
-import TinyMCEinit from './TinyMCEinit'
 import RibbonButton from './RibbonButton'
-import Frame from 'react-frame-component'
+// import Frame from 'react-frame-component'
 //moved stuff to paragraph component
 
+// eslint-disable-next-line
 class Style {
   toJSON(){
     return ""
@@ -31,7 +30,7 @@ class Style {
         textSettings,
         backgroundColor,
         textColor,
-      ] = data.match(/^(?:\((\d+)\w*?\))?(?:\<(.+?)\>)?(?:\{(.*),(.*)\})?$/gm)
+      ] = data.match(/^(?:\((\d+)\w*?\))?(?:<(.+?)>)?(?:\{(.*),(.*)\})?$/gm)
 
       this.fontSize = fontSize;
       this.textSettings = textSettings;
@@ -45,7 +44,7 @@ class Style {
 
 export default class Card extends Component {
   toggleMode(){
-    if(this.mode == "view"){
+    if(this.mode === "view"){
       this.mode="edit"
       this.dom.children[0].children[2].style.height="2.75em"
       this.cardBodyDom.contentEditable = true;
@@ -94,7 +93,7 @@ export default class Card extends Component {
         return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
       }
       year = pad(new Date(this.data.datePublished).getFullYear()%100,2)
-      if (year == "NaN"){
+      if (year+"" === "NaN"){
         throw new Error()
       }
     } catch (e) {
@@ -128,7 +127,6 @@ export default class Card extends Component {
   }
 
   render(){
-    var editBar;
 
     this.animate_open()
 
@@ -150,7 +148,7 @@ export default class Card extends Component {
                 onClick={scope => this.toggleMode()}
                 className="btn btn-sm btn-primary"
               >
-                {this.mode=="view"? "Edit":"View"}
+                {this.mode==="view"? "Edit":"View"}
               </button>
             </div>
           </div>
@@ -190,35 +188,33 @@ export default class Card extends Component {
               }}
             />
             <RibbonButton
-              title="Highlight"
+              icon={<img style={{filter:"brightness(0)"}}src="img/hilite.ico"></img>}
               size="lg"
               onClick={scope => {
-                var {toString,baseOffset,focusOffset} = document.getSelection()
-                var selID = window.hash([toString,baseOffset,focusOffset]);
-                if(selID == this.selID){
-                  document.execCommand("hiliteColor",true,"white")
+                var $$$ = document.getSelection()
+                var selID = window.hash([$$$.toString,$$$.baseOffset,$$$.focusOffset]);
+                if(selID === this.selID){
+                  document.execCommand("hiliteColor",true,"rgba(0,0,0,0)")
                   this.selID=""
                   return
                 }
                 document.execCommand("hiliteColor",false,"cyan")
 
-                toString=null;
-                baseOffset=null;
-                focusOffset=null;
-                var {toString,baseOffset,focusOffset} = document.getSelection()
-                selID = window.hash([toString,baseOffset,focusOffset]);
+                selID = window.hash([$$$.toString,$$$.baseOffset,$$$.focusOffset]);
                 this.selID=selID
               }}
             />
             <RibbonButton
-              title="Clear Formatting"
+              icon={<i className="glyphicon glyphicon-erase"></i>}
+              tooltip="Clear Formatting"
               size="lg"
               onClick={scope => {
                 document.execCommand("removeFormat");
               }}
             />
             <RibbonButton
-              icon="¶"
+              icon={<span>¶</span>}
+              tooltip="Toggle condensed text mode"
               size="lg"
               onClick={scope => {
                 this.togglePilcrows();

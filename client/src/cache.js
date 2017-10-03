@@ -59,10 +59,10 @@ var self = {
 }
 
 function callMainStorage(args,callback){
-  var uniqueChannel = window.hash([new Date,Math.random()])
+  var uniqueChannel = window.hash([new Date(),Math.random()])
   args.replyChannel=uniqueChannel
   window.electron.ipcRenderer.once("appStorage"+uniqueChannel,(event,reply)=>{
-    if(reply.status=="ok")
+    if(reply.status==="ok")
       callback(reply.data);
     else
       console.error("ThErE's aN eRrOr: ",reply)

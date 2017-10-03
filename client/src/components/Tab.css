@@ -21,9 +21,16 @@
   background-color: var(--ribbon-tab-inactive);
 }
 
-.active {
+.tab.active {
   background-color: var(--ribbon-tab-active);
   border-color: var(--ribbon-tab-active-border);
   border-bottom-color: var(--ribbon-tab-active-border);
   color: var(--text-color);
+}
+
+
+.tab:not(.active):hover{
+  /*background-color: var (--ribbon-tab-active);*/
+  border-color: var(--ribbon-tab-active-border);
+  border-style: dashed;
 }
