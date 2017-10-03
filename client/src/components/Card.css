@@ -3,12 +3,17 @@
   position: static;
   display:block;
   width: 90%;
+  max-width: 90%;
   background-color: var(--canvas-1);
   margin:auto;
   border-radius: 1em;
   border-style: solid;
   /*overflow: hidden;*/
   /*To allow for sticky*/
+}
+
+.card ::selection {
+  background: rgba(0,0,0,0.2); /* WebKit/Blink Browsers */
 }
 
 .card > .cardHead {

@@ -48,193 +48,20 @@ export default class Card extends Component {
     if(this.mode == "view"){
       this.mode="edit"
       this.dom.children[0].children[2].style.height="2.75em"
-      // cardHeadFormatingBar
+      this.cardBodyDom.contentEditable = true;
+      this.cardBodyDom.addEventListener("keypress",this.handleKey)
       this.forceUpdate()
     } else {
       this.mode="view"
       this.dom.children[0].children[2].style.height="0"
+      this.cardBodyDom.contentEditable = false;
+      this.cardBodyDom.removeEventListener("keypress",this.handleKey)
       this.forceUpdate()
     }
   }
 
-  formatText(style,altStyle){
-    if(this.blocking){return}
-    this.blocking=true
-    var
-      postLastSpan,
-      preFirstSpan;
-
-    var {baseNode, focusNode, baseOffset, focusOffset} = window.getSelection()
-    //SUBROUTINE: CHECK IF SELECTION IS VALID
-      if(~[baseNode, focusNode, baseOffset, focusOffset].map(isNull).indexOf(true)) {
-        console.log("Cant select because null")
-        return false
-      }
-
-      if(~[baseNode,focusNode].map((x) => {
-        while(x = x.parentElement){
-          if(x==this.cardBodyDom){
-            return true
-          }
-        }
-        return false
-      }).indexOf(false)){
-        console.log("Cant select because one of the selections is outside of the card")
-        return false
-      }
-
-      //if selectionend is at begining, move back 1 node
-    //END SUBROUTINE
-
-    //SUBROUTINE ADD ANCHOR_START AND ANCHOR_END
-      var headAnchor = document.createElement("label");
-      var tailAnchor = document.createElement("label");
-      this.cardBodyDom.insertAdjacentElement('afterbegin', headAnchor);
-      this.cardBodyDom.insertAdjacentElement('beforeend', tailAnchor);
-    //end SUBROUTINE
-
-    //SUBROUTINE CORRECT DOM ERRORS
-      var [baseSpan,focusSpan]=[baseNode,focusNode].map((x) => {
-        if(x.constructor == Text){
-          return x.parentNode;
-        } else {
-          return x;
-        }
-      });
-      [baseNode,focusNode] = [baseSpan,focusSpan].map(x => {
-        return x.childNodes[0]
-      })
-      var [baseNodeIndex,focusNodeIndex] = [baseNode,focusNode].map(getIndex);
-
-
-    //END SUBROUTINE
-
-    //SUBROUTINE ASSIGN FIRST AND LAST NODE VALUES
-      var selection_is_backwards = (baseNodeIndex == focusNodeIndex)?
-        focusOffset < baseOffset:
-        focusNodeIndex < baseNodeIndex
-      var baseGroup =  [baseNode,  baseNodeIndex,  baseOffset,  baseSpan];
-      var focusGroup = [focusNode, focusNodeIndex, focusOffset, focusSpan];
-      var [
-        firstNode, firstNodeIndex,  firstOffset, firstSpan,
-        lastNode, lastNodeIndex, lastOffset, lastSpan
-      ] =
-        selection_is_backwards?
-          [
-            ...focusGroup,
-            ...baseGroup,
-          ]:[
-            ...baseGroup,
-            ...focusGroup,
-          ];
-    //END SUBROUTINE
-
-    //SUBROUTINE SPLIT LAST AND FIRST TEXT
-      lastNode.splitText( lastOffset );
-      postLastSpan = lastSpan.cloneNode(true);
-      postLastSpan.childNodes[0].remove();
-      postLastSpan = lastSpan.insertAdjacentElement("afterend",postLastSpan);
-      lastSpan.childNodes[1].remove();
-
-      firstNode .splitText( firstOffset );
-      preFirstSpan = firstSpan.cloneNode(true);
-      preFirstSpan.childNodes[1].remove();
-      preFirstSpan = firstSpan.insertAdjacentElement("beforebegin",preFirstSpan);
-      firstSpan.childNodes[0].remove();
-    //END SUBROUITNE
-
-    //SUBROUTINE CHECK FOR FIRST NON-FORMATTED DOM ELEMENT
-      var currentChild = firstSpan
-      var text_already_formated = true
-
-      while(currentChild != lastSpan) {
-        if(!styleEqual(currentChild.style,style)){
-          text_already_formated=false
-          break
-        }
-        currentChild = currentChild.nextSibling
-      }
-    //END SUBROUTINE
-
-    //SUBROUTINE FORMAT TEXT
-      if(text_already_formated && altStyle !== false) {
-        currentChild = firstSpan
-        while(currentChild != postLastSpan){
-          for (var prop in style) {
-            currentChild.style[prop]=altStyle[prop]
-          }
-          currentChild = currentChild.nextSibling
-        }
-      } else {
-        while(currentChild !== postLastSpan){
-          for (var prop in style) {
-            currentChild.style[prop]=style[prop]
-          }
-          currentChild = currentChild.nextSibling
-        }
-      }
-    //END SUBROUTINE
-
-    //SUBROUTINE MERGE SIMILAR TEXT
-      currentChild = preFirstSpan
-      while(currentChild !== postLastSpan) {
-        if(currentChild.classList == currentChild.nextSibling.classList){
-          //take the
-          currentChild.appendChild(currentChild.nextSibling.childNodes[0])
-          currentChild.normalize()
-          var breakafterthis = currentChild.nextSibling == postLastSpan
-          currentChild.nextSibling.remove()
-          if (breakafterthis){break}
-        }
-        currentChild = currentChild.nextSibling
-      }
-    //END SUBROUTINE
-
-    //SUBROUTINE CLEANING UP EMPTY ELEMENTS
-      [firstSpan,firstNode,lastSpan,lastNode,preFirstSpan,postLastSpan].forEach(x=>
-        x.textContent.length || x.remove()
-      )
-      this.blocking = false;
-      headAnchor.remove()
-      tailAnchor.remove()
-    //END SUBROUTINE
-
-    function isNull(x){
-      return (
-        x === null ||
-        x === undefined ||
-        typeof x === "undefined" ||
-        typeof x === "null"
-      )
-    }
-
-    function styleEqual(style1,style2) {
-      var styles = [
-        "fontSize",
-        "backgroundColor",
-        "fontWeight",
-        "fontStyle",
-        "textDecoration",
-        "textTransform"
-      ]
-      var result = styles.map(x=>{
-        console.log(style1);
-        return style1[x]==style2[x]
-      });
-      var index =result.indexOf(false);
-      console.log(result,style1[index]==style2[index],result[index])
-      return  !~index
-    }
-
-    function getIndex(el){
-      var parent = el
-      var child;
-      while (parent.constructor !== HTMLDivElement){
-        child = parent
-        parent = parent.parentNode
-      }
-      return  Array.prototype.indexOf.call(parent.children, child)
-    }
+  handleKey(event){
+    console.log("a key was pressed",event.key);
   }
 
   constructor(a,b,c){
@@ -248,8 +75,14 @@ export default class Card extends Component {
       this.data = this.data[index]
     }
     this.tag=this.data.title
+    this.condensed = false
 
     this.generateTextDom()
+  }
+
+  togglePilcrows(){
+    this.condensed = !this.condensed
+    this.cardBodyDom.style.whiteSpace = this.condensed? "normal":"pre-wrap"
   }
 
   get formattedYear(){
@@ -280,7 +113,7 @@ export default class Card extends Component {
   generateTextDom(){
     var str = ""
     for (var i = 0; i < this.data.text.length; i++) {
-      str+= this.data.text[i]+"¶\n"
+      str+= this.data.text[i]+"¶ \n"
     }
     this.textDOM = <span>{str}</span>
   }
@@ -325,43 +158,75 @@ export default class Card extends Component {
             <RibbonButton
               icon={<i className="fa fa-bold fa-2x" />}
               size="lg"
-              onClick={scope => this.formatText({fontWeight:"bold"},{fontWeight:"normal"})}
+              onClick={scope => document.execCommand("bold")}
             />
             <RibbonButton
               icon={<i className="fa fa-italic fa-2x"></i>}
               size="lg"
-              onClick={scope => this.formatText({fontStyle:"italic"},{fontStyle:"normal"})}
-            />
-            <RibbonButton
-              title="Emphasis"
-              size="lg"
-              onClick={scope => this.formatText({
-                fontWeight:"bold",
-                fontStyle:"normal",
-                textDecoration:"underline",
-              },false)}
+              onClick={scope => document.execCommand("italic")}
             />
             <RibbonButton
               icon={<i className="fa fa-underline fa-2x"></i>}
               size="lg"
-              onClick={scope => this.formatText({
-                textDecoration:"underline",
-                fontWeight:"normal",
-                fontStyle:"normal",
-              },false)}
+              onClick={scope => {
+                document.execCommand("underline")
+              }}
+            />
+            <RibbonButton
+              title="Underline"
+              size="lg"
+              onClick={scope => {
+                document.execCommand("removeFormat");
+                document.execCommand("underline")
+              }}
+            />
+            <RibbonButton
+              title="Emphasis"
+              size="lg"
+              onClick={scope => {
+                document.execCommand("removeFormat");
+                document.execCommand("underline");
+                document.execCommand("bold")
+              }}
+            />
+            <RibbonButton
+              title="Highlight"
+              size="lg"
+              onClick={scope => {
+                var {toString,baseOffset,focusOffset} = document.getSelection()
+                var selID = window.hash([toString,baseOffset,focusOffset]);
+                if(selID == this.selID){
+                  document.execCommand("hiliteColor",true,"white")
+                  this.selID=""
+                  return
+                }
+                document.execCommand("hiliteColor",false,"cyan")
+
+                toString=null;
+                baseOffset=null;
+                focusOffset=null;
+                var {toString,baseOffset,focusOffset} = document.getSelection()
+                selID = window.hash([toString,baseOffset,focusOffset]);
+                this.selID=selID
+              }}
             />
             <RibbonButton
               title="Clear Formatting"
               size="lg"
-              onClick={scope => this.formatText({
-                textDecoration:"normal",
-                fontWeight:"normal",
-                fontStyle:"normal",
-              },false)}
+              onClick={scope => {
+                document.execCommand("removeFormat");
+              }}
+            />
+            <RibbonButton
+              icon="¶"
+              size="lg"
+              onClick={scope => {
+                this.togglePilcrows();
+              }}
             />
           </div>
         </div>
-        <div className="cardBody" ref={self => this.cardBodyDom = self}>
+        <div className="cardBody" contentEditable={true} ref={self => this.cardBodyDom = self}>
           {this.textDOM}
         </div>
       </div>
