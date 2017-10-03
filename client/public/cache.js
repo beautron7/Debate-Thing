@@ -17,7 +17,7 @@ var self = {
 }
 
 function callMainStorage(args,callback){
-  var uniqueChannel = window.hash(new Date)
+  var uniqueChannel = window.hash([new Date,Math.random()])
   args.replyChannel=uniqueChannel
   window.electron.ipcRenderer.once("appStorage"+uniqueChannel,(event,reply)=>{
     console.log(reply)

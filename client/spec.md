@@ -58,7 +58,7 @@ folder/cards/(cardID).cardText.json
 usrSettings.json
 {
   "cardSrces":[
-    "path/to/*.cardCollection.json",
+    "path/to/folder/cardCollection.json",
     " /* etc. */ "
   ]
 }

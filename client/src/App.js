@@ -26,7 +26,9 @@ window.electron = window.electron||window.nodeRequire('electron');
 //   title:'Panasonic',
 //   keywords:['One','Five'],
 // }]
-
+Object.defineProperty(window,"qi",{
+  get:()=>(window.hash([new Date(),Math.random()]))
+})
 
 
 class App extends Component {
@@ -63,8 +65,6 @@ class App extends Component {
   }
 
   render() {
-
-
     return (
       <div className="App">
         <Tabbar

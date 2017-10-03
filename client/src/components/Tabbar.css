@@ -5,6 +5,7 @@
   padding-top: 0.2em;
   clear: both;
   -webkit-app-region: drag;
+  cursor: default;
 }
 .fa-window-thing{
   margin-top:0.25em;
@@ -15,4 +16,9 @@
   float:right;
   -webkit-app-region: no-drag;
   color:black;
+  transition: color 0.25s;
+}
+
+.fa-window-thing:hover{
+  color: #0af;
 }

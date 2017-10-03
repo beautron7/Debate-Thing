@@ -3,6 +3,7 @@
 }
 
 .app-body {
+  width: 100%;
   height: auto;
   overflow-y: hidden;
   box-orient: horizontal;
@@ -14,4 +15,71 @@
 
 html {
   height:100%;
+
 }
+
+body {
+  /*filter: blur(0.1px);*/
+}
+
+html,*, body {
+  --theme: light-dev;
+
+  --section0: red;
+  --section1: blue;
+  --section2: green;
+  --section3: white;
+
+  --accent-primary: #0AF;
+  --accent-secondary: #FB0;
+  --btn-default: rgba(0,0,0,0.0);
+  --btn-hover: gray;
+
+  --highlight: cyan;
+  --text-color: #000;
+
+  --ribbon-tab-active: var(--canvas-1);
+  --ribbon-tab-inactive: #eee;
+  --ribbon-title-bar: var(--canvas-1);
+  --ribbon-tab-active-border: black;
+
+  --canvas-scroll: #0BF;
+  --canvas-scroll-bkg: #f3f3f3;
+  --canvas-img-background: white;
+
+  --canvas-1: #ddd;
+  --canvas-2: #bbb;
+  --canvas-3: #ccc;
+  --canvas-4: #aaa;
+}
+
+/*html,*, body {
+  --theme: dark-dev;
+
+  --section0: radial-gradient(ellipse at center, rgba(0,75,120,1) 0%, rgba(0,117,170,1) 100%);;
+  --section1: radial-gradient(ellipse at center, #075 0%, #094 100%);;
+  --section2: #508;
+  --section3: black;
+
+  --accent-primary: #0AF;
+  --accent-secondary: #b80;
+  --btn-default: rgba(0,0,0,0.0);
+  --btn-hover: gray;
+
+  --highlight: cyan;
+  --text-color: #ddd;
+
+  --ribbon-tab-active: var(--canvas-1);
+  --ribbon-tab-inactive: gray;
+  --ribbon-title-bar: var(--canvas-1);
+  --ribbon-tab-active-border: black;
+
+  --canvas-scroll: #07A;
+  --canvas-scroll-bkg: #0000;
+  --canvas-img-background: gray;
+
+  --canvas-1: #004560;
+  --canvas-2: #111;
+  --canvas-3: #035;
+  --canvas-4: #911;
+}*/

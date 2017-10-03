@@ -1,25 +1,32 @@
-#editor .circle {
-  width: 1em;
-  height: 1em;
-	border-radius: 50%;
-  background-color: black;
-  margin: auto;
-}
 #editor {
   position: static;
   flex-grow: 999999999999999999999999999;
   /*width: 540%;*/
   /*order: 0;*/
-  background-color: rgba(255,0,0,0.5);
+  background: var(--section0);
   /*overflow-y: scroll;
   overflow-x: hidden;*/
+  color: var(--text-color)
 }
+
 
 #editor > .section {
   position: static;
   width:100%;
   margin:auto;
 }
+
+#editor > .section .section {
+  width:90%;
+  background: var(--section1);
+  margin:auto
+}
+
+#editor > .section .section .section{
+  background: var(--section2);
+}
+
+
 
 #editor > .section > div > .heading {
   font-size: 3em;
@@ -33,11 +40,7 @@
   text-decoration: underline;
 }
 
-#editor > .section .section {
-  width:90%;
-  background-color: #0af;
-  margin:auto
-}
+
 
 #editor > .section .section .terminator{
   width: 100%;

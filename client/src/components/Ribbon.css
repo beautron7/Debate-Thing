@@ -2,7 +2,7 @@
 .ribbon {
   height: 6em;
   /*background-color: #0af;*/
-  background-color: lightgrey;
+  background-color: var(--ribbon-title-bar);
   text-align: left;
   border-bottom-color: black;
   border-bottom-style:dotted;

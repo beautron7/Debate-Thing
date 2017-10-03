@@ -2,15 +2,25 @@
   margin: 1em;
   width: auto;
   height: 6em;
-  background-color: #AAA;
+  background-color: var(--canvas-4);
   /*overflow-y: hidden;*/
+  box-shadow: 0px 5px 15px -2px rgba(0,0,0,0.75);
+  transition: margin 0.5s;
+  color: var(--text-color)
 }
+
+.card-preview:hover{
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  /*height: 6em;*/
+}
+
 .card-preview > img {
   height: 5em;
   width: 5em;
   margin: 0.5em;
   float: left;
-  background-color: white;
+  background-color: var(--canvas-img-background);
 }
 
 .card-preview > .author {
@@ -54,7 +64,7 @@
   overflow-x: hidden;
 }
 .card-preview > .keywordContainer > .keyword {
-  background-color: #FB0;
+  background-color: var(--accent-secondary);
   border-radius: 0.6em;
   font-size: 1em;
   height: 1.2em;

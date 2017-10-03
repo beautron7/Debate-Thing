@@ -17,14 +17,20 @@
 
   -webkit-app-region: no-drag;
 
-  color: #000;
-  background-color: #eee;
+  color: var(--text-color);
+  background-color: var(--ribbon-tab-inactive);
 }
 
-.active {
-  border-color: black;
-  border-bottom-color: lightgray;
-  background-color: lightgray;
-  color: #ddd;
-  color: #000
+.tab.active {
+  background-color: var(--ribbon-tab-active);
+  border-color: var(--ribbon-tab-active-border);
+  border-bottom-color: var(--ribbon-tab-active-border);
+  color: var(--text-color);
+}
+
+
+.tab:not(.active):hover{
+  /*background-color: var (--ribbon-tab-active);*/
+  border-color: var(--ribbon-tab-active-border);
+  border-style: dashed;
 }

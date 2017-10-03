@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import CardPreview from './CardPreview'
 import './scrollbar.css'
@@ -45,7 +45,7 @@ export default class CardsFrame extends Component {
   render(){
     var data = this.data
 
-    if(data.length == 0){
+    if(data.length === 0){
       return (
         <div>Loading...</div>
       )

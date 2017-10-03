@@ -5,16 +5,22 @@
   font-size: var(--baseheight);
 
   border-style: solid;
-  border-color: rgba(0,0,0,0);
+  border-color: var(--btn-default);
+  background-color: var(--btn-default);
   margin:0em;
   user-select: none !important;
-  background-color: rgba(0,0,0,0.0)
+  color: var(--text-color);
   /*height: var(--height);*/
+  cursor: default;
 }
 
 .ribbon-button:hover {
-  border-color: gray;
-  background-color: gray;
+  border-color: var(--btn-hover);
+  background-color: var(--btn-hover);
+}
+
+.ribbon-button:active{
+  background-color: var(--btn-down);
 }
 
 .ribbon-button.lg {
@@ -49,4 +55,15 @@
 .ribbon-button.md .icon .glyphicon {
   /*font-size: var(--height)*/
   margin-top: -0.1em;
+}
+.ribbon-button.lg .icon .glyphicon {
+  font-size: var(--height);
+}
+.ribbon-button.lg .icon span {
+  font-size: var(--height);
+  overflow: clip;
+}
+.ribbon-button.lg .icon img {
+  width: var(--height);
+  height: var(--height);
 }
