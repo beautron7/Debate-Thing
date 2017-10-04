@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 // import PropTypes from 'prop-types';
 import './Ribbon.css'
 import RibbonButton from './RibbonButton.js'
-
+import ButtonGroup from './ButtonGroup.js'
+import RibbonGroup from './RibbonGroup.js'
+import Row from './Row.js'
 export default class Ribbon extends Component {
 
   constructor(a,b,c){
@@ -10,37 +12,128 @@ export default class Ribbon extends Component {
 
     Ribbon.spools = [
       <div>
-          <div className="section">
-            <RibbonButton
-              title="Open"
-              icon={<i className="glyphicon glyphicon-open-file"></i>}
-              size="md"
-            />
-            <RibbonButton
-              title="Save"
-              icon={<i className="glyphicon glyphicon-save-file"></i>}
-              size="md"
-            />
-            <RibbonButton
-              title="4"
-              icon={<i className="glyphicon glyphicon-save-file"></i>}
-              size="md"
-            />
-          <div className="terminator"></div></div>
+        <RibbonGroup title="Open">
+        </RibbonGroup>
       </div>,
       <div>
         <span>Edit</span>
       </div>,
       <div>
         <span>Settings</span>
+          <RibbonGroup title="Open">
+            <ButtonGroup>
+                <RibbonButton
+                  title="Open"
+                  icon={<i className="glyphicon glyphicon-open-file"></i>}
+                  size="md"
+                />
+                <RibbonButton
+                  title="Save"
+                  icon={<i className="glyphicon glyphicon-save-file"></i>}
+                  size="md"
+                />
+                <RibbonButton
+                  title="4"
+                  icon={<i className="glyphicon glyphicon-save-file"></i>}
+                  size="md"
+                />
+            </ButtonGroup>
+            <ButtonGroup>
+              <Row>
+                <RibbonButton
+                  title="Open"
+                  icon={<i className="glyphicon glyphicon-open-file"></i>}
+                  size="md"
+                />
+                <RibbonButton
+                  title="Save"
+                  icon={<i className="glyphicon glyphicon-save-file"></i>}
+                  size="md"
+                />
+              </Row>
+              <Row>
+                <RibbonButton
+                  title="Open"
+                  icon={<i className="glyphicon glyphicon-open-file"></i>}
+                  size="md"
+                />
+                <RibbonButton
+                  title="Save"
+                  icon={<i className="glyphicon glyphicon-save-file"></i>}
+                  size="md"
+                />
+              </Row>
+              <Row>
+                <RibbonButton
+                  title="4"
+                  icon={<i className="glyphicon glyphicon-save-file"></i>}
+                  size="md"
+                  />
+              </Row>
+            </ButtonGroup>
+            <ButtonGroup>
+              <Row>
+                <RibbonButton
+                  title="Open"
+                  icon={<i className="glyphicon glyphicon-open-file"></i>}
+                  size="md"
+                />
+                <RibbonButton
+                  title="Save"
+                  icon={<i className="glyphicon glyphicon-save-file"></i>}
+                  size="md"
+                />
+              </Row>
+              <Row>
+                <RibbonButton
+                  title="4"
+                  icon={<i className="glyphicon glyphicon-save-file"></i>}
+                  size="md"
+                  />
+              </Row>
+            </ButtonGroup>
+            <ButtonGroup>
+              <Row>
+                <RibbonButton
+                  title="Open"
+                  icon={<i className="glyphicon glyphicon-open-file"></i>}
+                  size="md"
+                />
+                <RibbonButton
+                  title="Save"
+                  icon={<i className="glyphicon glyphicon-save-file"></i>}
+                  size="md"
+                />
+              </Row>
+            </ButtonGroup>
+            <ButtonGroup>
+                <RibbonButton
+                  title="Open"
+                  icon={<i className="glyphicon glyphicon-open-file"></i>}
+                  size="md"
+                />
+                <RibbonButton
+                  title="Save"
+                  icon={<i className="glyphicon glyphicon-save-file"></i>}
+                  size="md"
+                />
+                <RibbonButton
+                  title="4"
+                  icon={<i className="glyphicon glyphicon-save-file"></i>}
+                  size="md"
+                />
+            </ButtonGroup>
+          </RibbonGroup>
       </div>,
       <div>
 
           <RibbonButton
+            icon={<i className="fa fa-search"></i>}
             onClick={x=>window.App.leftBar.toggleVis()}
             title="Nav"
           />
-        <RibbonButton
+          <RibbonButton
+            icon={<i className="glyphicon glyphicon-book"></i>}
             onClick={x=>window.App.rightBar.toggleVis()}
             title="Research"
           />

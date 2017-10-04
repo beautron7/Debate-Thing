@@ -58,9 +58,24 @@ export default class Card extends Component {
     }
   }
 
+  clearFormattingKeepHighlight(){
+    document.execCommand("bold")
+    document.execCommand("underline")
+    document.execCommand("italic")
+    if(document.queryCommandState("bold")){
+      document.execCommand("bold")
+    }
+    if(document.queryCommandState("underline")){
+      document.execCommand("underline")
+    }
+    if(document.queryCommandState("italic")){
+      document.execCommand("italic")
+    }
+  }
+
   handleKey(event){
     var {key, ctrlKey} = event
-    console.log("a key was pressed",key);
+    console.log("a key was pressed",key,event);
 
     var allowKey = 0;
     allowKey += //if the following is true, or if allowKey is true, then allowKey is true
@@ -83,8 +98,18 @@ export default class Card extends Component {
       )
     if(allowKey){return}
 
-    if(key === "F9" || key === "F10" || key === "F11" || key === "F12"){
+    if(key==="F9" || key === "F10" || key ==="F12"){//formatters
+      this.clearFormattingKeepHighlight()
+      if(key == "F9" || key === "F10"){//Formatters that underline
+        document.execCommand("underline")
+      }
+      if (key === "F10"){//formatters that bold
+        document.execCommand("bold")
+      }
       return
+    } else if (key === "F11") {
+      event.preventDefault()
+      this.highlight()
     }
 
     event.preventDefault()
@@ -164,6 +189,20 @@ export default class Card extends Component {
     }
   }
 
+  highlight(){
+    var $$$ = document.getSelection()
+    var selID = window.hash([$$$.toString,$$$.baseOffset,$$$.focusOffset]);
+    if(selID === this.selID){
+      document.execCommand("hiliteColor",true,"rgba(0,0,0,0)")
+      this.selID=""
+      return
+    }
+    document.execCommand("hiliteColor",false,"cyan")
+
+    selID = window.hash([$$$.toString,$$$.baseOffset,$$$.focusOffset]);
+    this.selID=selID
+  }
+
   render(){
 
     this.animate_open()
@@ -212,7 +251,7 @@ export default class Card extends Component {
               title="Underline"
               size="lg"
               onClick={scope => {
-                document.execCommand("removeFormat");
+                this.clearFormattingKeepHighlight();
                 document.execCommand("underline")
               }}
             />
@@ -220,34 +259,34 @@ export default class Card extends Component {
               title="Emphasis"
               size="lg"
               onClick={scope => {
-                document.execCommand("removeFormat");
+                this.clearFormattingKeepHighlight();
                 document.execCommand("underline");
                 document.execCommand("bold")
               }}
             />
             <RibbonButton
+              size="lg"
+              icon={<i className="glyphicon glyphicon-text-size"></i>}
+            />
+            <RibbonButton
               icon={<img style={{filter:"brightness(0)"}} alt="hilite" src="img/hilite.ico"></img>}
               size="lg"
-              onClick={scope => {
-                var $$$ = document.getSelection()
-                var selID = window.hash([$$$.toString,$$$.baseOffset,$$$.focusOffset]);
-                if(selID === this.selID){
-                  document.execCommand("hiliteColor",true,"rgba(0,0,0,0)")
-                  this.selID=""
-                  return
-                }
-                document.execCommand("hiliteColor",false,"cyan")
-
-                selID = window.hash([$$$.toString,$$$.baseOffset,$$$.focusOffset]);
-                this.selID=selID
-              }}
+              onClick={scope=>this.highlight()}
             />
             <RibbonButton
               icon={<i className="glyphicon glyphicon-erase"></i>}
               tooltip="Clear Formatting"
               size="lg"
               onClick={scope => {
-                document.execCommand("removeFormat");
+                this.clearFormattingKeepHighlight();
+              }}
+            />
+            <RibbonButton
+              icon={<span>¶</span>}
+              tooltip="Toggle condensed text mode"
+              size="lg"
+              onClick={scope => {
+                this.togglePilcrows();
               }}
             />
             <RibbonButton

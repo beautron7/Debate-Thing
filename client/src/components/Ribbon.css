@@ -8,23 +8,3 @@
   border-bottom-style:dotted;
   border-bottom-width: 0.1em;
 }
-
-.ribbon > div > div.section div.terminator{
-  height: 100%
-}
-.ribbon > div > div.section {
-  display: flex;
-  align-content: space-between;
-  flex-wrap: wrap;
-  flex-direction: column;
-  max-width: 10em;
-  width: auto;;
-  height: 6em;
-  padding-left: 0.25em;
-  padding-right: 0.25em;
-  border-style: solid;
-  border-color: #777;
-  border-top-width: 0;
-  border-left-width:0;
-  border-bottom-width:0;
-}
