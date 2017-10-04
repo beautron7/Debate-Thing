@@ -12,7 +12,53 @@ export default class Ribbon extends Component {
 
     Ribbon.spools = [
       <div>
-        <RibbonGroup title="Open">
+        <RibbonGroup title="Files">
+              <ButtonGroup>
+                <RibbonButton
+                  title="Open file"
+                  icon={<i className="glyphicon glyphicon-open-file"></i>}
+                  size="md"
+                />
+                <RibbonButton
+                  title="Open from USB"
+                  icon={<i className="fa fa-usb"></i>}
+                  size="md"
+                />
+              <RibbonButton
+                title="Open from box"
+                icon={<i className="fa fa-cloud-download"></i>}
+                size="md"
+                />
+            </ButtonGroup>
+            <ButtonGroup>
+                <RibbonButton
+                  title="Save File"
+                  icon={<i className="glyphicon glyphicon-save-file"></i>}
+                  size="md"
+                />
+                <RibbonButton
+                  title="Save To USB"
+                  icon={<i className="fa fa-usb"></i>}
+                  size="md"
+                />
+              <RibbonButton
+                title="Upload to box"
+                icon={<i className="fa fa-cloud-upload"></i>}
+                size="md"
+                />
+            </ButtonGroup>
+            <ButtonGroup>
+              <RibbonButton
+                title="Set up round"
+                icon={<i className="fa fa-wrench"></i>}
+                size="md"
+              />
+              <RibbonButton
+                title="Change ID"
+                icon={<i className="fa fa-user"></i>}
+                size="md"
+              />
+          </ButtonGroup>
         </RibbonGroup>
       </div>,
       <div>
