@@ -9,17 +9,16 @@ export default class CardsFrame extends Component {
   constructor(a,b,c){
     super(a,b,c)
     this.data = []
-    window.appStorage.getRecentCards(10).then((simpleData)=>{
-      this.newData(simpleData,0)
+    window.appStorage.getRecentCards(10).then((cardRefs)=>{
+      this.updateData(cardRefs,0)
     })
   }
 
-  newData(simpleData,delay){
-    console.log(simpleData)
+  updateData(simpleData,delay){
     delay = delay | 0
     /* Delay is here to stop queries from being fired on every single word.
-     * if newData is called less than (delay) secs milliseconds after
-     * a previous newData call, then the old newData call is canceled.
+     * if updateData is called less than (delay) secs milliseconds after
+     * a previous updateData call, then the old updateData call is canceled.
      */
     clearTimeout(this.dataPID);
     this.dataPID = setTimeout(()=>{
@@ -35,7 +34,6 @@ export default class CardsFrame extends Component {
       }
       Promise.all(promises)
         .then((cards)=>{
-          console.log(cards)
           this.data=cards
           this.forceUpdate()
         },delay)
@@ -44,7 +42,7 @@ export default class CardsFrame extends Component {
 
   render(){
     var data = this.data
-
+    // console.log(this.data)
     if(data.length === 0){
       return (
         <div>Loading...</div>
@@ -59,6 +57,7 @@ export default class CardsFrame extends Component {
 
     const cardCollection = data.map((card, index) =>
       (<CardPreview
+        collectionID={card.collectionID}
         ID={card.ID}
         key={card.ID}
         img={card.image}

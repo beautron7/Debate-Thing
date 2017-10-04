@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import './Card.css'
 import './slideOpen.css'
 import RibbonButton from './RibbonButton'
@@ -48,19 +49,56 @@ export default class Card extends Component {
       this.mode="edit"
       this.dom.children[0].children[2].style.height="2.75em"
       this.cardBodyDom.contentEditable = true;
-      this.cardBodyDom.addEventListener("keypress",this.handleKey)
       this.forceUpdate()
     } else {
       this.mode="view"
       this.dom.children[0].children[2].style.height="0"
       this.cardBodyDom.contentEditable = false;
-      this.cardBodyDom.removeEventListener("keypress",this.handleKey)
       this.forceUpdate()
     }
   }
 
   handleKey(event){
-    console.log("a key was pressed",event.key);
+    var {key, ctrlKey} = event
+    console.log("a key was pressed",key);
+
+    var allowKey = 0;
+    allowKey += //if the following is true, or if allowKey is true, then allowKey is true
+      ["Up","Right","Left","Down"]
+        .map(x=>"Arrow"+x)
+        .indexOf(key) !== -1;
+
+    allowKey += //if the following is true, or if allowKey is true, then allowKey is true
+      ctrlKey && (
+        key === "c" ||
+
+        key === "b" ||
+        key === "u" ||
+        key === "i" ||
+
+        key === "w" ||
+        key === "p" ||
+
+        key === "z"
+      )
+    if(allowKey){return}
+
+    if(key === "F9" || key === "F10" || key === "F11" || key === "F12"){
+      return
+    }
+
+    event.preventDefault()
+    if(key === "Enter"){//mark the card xx
+      var prev_mark = this.cardBodyDom.querySelector('.card-marker')
+      prev_mark && prev_mark.remove()
+      var sel, range;
+      sel = window.getSelection();
+      range = sel.getRangeAt(0);
+      var el = document.createElement("div")
+      el.classList.add("card-marker")
+      el.textContent=""
+      range.insertNode(el);
+    }
   }
 
   constructor(a,b,c){
@@ -188,7 +226,7 @@ export default class Card extends Component {
               }}
             />
             <RibbonButton
-              icon={<img style={{filter:"brightness(0)"}}src="img/hilite.ico"></img>}
+              icon={<img style={{filter:"brightness(0)"}} alt="hilite" src="img/hilite.ico"></img>}
               size="lg"
               onClick={scope => {
                 var $$$ = document.getSelection()
@@ -222,10 +260,21 @@ export default class Card extends Component {
             />
           </div>
         </div>
-        <div className="cardBody" contentEditable={true} ref={self => this.cardBodyDom = self}>
-          {this.textDOM}
+        <div
+          className="cardBody"
+          onPaste={x=>x.preventDefault()}
+          onCut={x=>x.preventDefault()}
+          onDrop={x=>x.preventDefault()}
+          contentEditable={true}
+          ref={self => this.cardBodyDom = self}
+        >
         </div>
       </div>
     )
+  }
+  componentDidMount(){
+    ReactDOM.render(this.textDOM,this.cardBodyDom)
+    this.cardBodyDom.addEventListener("keypress",scope=>this.handleKey(scope))
+    this.cardBodyDom.addEventListener("keydown",scope=>this.handleKey(scope))
   }
 }

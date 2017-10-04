@@ -17,7 +17,6 @@ export default class Circle extends Component {
     if (self.domCtxReady){return true}
     try {
       self.dataContainer = window.App.editor.data
-      console.log(window.App.editor.primarySection,self.props.path)
       self.parentReactElement = window.App.editor.primarySection //used to forceUpdate
       for (var i = 0; i < self.props.path.length-1; i++) {//stop before the final point so splicing can occour.
         var index = self.props.path[i]
@@ -51,7 +50,6 @@ export default class Circle extends Component {
       window.appStorage.getCard(cardInfo.cardID,cardInfo.collectionID).then(function (card) {
         card.tag = card.tag? card.tag:card.title
         self.dataContainer.splice(self.insertToIndex,0,card)
-        console.log(self)
         self.parentReactElement.forceUpdate()
       });
     }

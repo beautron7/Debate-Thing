@@ -19,7 +19,7 @@ function Loader(name,path,defaultdata) {
 }
 
 class Card {
-  constructor(data,path) {
+  constructor(data,path,collectionID) {
     this.ID = data.ID;
     this.title = data.title;
     this.dateCaught = new Date(data.dateCaught);
@@ -27,7 +27,7 @@ class Card {
     this.author = data.author;
     this.url = data.url;
     this.keywords = data.keywords;
-    this.dbSignature = data.dbSignature;
+    this.collectionID = collectionID;
     this.quals = data.quals;
     this.path=path
   }
@@ -97,7 +97,7 @@ class CardCollection {
     }
 
     for (var i = 0; i < data.cards.length; i++) {
-      this.cards[i] = new Card(data.cards[i],this.path)
+      this.cards[i] = new Card(data.cards[i],this.path,this.collectionID)
     }
   }
 

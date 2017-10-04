@@ -12,6 +12,21 @@
   /*To allow for sticky*/
 }
 
+
+.card .card-marker:before{
+  display:inline;
+  content: "MARK";
+  background-color: #0af;
+  text-color:white;
+  border-radius:1em;
+  padding-left:0.25em;
+  padding-right:0.25em;
+}
+
+.card .card-marker{
+  display:inline;
+}
+
 .card ::selection {
   background: rgba(0,0,0,0.2); /* WebKit/Blink Browsers */
 }
@@ -24,6 +39,28 @@
   position: sticky;
   top:0em;
 }
+
+.card > .cardHead > .cardHeadLower > .cardAuthor::-webkit-scrollbar
+{
+  background-color: rgba(0,0,0,0.1);
+  border-radius: 1em;
+}
+
+
+.card > .cardHead > .cardHeadLower > .cardAuthor::-webkit-scrollbar-thumb
+{
+  background-color: rgba(0,0,0,0.4);
+  border-radius: 1em;
+}
+
+.card > .cardHead > .cardHeadLower > .cardAuthor::-webkit-scrollbar-thumb:hover
+{
+  background-color: rgba(0,0,0,0.6);
+}
+.card > .cardHead > .cardHeadLower > .cardAuthor::-webkit-scrollbar-thumb:active{
+  background-color: rgba(0,0,0,0.8);
+}
+
 
 .card > .cardHead > .cardHeadUpper {
   min-width: 100%;
@@ -74,6 +111,12 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+
+  max-width: calc(100% - 8em);
+  /*overflow-x: scroll;*/
+  overflow-y: hidden;
+  height: 32px;
+  white-space: nowrap;
 }
 
 .card > .cardHead > .cardHeadLower > .cardButtons{
