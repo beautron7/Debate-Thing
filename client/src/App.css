@@ -34,6 +34,7 @@ html,*, body {
   --accent-secondary: #FB0;
   --btn-default: rgba(0,0,0,0.0);
   --btn-hover: gray;
+  --btn-down: lightgray;
 
   --highlight: cyan;
   --text-color: #000;

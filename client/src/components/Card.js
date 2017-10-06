@@ -289,14 +289,6 @@ export default class Card extends Component {
                 this.togglePilcrows();
               }}
             />
-            <RibbonButton
-              icon={<span>¶</span>}
-              tooltip="Toggle condensed text mode"
-              size="lg"
-              onClick={scope => {
-                this.togglePilcrows();
-              }}
-            />
           </div>
         </div>
         <div

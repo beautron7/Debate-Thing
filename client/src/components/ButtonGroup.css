@@ -36,8 +36,6 @@ div.ribbon-group > div.top > div.button-group {
   height: 5em;
   padding-left: 0.25em;
   padding-right: 0.25em;
-
-
 }
 
 
@@ -45,7 +43,7 @@ div.ribbon-group > div.top > div.button-group > div.row {
   display: inline;
   margin: 0;
 }
-
+/*
 div.ribbon-group > div.top > div.button-group > div.row > .ribbon-button{
   display: inline;
-}
+}*/

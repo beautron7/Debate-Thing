@@ -1,0 +1,66 @@
+.modal-back {
+  position: fixed;
+  top:0px;
+  right: 0px;
+  left:0px;
+  bottom:0px;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 100;
+  visibility: visible;
+  display: block;
+}
+
+.modal-back .modal-title {
+  /*margin: 0.5em;*/
+  padding-left:0.25em;
+  vertical-align:middle;
+  position: absolute;
+  /*top:7em;*/
+  left: 23%;
+  right: 23%;
+  top: 112px;
+  height: 48px;
+  background-color: darkred;
+  color:White;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+.modal-back .modal-title span {
+  font-size: 32px;
+}
+
+.modal-back .modal-title i.fa-times {
+  position: fixed;
+  right: calc(23% + 13px);
+  top: 122px;
+  font-size: 1.5em;
+}
+
+.modal-back .modal-title i.fa-times:hover {
+  color: var(--btn-hover);
+}
+.modal-back .modal-title i.fa-times:active {
+  color: inherit;
+}
+
+.modal-back .modal-body {
+  /*margin: 0.5em;*/
+  padding-left:0.25em;
+  vertical-align: center;
+  position: absolute;
+  /*top:7em;*/
+  left: 23%;
+  right: 23%;
+  top: 160px;
+  height: auto;
+  background-color: white;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.modal-back .modal-body .HalfButton{
+  margin-left: calc(100% / 24);
+  margin-right: calc(100% / 24);
+  margin-bottom: 10px;
+  text-align: center;
+}

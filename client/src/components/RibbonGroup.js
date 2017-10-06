@@ -14,7 +14,7 @@ export default class RibbonGroup extends Component {
         <div className="top">
           {children}
           <div className="bottom">
-            {title}
+            <b><u>{title}</u></b>
           </div>
         </div>
       </div>
