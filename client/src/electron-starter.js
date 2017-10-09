@@ -48,7 +48,7 @@ function createAnImporterWindow(){
       slashes: true
     });
 
-  console.log(startUrl)
+  console.log("Start url: ",startUrl)
   theWindow.loadURL(startUrl);
 
   theWindow.on('closed', function () {

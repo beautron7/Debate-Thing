@@ -34,7 +34,7 @@ export default class Tabbar extends Component {
 
     const {updateGUI} = window.App
 
-    const tabs = ['File','Edit','Settings','View'].map((x,i)=>(
+    const tabs = ['File','Editing','Settings','View'].map((x,i)=>(
       <Tab
         active={this.paneNumber===i}
         name={x}

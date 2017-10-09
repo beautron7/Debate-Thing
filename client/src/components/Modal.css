@@ -24,6 +24,7 @@
   color:White;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  -webkit-app-region: drag;
 }
 .modal-back .modal-title span {
   font-size: 32px;
@@ -44,6 +45,9 @@
 }
 
 .modal-back .modal-body {
+  -webkit-transform: translate3d(0, 0, 0);/* HACK: fixes laggy scrolling*/
+  -webkit-backface-visibility: hidden; /* HACK: fixes laggy scrolling */
+  -webkit-perspective: 1000;/* HACK: fixes laggy scrolling */
   /*margin: 0.5em;*/
   padding-left:0.25em;
   vertical-align: center;
@@ -53,10 +57,27 @@
   right: 23%;
   top: 160px;
   height: auto;
+  max-height: calc(100% - 200px);
+  overflow-y: scroll;
   background-color: white;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
+
+.modal-back .modal-body::-webkit-scrollbar
+{
+  border-radius: 8px;
+	width: 12px;
+	background-color: var(--canvas-scroll-bkg);
+}
+
+.modal-back .modal-body::-webkit-scrollbar-thumb
+{
+	border-radius: 8px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: var(--canvas-scroll);
+}
+
 
 .modal-back .modal-body .HalfButton{
   margin-left: calc(100% / 24);

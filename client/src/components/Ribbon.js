@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 // import PropTypes from 'prop-types';
+import Modals from '../modals/AllModals'
 import Modal from './Modal'
 import './Ribbon.css'
 import RibbonButton from './RibbonButton'
 import ButtonGroup from './ButtonGroup'
 import RibbonGroup from './RibbonGroup'
 import Row from './Row'
-export default class Ribbon extends Component {
 
+window.Modals = Modals
+export default class Ribbon extends Component {
   constructor(a,b,c){
     super(a,b,c)
 
@@ -172,6 +174,26 @@ export default class Ribbon extends Component {
             <RibbonButton
               title="Shrink/Grow Text"
               icon={<i className="glyphicon glyphicon-text-size"></i>}
+            />
+          </ButtonGroup>
+        </RibbonGroup>
+        <RibbonGroup title="Research">
+          <ButtonGroup>
+            <RibbonButton
+              title="Add Card"
+              icon={<i className="fa fa-file-text-o"></i>}
+              size="md"
+              onClick={Modals["newCard"]}
+            />
+            <RibbonButton
+              title="Open Database"
+              icon={<i className="glyphicon glyphicon-open-file"></i>}
+              size="md"
+            />
+            <RibbonButton
+              title="New Database"
+              icon={<i className="glyphicon glyphicon-save-file"></i>}
+              size="md"
             />
           </ButtonGroup>
         </RibbonGroup>
