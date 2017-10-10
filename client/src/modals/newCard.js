@@ -1,140 +1,30 @@
 import Modal from '../components/Modal'
-import React from 'react'
-
-function openDB(){
-  var remote = electron.remote;
-  var path = remote.dialog.showOpenDialog({
-    properties: ['openDirectory']
-  })[0];
-  document.forms.default["newDBpath"].value=path[0]
-  window.appStorage.openDB(path)
-    .then(database_picker.update)
-    .error(function () {console.error("Couldn't open the database")});
-}
-
-var database_picker = {
-  labels:[],
-  hashes:[],
-  selected:-1,
-
-  async update(){
-    database_picker.labels = [];
-    database_picker.hashes = [];
-    var data = await window.appStorage.DBlist;
-    console.log(data)
-    
-    for (var i = 0; i < data.length; i++) {
-      database_picker.labels[i]=data[i].collectionName
-      database_picker.hashes[i]=data[i].collectionID
-    }
-
-    var buttons = database_picker.labels.slice().reverse().map((x,i)=>(
-      <li><a href="javascript:database_picker.select(${i})">{x}</a></li>
-    ))
-
-    ReactDOM.render(
-      <div>
-        {buttons}
-        <li role="separator" className="divider" />
-        <li>
-          <button>
-            <i className="glyphicon glyphicon-open" /> Open Pre-Existing Database
-            </button>
-          </li>
-          <li>
-            <button>
-              <i className="glyphicon glyphicon-save" /> Create New Database
-              </button>
-            </li>
-          </div>
-          ,database_picker.items_dom
-        )
-
-  },
-
-  select(i){
-    database_picker.button_text.html(database_picker.labels[database_picker.labels.length-1-i])
-    document.forms.default["database"].value=i
-  },
-
-  submitForm(){
-    var database= database_picker.hashes[
-      (database_picker.labels.length - 1) -
-      database_picker.form["database"].value
-    ]
-    var data = {
-      author: database_picker.form["author"].value,
-      datePublished: new Date(database_picker.form.year.value,database_picker.form.month.selectedIndex-1,database_picker.form.day.value),
-      dateCaught: new Date(),
-      text: database_picker.form["fulltext"].value.split(/\n+/),
-      title: database_picker.form["title"].value,
-      url: database_picker.form["url"].value,
-      keywords: database_picker.form["keywords"].value.split(/\s*,\s*/),
-      quals: database_picker.form["quals"].value,
-    }
-    if(database===""){
-      database_picker.form["submit-btn"].innerHTML = ("Please choose a database");
-      return
-    }
-    for (var thing in data) {
-      if (data.hasOwnProperty(thing)) {
-        if (data[thing] === ""){
-          database_picker.form["submit-btn"].innerHTML = ("Please enter a(n) "+thing)
-          setTimeout(()=>{
-            database_picker.form["submit-btn"].innerHTML = ("Add Card")
-          },3000)
-          return
-        }
-      }
-    }
-    appStorage.addCard(data,database)
-  }
-}
+import React, {Component} from 'react'
+import ReactDOM from 'react-dom'
+import Async from '../components/Async'
 
 export default function newCard(){
   new Modal("New Card",
-    <form
-      ref={x=>{database_picker.form=x}}
-      className="X"
-      action="#"
-    >
-      <span className="h1">
-        Add a card
-      </span>
+    <form className="X" action="#">
+      <span className="h1">Add a card</span>
       <br />
       <br />
       <div className="form-group">
-        <label>
-          Select database:
-        </label>
-        <div
-          ref={x=>database_picker.dom=x}
-          className="database-dropdown dropdown"
-        >
+        <label>Select database:</label>
+        <div className="database-dropdown dropdown">
           <div className="input-group">
-            <button
-              className="btn btn-default dropdown-toggle"
-              ref={x=>database_picker.button_dom=x}
-              type="button"
-              id="dropdownMenu1"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <span
-                ref={x=>database_picker.button_text=x}
-                className="text"
-              >
-                Select Database
-              </span>
-              <span className="caret" />
+            <button className="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+              <span className="text">Select Database</span>
+              <span className="caret"></span>
             </button>
-            <ul
-              ref={x=>database_picker.items_dom=x}
-              className="dropdown-menu database-dropdown-menu"
-              aria-labelledby="dropdownMenu"
-            >
-
+            <ul className="dropdown-menu" aria-labelledby="dropdownMenu">
+              <Async
+                promise={new Promise(()=>{})}
+                pending={<li><i className="fa fa-spinner fa-pulse fa-fw"></i></li>}
+              />
+              <li role="separator" className="divider"></li>
+              <li><a href="#" onclick="openDB()"><i className="glyphicon glyphicon-open"></i> Open Pre-Existing Database</a></li>
+              <li><a href="#" onclick="newDB.show()"><i className="glyphicon glyphicon-save"></i> Create New Database</a></li>
             </ul>
           </div>
         </div>
@@ -142,7 +32,7 @@ export default function newCard(){
       <input
         type="hidden"
         name="database"
-        defaultValue
+        defaultValue=""
       />
       <br />
       <div
@@ -235,11 +125,12 @@ export default function newCard(){
         type="button"
         name="submit-btn"
         className="btn btn-primary btn-block"
-        onClick={database_picker.submitForm}
       >
         Add Card
       </button>
     </form>
   )
-  database_picker.update()
+  // database_picker.update()
 }
+
+// window.database_picker=database_picker

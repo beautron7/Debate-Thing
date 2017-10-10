@@ -7,6 +7,15 @@ import 'font-awesome/css/font-awesome.css'
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
+import Modal from './components/Modal'
 
-ReactDOM.render(<App />, document.getElementsByClassName('viewport')[0]);
+ReactDOM.render(
+  <Modal.Dropdown
+    items={["Item 1","Item 2","Item 3"]}
+  >
+    Hello!  
+  </Modal.Dropdown>
+,
+document.getElementsByClassName('viewport')[0]);
+
 registerServiceWorker();

@@ -77,7 +77,6 @@ export default class Section extends Component {
               :<Card
                 path={path.concat(...[i+1])}
                 ref={self=>this.children[i+1]=self}
-                iiiiidata={x}
               />
           }
           <Circle

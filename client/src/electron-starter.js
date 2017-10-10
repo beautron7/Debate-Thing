@@ -76,6 +76,11 @@ function createAnEditorWindow () {
     slashes: true
   });
 
+  // react devtools:
+  BrowserWindow.addDevToolsExtension(
+    'C:\\Users\\Beautron7\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\2.5.2_0'
+  );
+
   theWindow.loadURL(startUrl);
 
   theWindow.on('closed', function () {
