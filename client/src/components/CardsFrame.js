@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import CardPreview from './CardPreview'
 import './scrollbar.css'
 import './CardsFrame.css'
+import Async from './Async.js'
 
 export default class CardsFrame extends Component {
   constructor(a,b,c){
@@ -15,34 +16,29 @@ export default class CardsFrame extends Component {
   }
 
   updateData(simpleData,delay){
-    delay = delay | 0
+    delay = delay | 500
     /* Delay is here to stop queries from being fired on every single word.
      * if updateData is called less than (delay) secs milliseconds after
      * a previous updateData call, then the old updateData call is canceled.
      */
     clearTimeout(this.dataPID);
     this.dataPID = setTimeout(()=>{
-      var promises = []
+      this.data = []
       for (var i = 0; i < simpleData.length; i++) {
         if(simpleData[i].ID){
-          promises[i] = window.appStorage.getCard(
+          this.data[i] = window.appStorage.getCard(
             simpleData[i].ID,
             simpleData[i].collectionID,
             true //Just metadata
           );
         }
       }
-      Promise.all(promises)
-        .then((cards)=>{
-          this.data=cards
-          this.forceUpdate()
-        },delay)
-    })
+      this.forceUpdate();
+    },delay)
   }
 
   render(){
     var data = this.data
-    // console.log(this.data)
     if(data.length === 0){
       return (
         <div>Loading...</div>
@@ -55,28 +51,40 @@ export default class CardsFrame extends Component {
       return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
     }
 
-    const cardCollection = data.map((card, index) =>
-      (<CardPreview
-        collectionID={card.collectionID}
-        ID={card.ID}
-        key={card.ID}
-        img={card.image}
-        title={card.title || "(No title)"}
-        author={
-          (
-            card.author ||
-            "(No author)"
-          ) + " " + pad (
-            (
-              (new Date(card.datePublished))
-                .getFullYear() % 100
-            ),
-            2
-          )
-        }
-        keywords={card.keywords}
-        url={card.url}
-      />)
+    function authorString(card){
+      return (
+        card.author ||
+        "(No author)"
+      ) + " " + pad (
+        (
+          (new Date(card.datePublished))
+            .getFullYear() % 100
+        ),
+        2
+      )
+    }
+
+    const cardCollection = data.map((promised_card, index) =>
+      (
+        <Async
+          promise={promised_card}
+          resolved={card=>(
+            <CardPreview
+              collectionID={card.collectionID}
+              ID={card.ID}
+              key={card.ID}
+              img={card.image}
+              title={card.title || "(No title)"}
+              author={authorString(card)}
+              keywords={card.keywords}
+              url={card.url}
+            />
+          )}
+        >
+          <CardPreview/>
+        </Async>
+
+      )
     );
 
     return (

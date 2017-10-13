@@ -11,23 +11,17 @@ export default function newCard(){
       <br />
       <div className="form-group">
         <label>Select database:</label>
-        <div className="database-dropdown dropdown">
-          <div className="input-group">
-            <button className="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-              <span className="text">Select Database</span>
-              <span className="caret"></span>
-            </button>
-            <ul className="dropdown-menu" aria-labelledby="dropdownMenu">
-              <Async
-                promise={new Promise(()=>{})}
-                pending={<li><i className="fa fa-spinner fa-pulse fa-fw"></i></li>}
-              />
-              <li role="separator" className="divider"></li>
-              <li><a href="#" onclick="openDB()"><i className="glyphicon glyphicon-open"></i> Open Pre-Existing Database</a></li>
-              <li><a href="#" onclick="newDB.show()"><i className="glyphicon glyphicon-save"></i> Create New Database</a></li>
-            </ul>
-          </div>
-        </div>
+        <Async
+          promise={window.appStorage.DBlist}
+          resolved={x=> 
+            <Modal.Picker
+              items={x.map(x=>x.collectionName)}
+            >
+              Select Database
+            </Modal.Picker>
+          }
+          pending={<i className="fa fa-spinner fa-pulse"></i>}
+        />
       </div>
       <input
         type="hidden"

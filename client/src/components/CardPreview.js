@@ -11,6 +11,15 @@ export default class CardPreview extends Component {
     keywords: PropTypes.arrayOf(PropTypes.string).isRequired,
   }
 
+  static TextPane = class TextPane extends Component {
+    render() {
+      return <div className="text-pane">
+        <div className="tri"></div>
+        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.</div>
+      </div>
+    }
+  }
+
   render(){
     const {
       img,
@@ -47,6 +56,7 @@ export default class CardPreview extends Component {
         <div className="author" draggable="false"><span>{author}</span></div>
         <div className="title" draggable="false"><span>{title}</span></div>
         <div className="keywordContainer" draggable="false">{keywordNodes}</div>
+        <CardPreview.TextPane/>
       </div>
     )
   }

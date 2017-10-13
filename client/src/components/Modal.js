@@ -67,7 +67,6 @@ Modal.Dropdown = class Dropdown extends Component{
   }
 
   render(){
-    var btn = this.props.children
     var items = this.props.items.map((x,i)=>(<li key={i}>{x}</li>))
     return (
       <div
@@ -77,7 +76,7 @@ Modal.Dropdown = class Dropdown extends Component{
           className="dropdown-btn"
           onClick={scope => this.toggle()}
         >
-          {btn}
+          {this.props.children}
         </div>
         <ul
           onClick={scope => this.hide()}
@@ -96,6 +95,56 @@ Modal.Dropdown = class Dropdown extends Component{
     this.forceUpdate()
   }
   hide(){
-    if(this.visibility){console.log("HEY");this.toggle()}
+    if(this.visibility){this.toggle()}
+  }
+}
+
+Modal.Picker = class Picker extends Modal.Dropdown {
+  constructor(...args){
+    super(...args);
+    this.selection=-1
+  }
+
+  render(){
+    var items = this.props.items.map((x,i)=>(
+      <li
+        key={i}
+        onClick={scope=>this.select(i)}
+      >{x}</li>
+     ))
+
+    return(
+      <div
+      className = "dropdown"
+      >
+        <div
+          className="dropdown-btn"
+          onClick={scope => this.toggle()}
+        >
+          {this.selection==-1?
+            <div>
+              {this.props.children}
+              <span className="caret"></span>
+            </div>:
+            this.props.items[this.selection]
+          }
+      </div>
+        <ul
+          onClick={scope => this.hide()}
+          style={{
+            visibility: this.visibility ?
+              "visible" : "hidden"
+          }}
+        >
+          {items}
+        </ul>
+      </div>
+    )
+  }
+
+  select(x){
+    if(0 <= x && x < this.props.items.length){
+      this.selection = x
+    }
   }
 }

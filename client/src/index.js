@@ -10,11 +10,7 @@ import registerServiceWorker from './registerServiceWorker';
 import Modal from './components/Modal'
 
 ReactDOM.render(
-  <Modal.Dropdown
-    items={["Item 1","Item 2","Item 3"]}
-  >
-    Hello!  
-  </Modal.Dropdown>
+  <App />
 ,
 document.getElementsByClassName('viewport')[0]);
 
