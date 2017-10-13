@@ -74,9 +74,43 @@
   padding-left: 0.5em;
   padding-right: 0.5em;
 }
+
 .card-preview > .url {
   visibility: hidden;
 }
+
+/*TEXTPANE*/
+.card-preview > .text-pane{
+  visibility: hidden;
+}
+
+.card-preview:hover > .text-pane {
+  visibility: visible;
+}
+.card-preview:active > .text-pane {
+  visibility: hidden;
+}
+
+.card-preview > .text-pane > .fake-body{
+  position: fixed;
+  overflow: hidden;
+  transform: translateY(calc(-50% - 2.75em)) translateX(-50.5em);   
+  width: 50em;
+  z-index: 1;
+  background: var(--accent-secondary);
+  height:35em;
+  
+}
+
+
+.card-preview > .text-pane > .fake-body > .body{
+  position: sticky; 
+  width: 100%;
+  height: 35em;
+  overflow-y: scroll; 
+  background: var(--accent-primary)
+}
+
 .card-preview > .text-pane > .tri{
   position: fixed;
   transform: translateY(-3.5em) translateX(-.5em);
