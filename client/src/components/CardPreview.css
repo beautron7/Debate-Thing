@@ -83,23 +83,23 @@
 
 
 /*TEXTPANE*/
-.card-preview > .text-pane{
-  visibility: hidden;
+.card-preview >        .text-pane {visibility: hidden;}
+.card-preview:hover >  .text-pane {visibility: visible;}
+.card-preview:active > .text-pane {visibility: hidden;}
 
+.card-preview{
+  --right:23%;
 }
 
-.card-preview:hover > .text-pane {
-  visibility: visible;
-}
-.card-preview:active > .text-pane {
-  visibility: hidden;
-}
+@media all and (max-width: 900px) {.card-preview{
+  --right:15em !important;
+}}
 
 .card-preview > .text-pane > .tri{
   position: fixed;
-  transform: translateY(-3.5em) translateX(-.5em);
+  transform: translateY(-3.5em);
+  right: calc(var(--right) - 0.75em);
   z-index: 1;
-
   width: 0;
   height: 0;
   border-style: solid;
@@ -108,34 +108,44 @@
 }
 
 .card-preview > .text-pane > .fake-body  {
-  border-style: solid;  
+  border-style: solid;    
   border-width:0em 1em 0em 0em;  
-  border-color: transparent;
+  border-color: rgba(0,0,0,0); 
+  background-clip: content-box;
   transform: translateX(1em);
-
-   --width: 10em;
   position: fixed;
-  overflow: hidden;
+  /* overflow: hidden; */
   top:8em;
   bottom: 1em;
   left:23%;
-  right:23%;
+  right:var(--right);
+  left:var(--right);
   z-index: 1;
+  overflow-y: scroll;   
+  background-color: var(--accent-primary);   
 }
 
-@media all and (max-width: 900px) {.card-preview > .text-pane > .fake-body  {
-  right:15em;
-}}
 
+ .card-preview > .text-pane > .fake-body > ::-webkit-scrollbar {
+  background: #a00;
+}
+.card-preview > .text-pane > .fake-body > ::-webkit-scrollbar-thumb {
+  background: #a0a; 
+}
+.card-preview > .text-pane > .fake-body > ::-webkit-scrollbar-track {
+  background: #00a;
+} 
+
+.card-preview > .text-pane > .fake-body::-webkit-scrollbar-thumb{
+  border-radius: 1em;
+  background: black;
+}
+
+.card-preview > .text-pane > .fake-body::-webkit-scrollbar{
+  border-radius: 1em;
+  background-color: greenyellow;
+}
 
 .card-preview > .text-pane > .fake-body > .body:hover{
   visibility: visible;
-}
-
-.card-preview > .text-pane > .fake-body > .body{
-  position: sticky; 
-  width: 100%;
-  height: 35em;
-  overflow-y: scroll; 
-  background: var(--accent-primary)
 }
