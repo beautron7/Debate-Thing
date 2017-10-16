@@ -83,10 +83,6 @@
 
 
 /*TEXTPANE*/
-.card-preview >        .text-pane {visibility: hidden;}
-.card-preview:hover >  .text-pane {visibility: visible;}
-.card-preview:active > .text-pane {visibility: hidden;}
-
 .card-preview{
   --right:23%;
 }
@@ -95,7 +91,14 @@
   --right:15em !important;
 }}
 
-.card-preview > .text-pane > .tri{
+.card-preview >        .text-pane {visibility: hidden;}                 /*Default, no touch*/
+.card-preview:hover >  .text-pane {visibility: visible;} /*Peek on hover*/
+.card-preview > .text-pane:hover  {visibility: visible;opacity: 1;}     /*Full on hover*/
+.card-preview > .text-pane:active {visibility: visible;}                /*Stay up when focus shifts*/
+.card-preview:active > .text-pane {visibility: hidden;}                 /*Hide when drag begins*/
+
+
+.card-preview > .text-pane > .tri {
   position: fixed;
   transform: translateY(-3.5em);
   right: calc(var(--right) - 0.75em);
@@ -108,44 +111,42 @@
 }
 
 .card-preview > .text-pane > .fake-body  {
+  vertical-align: center;
+  --edge: 7.5em;  
+  background: var(--accent-secondary);
+
   border-style: solid;    
   border-width:0em 1em 0em 0em;  
   border-color: rgba(0,0,0,0); 
   background-clip: content-box;
-  transform: translateX(1em);
+
+
+  transform: translateX(1.1em) translateY(calc(-2.5em - 50%));
   position: fixed;
-  /* overflow: hidden; */
-  top:8em;
-  bottom: 1em;
-  left:23%;
-  right:var(--right);
-  left:var(--right);
+  right:var(--right); 
+  left:calc(100% - var(--right) - var(--edge));  
+  height: var(--edge);    
   z-index: 1;
-  overflow-y: scroll;   
+}
+
+@keyframes expand {
+  0% {
+    transform: translateX(1.1em) translateY(calc(-2.5em - 50%));
+  }
+}
+
+.card-preview > .text-pane > .fake-body:hover  {
   background-color: var(--accent-primary);   
+  transform: translateX(1.1em); 
+  top:8em;
+  bottom: 1em; 
+  height: calc(100% - 9em);
+  left:var(--right); 
+  overflow-y: scroll;   
 }
 
 
- .card-preview > .text-pane > .fake-body > ::-webkit-scrollbar {
-  background: #a00;
-}
-.card-preview > .text-pane > .fake-body > ::-webkit-scrollbar-thumb {
-  background: #a0a; 
-}
-.card-preview > .text-pane > .fake-body > ::-webkit-scrollbar-track {
-  background: #00a;
-} 
-
-.card-preview > .text-pane > .fake-body::-webkit-scrollbar-thumb{
-  border-radius: 1em;
-  background: black;
-}
-
-.card-preview > .text-pane > .fake-body::-webkit-scrollbar{
-  border-radius: 1em;
-  background-color: greenyellow;
-}
-
-.card-preview > .text-pane > .fake-body > .body:hover{
-  visibility: visible;
-}
+.card-preview > .text-pane > .fake-body > ::-webkit-scrollbar {background: #a00;}
+.card-preview > .text-pane > .fake-body > ::-webkit-scrollbar-thumb {background:#a0a;}
+.card-preview > .text-pane > .fake-body > ::-webkit-scrollbar-track {background:#00a;}
+.card-preview > .text-pane > .fake-body::-webkit-scrollbar{border-radius: 1em;background-color: greenyellow;}

@@ -13,12 +13,10 @@ export default class CardPreview extends Component {
 
   static TextPane = class TextPane extends Component {
     render() {
-      return <div className="text-pane">
+      return <div ref={this.props._ref} className="text-pane">
         <div className="tri"></div>
         <div className="fake-body">
-          {/* <div className="body"> */}
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque culpa natus ipsam maiores. Autem dolores nihil facere, nobis a minus quibusdam! Quae sunt sequi ipsum, ratione nemo, quod dolorem quam.
-          {/* </div> */}
+          Hover here to load text
         </div>
       </div>
     }
@@ -55,12 +53,19 @@ export default class CardPreview extends Component {
     }
 
     return (
-      <div className="card-preview" draggable="true" onDragStart={onDragStart}>
+      <div 
+        className="card-preview"
+        draggable="true"
+        onDragStart={onDragStart}
+        ref={x=>this.dom=x}
+      >
         <img src={img} draggable="false" alt="" />
         <div className="author" draggable="false"><span>{author}</span></div>
         <div className="title" draggable="false"><span>{title}</span></div>
         <div className="keywordContainer" draggable="false">{keywordNodes}</div>
-        <CardPreview.TextPane/>
+        <CardPreview.TextPane
+          _ref={x=>this.txtPN=x}
+        />
       </div>
     )
   }
