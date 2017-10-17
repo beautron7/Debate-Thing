@@ -80,10 +80,10 @@ export default class CardsFrame extends Component {
               url={card.url}
             />
           )}
+          rejected={(data)=><div>{data}</div>}
         >
-          <CardPreview/>
+          <CardPreview placeholder/>
         </Async>
-
       )
     );
 
