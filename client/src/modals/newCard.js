@@ -4,38 +4,26 @@ import ReactDOM from 'react-dom'
 import Async from '../components/Async'
 
 export default function newCard(){
-  new Modal("New Card",
-    <form className="X" action="#">
-      <span className="h1">Add a card</span>
-      <br />
-      <br />
+  new Modal("Add a card",
+    <form ref={x=>window.modalForm=x}className="X" action="#">
       <div className="form-group">
         <label>Select database:</label>
-        <Async
-          promise={window.appStorage.DBlist}
-          resolved={x=> 
-            <Modal.Picker
-              items={x.map(x=>x.collectionName)}
-            >
-              Select Database
-            </Modal.Picker>
-          }
-          pending={<i className="fa fa-spinner fa-pulse"></i>}
-        />
+        <Async promise={window.appStorage.DBlist} resolved={x=>{
+          window.modalDBz = x;
+          return <Modal.Picker name="DATABASENAME" items={x.map(x=>x.collectionName)}>
+            Select Database
+          </Modal.Picker>
+        }}>
+          <i className="fa fa-spinner fa-pulse"></i>
+        </Async>
       </div>
-      <input
-        type="hidden"
-        name="database"
-        defaultValue=""
-      />
-      <br />
       <div
         className="input-group date-published"
       >
         <label>
           Date Published
         </label>
-        <select name="month" className="form-control">
+        <select name="MONTH" className="form-control">
           <option>Month:</option>
           <option>January</option>
           <option>Febuary</option>
@@ -51,53 +39,53 @@ export default function newCard(){
           <option>December</option>
         </select>
         <input
-          name="day"
+          name="DAY"
           type="text"
           className="form-control col-sm-6"
           id="exampleInputAmount"
           placeholder="Day" />
         <input
-          name="year"
+          name="YEAR"
           type="text"
           className="form-control col-sm-6"
           id="exampleInputAmount"
           placeholder="Year" />
       </div>
-      <br />
+
       <div className="author input-group">
         <label>Author[s]</label>
         <input
-          name="author"
+          name="AUTHORS"
           type="text"
           className="form-control"
           placeholder="Doe John, Trump Donald, ..."
           aria-describedby="basic-addon1" />
       </div>
-      <br />
+
       <div className="quals">
         <label>
           Author Qualifcations
         </label>
         <textarea
-          name="quals"
+          name="QUALS"
           className="form-control col-sm-12"
           rows={3} />
       </div>
-      <br />
+
       <div className="keywords input-group">
         <label>Keywords</label>
         <input
-          name="keywords"
+          name="KEYWORDS"
           type="text"
           className="form-control"
           placeholder="US, China, Neg..."
           aria-describedby="basic-addon1" />
       </div>
-      <br />
+
       <div className="url input-group">
         <label>URL</label>
         <input
-          name="url"
+          name="URL"
           type="url"
           className="form-control"
           placeholder="www.example.com"
@@ -109,7 +97,7 @@ export default function newCard(){
           Full text
         </label>
         <textarea
-          name="fulltext"
+          name="FULLTEXT"
           className="form-control col-sm-12"
           rows={8}
         />
@@ -119,6 +107,41 @@ export default function newCard(){
         type="button"
         name="submit-btn"
         className="btn btn-primary btn-block"
+        onClick={async ()=>{
+          var form = window.modalForm
+          var databases = {}
+          window.modalDBz.forEach((x,i)=>{
+            databases[x.collectionName]=x.collectionID;
+          })
+          databases.indexOf
+          database_picker.hashes[database_picker.labels.length - 1 - form["database"].value]
+          var data = {
+            author: form["author"].value,
+            datePublished: new Date(form.year.value, form.month.selectedIndex - 1, form.day.value),
+            dateCaught: new Date(),
+            text: form["fulltext"].value.split(/\n+/),
+            title: form["title"].value,
+            url: form["url"].value,
+            keywords: form["keywords"].value.split(/\s*,\s*/),
+            quals: form["quals"].value,
+          }
+          if (database === "") {
+            form["submit-btn"].innerHTML = ("Please choose a database");
+            return
+          }
+          for (var thing in data) {
+            if (data.hasOwnProperty(thing)) {
+              if (data[thing] === "") {
+                form["submit-btn"].innerHTML = ("Please enter a(n) " + thing)
+                setTimeout(() => {
+                  form["submit-btn"].innerHTML = ("Add Card")
+                }, 3000)
+                return
+              }
+            }
+          }
+          appStorage.addCard(data, database)
+        }}
       >
         Add Card
       </button>

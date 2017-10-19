@@ -11,7 +11,8 @@ import Modal from './components/Modal'
 
 ReactDOM.render(
   <App />
-,
-document.getElementsByClassName('viewport')[0]);
+  ,document.getElementsByClassName('viewport')[0]
+);
 
+window.nodeRequire("electron").remote.getCurrentWindow().maximize()
 registerServiceWorker();

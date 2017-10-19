@@ -67,6 +67,7 @@ export default class CardsFrame extends Component {
     const cardCollection = data.map((promised_card, index) =>
       (
         <Async
+          key={"Async"+index}
           promise={promised_card}
           resolved={card=>(
             <CardPreview
@@ -80,9 +81,9 @@ export default class CardsFrame extends Component {
               url={card.url}
             />
           )}
-          rejected={(data)=><div>{data}</div>}
+          rejected={(data)=><div>ERROR: {data}</div>}
         >
-          <CardPreview placeholder/>
+          <CardPreview key={"Placeholder"+index} placeholder/>
         </Async>
       )
     );

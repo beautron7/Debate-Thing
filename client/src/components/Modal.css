@@ -35,13 +35,15 @@
   right: calc(23% + 13px);
   top: 122px;
   font-size: 1.5em;
+  width: 1em;
+  -webkit-app-region: no-drag;
 }
 
-.modal-back .modal-title i.fa-times:hover {
-  color: var(--btn-hover);
+.modal-back > .modal-title > i.fa-times:hover{
+  color: #999;
 }
 .modal-back .modal-title i.fa-times:active {
-  color: inherit;
+  color: #000;
 }
 
 .modal-back .modal-body {
@@ -118,7 +120,7 @@
   list-style-type: none;
   padding: 0;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
-  
+  z-index: 10;
 }
 
 .dropdown ul li {
@@ -133,4 +135,8 @@
 }
 .dropdown ul li:active{
   background-color: var(--btn-2)
+}
+.dropdown select.hidden {
+  height: 0;
+  visibility: hidden;
 }

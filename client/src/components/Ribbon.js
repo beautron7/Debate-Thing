@@ -79,28 +79,7 @@ export default class Ribbon extends Component {
           <RibbonButton
             title="Set up Round"
             icon={<i className="fa fa-wrench"></i>}
-            onClick={x=>{
-              var btn_margin = {
-
-              }
-              new Modal("Set up Round-Share",
-                <div>
-                  <Modal.HalfButton>
-                    Use Email
-                  </Modal.HalfButton>
-                  <Modal.HalfButton>
-                    Use Box
-                  </Modal.HalfButton>
-                  <form>
-                    <Modal.Input
-                      name="emails"
-                      friendlyName="Emails of other debaters"
-                      defaultValue="john@doe.org; jane@doe.org"
-                    />
-                  </form>
-                </div>
-              );
-            }}
+            onClick={Modals["setupRound"]}
             size="md"
           />
           <RibbonButton

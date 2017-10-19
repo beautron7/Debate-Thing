@@ -113,10 +113,20 @@ Modal.Picker = class Picker extends Modal.Dropdown {
       >{x}</li>
      ))
 
+    var hiddenInput = <select
+      name={this.props.name}
+      type="hidden"
+      className="hidden"
+      ref={x=> this.hiddenInput=x}
+    >
+      {this.props.items.map((x,i)=>(<option key={i}>{x}</option>))}
+    </select>
+
     return(
       <div
       className = "dropdown"
       >
+        {hiddenInput}
         <div
           className="dropdown-btn"
           onClick={scope => this.toggle()}
@@ -144,7 +154,8 @@ Modal.Picker = class Picker extends Modal.Dropdown {
 
   select(x){
     if(0 <= x && x < this.props.items.length){
-      this.selection = x
+      this.selection = x;
+      this.hiddenInput.selectedIndex = x;
     }
   }
 }

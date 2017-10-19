@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 export default class Async extends Component {
+  shouldComponentUpdate(){return false}
+
   constructor(props,b,c){
     super(props,b,c)
     var prom;
@@ -42,6 +44,7 @@ export default class Async extends Component {
     if(this.status=="pending"){
       return this.props.children
     }
+    return this.props.children;
   }
 }
 

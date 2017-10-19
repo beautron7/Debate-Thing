@@ -1,20 +1,26 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import './CardPreview.css';
 import Async from './Async'
 
 export default class CardPreview extends Component {
-  static propTypes = {
-    url:PropTypes.string.isRequired,
-    img: PropTypes.string,
-    author: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    keywords: PropTypes.arrayOf(PropTypes.string).isRequired,
-  }
-
   static TextPane = class TextPane extends Component {
+    constructor(props){
+      super(props)
+      this.state={data:["loading"]}
+    }
+
+    unloadText(){
+      this.setState({data:["loading"]})
+    }
+
     loadText() {
-      window.appStorage.getCard(this.props.cardID,this.props.collectionID,false).then(this.resolve).catch(this.reject)
+      window.appStorage.getCard(
+        this.props.cardID,
+        this.props.collectionID,
+        false
+      )
+        .then(x=> this.setState({data:x.text}))
+        .catch(this.setState({}));
     }
 
     render() {
@@ -22,17 +28,15 @@ export default class CardPreview extends Component {
 
       return <div ref={this.props._ref} className="text-pane">
         <div className="tri"></div>
-        <div onMouseOver={scope => this.loadText()} className="fake-body">
+        <div 
+          onMouseEnter={scope => this.loadText()}
+          onMouseLeave={scope => this.unloadText()}
+          className="fake-body">
           <div className="pre-load">
             Hover here to load text
           </div>
           <div className="post-load">
-            <Async
-              promise={this.prom}
-              success={(data)=><div>{data.text.map(x=><p>{x}</p>)}</div>}
-            >
-              <div>Loading...</div>
-            </Async> 
+            {this.state.data.map((x,i)=>(<p key={i}>{x}</p>))}
           </div>
         </div>
       </div>

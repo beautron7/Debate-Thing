@@ -34,9 +34,6 @@ class Card {
 
   async getText(){
     console.log("Card text is being accessed".cyan);
-    if(this.text){
-      return this.text;
-    }
     var cardTextPath = this.path+"/cards/"+this.ID+".cardText.json";
     var fileExists = await self.fs.exists(cardTextPath);
     if (fileExists){
@@ -67,9 +64,6 @@ class CardCollection {
   async push(){
     var fileExists = await self.fs.exists(this.path+"/cardMetadata.json")
     if (!fileExists){throw new Error("cardMetadata.json was missing")}
-    for (var i = 0; i < this.cards.length; i++) {
-      delete this.cards[i].text
-    }
     var data = JSON.stringify(this)
     return await self.fs.writeFile(this.path+"/cardMetadata.json",data)
   }
@@ -228,15 +222,11 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
             if(DB.cards[i].ID === arg.params.cardID){
               var card = DB.cards[i];
               (async ()=>{
-                if(arg.params.justMeta){
-                  var tmp = card.text
-                  delete card.text
-                  event.sender.send("appStorage"+arg.replyChannel,{status:"ok",data:card})
-                  card.text = tmp
-                } else {
-                  await card.getText()
-                  event.sender.send("appStorage"+arg.replyChannel,{status:"ok",data:card})
+                if(!arg.params.justMeta){
+                  card.text = await card.getText()
                 }
+                event.sender.send("appStorage"+arg.replyChannel,{status:"ok",data:card})
+                delete card.text;
               })();
               return
             }
