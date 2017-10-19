@@ -34,6 +34,7 @@ export default class CardsFrame extends Component {
         }
       }
       this.forceUpdate();
+      
     },delay)
   }
 

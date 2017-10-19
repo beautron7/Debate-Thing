@@ -42,6 +42,9 @@ export default class Modal {
     this.dom.remove()
     delete this
   }
+  close(){
+    this.remove()
+  }
 }
 
 Modal.alreadyExists = false

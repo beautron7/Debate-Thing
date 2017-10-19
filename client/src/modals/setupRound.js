@@ -9,10 +9,10 @@ export default function setupRound() {
     <div>
       <Modal.HalfButton>
         Use Email
-          </Modal.HalfButton>
+      </Modal.HalfButton>
       <Modal.HalfButton>
-        Use Box
-          </Modal.HalfButton>
+        Use EvidenceX (Prepd)
+      </Modal.HalfButton>
       <form>
         <Modal.Input
           name="emails"
