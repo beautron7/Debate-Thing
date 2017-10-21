@@ -30,43 +30,7 @@ appStorage.init()
 
 const windows = []
 
-function createAnImporterWindow(){
-  const theWindow = new BrowserWindow({
-    maxWidth: 350,
-    minWidth: 350,
-    width: 350,
-    height: 600,
-    toolbar: false,
-  })
-  windows.push(theWindow)
-
-  const startUrl = process.env.ELECTRON_START_URL?
-    process.env.ELECTRON_START_URL+'/DBimporter.index.html' :
-    url.format({
-      pathname: path.join(__dirname, '/../public/DBimporter.index.html'),//TODO: for production, change /public/ to /build/
-      protocol: 'file:',
-      slashes: true
-    });
-
-  console.log("Start url: ",startUrl)
-  theWindow.loadURL(startUrl);
-
-  theWindow.on('closed', function () {
-    windows.remove(theWindow)
-    delete theWindow
-  })
-
-  theWindow.on('maximize', function () {
-    theWindow.webContents.send('Window-State','maximized')
-  })
-
-  theWindow.on('unmaximize', function () {
-    theWindow.webContents.send('Window-State','unmaximized')
-  })
-}
-
 function createAnEditorWindow () {
-  createAnImporterWindow()
   const theWindow = new BrowserWindow({width: 800, height: 600, frame: false})
   windows.push(theWindow)
 
@@ -77,9 +41,9 @@ function createAnEditorWindow () {
   });
 
   // react devtools:
-  BrowserWindow.addDevToolsExtension(
-    'C:\\Users\\Beautron7\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\2.5.2_0'
-  );
+  // BrowserWindow.addDevToolsExtension(
+  //   'C:\\Users\\Beautron7\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\2.5.2_0'
+  // );
 
   theWindow.loadURL(startUrl);
 

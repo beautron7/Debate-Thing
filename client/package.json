@@ -30,6 +30,6 @@
     "eject": "react-scripts eject",
     "dev": "nf start",
     "electron": "electron .",
-    "electron-dev": "ELECTRON_START_URL=http://localhost:3000 & electron . --remote-debugging-port=9876"
+    "electron-dev": "ELECTRON_START_URL=http://localhost:3000 & electron . --inspect=9877 --remote-debugging-port=9876"
   }
 }

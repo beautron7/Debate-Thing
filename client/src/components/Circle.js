@@ -16,7 +16,7 @@ export default class Circle extends Component {
   static getDomCtx(self) {
     if (self.domCtxReady){return true}
     try {
-      self.dataContainer = window.App.editor.data
+      self.dataContainer = window.App.editor.state.data
       self.parentReactElement = window.App.editor.primarySection //used to forceUpdate
       for (var i = 0; i < self.props.path.length-1; i++) {//stop before the final point so splicing can occour.
         var index = self.props.path[i]

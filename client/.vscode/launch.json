@@ -4,10 +4,22 @@
     {
       "type": "chrome",
       "request": "attach",
-      "name": "Attach to 9876",
+      "name": "WEB  Attach to 9876",
       "port": 9876,
       "webRoot": "${workspaceRoot}\\src",
-      "sourceMaps": true
+      "sourceMaps": true,
+      "skipFiles": [
+        "${workspaceFolder}/node_modules/**/*.js",
+        "${workspaceFolder}/lib/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "NODE Attach to 9877",
+      "port": 9877,
+      // "webRoot": "${workspaceRoot}\\src",
+      // "sourceMaps": true
     }
   ]
 }

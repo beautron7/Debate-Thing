@@ -1,4 +1,46 @@
 var self = {
+  async loadState(path){
+    /*{
+      metadata:{
+        "filename":"afds"
+        "authors":[{
+          "First":"Name",
+          "Last":"Name",
+          "Team":{
+            "name":"school",
+            "id":"rwerqrew897"
+          }
+        }]
+      }
+      data:{
+        ["file-name"],
+        [
+          "Contention1",
+          {
+            "Tag":"Global climate action",
+            "meta":{
+              //card metadata
+            },
+            "Sections":[
+              {
+                "start_snippet":"the shortness of human life is the onto",
+                "start_index":10,
+                "end_snippet":"ontological death",
+                "start_index":100,
+              }, // ...
+            ]
+          }
+        ]
+      }
+    }*/
+    this.state = await new Promise(function(resolve,reject){
+      callMainStorage({
+        action:"loadState",
+        params:{path:path}
+      })
+    })
+    window.App.editor
+  },
   get usrSettings(){
     return new Promise(function(resolve, reject) {
       callMainStorage({

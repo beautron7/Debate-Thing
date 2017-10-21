@@ -130,13 +130,13 @@ export default class Card extends Component {
     super(a,b,c);
     this.mode="view"
     this.hideLinebreaks=false;
-
-    this.data = window.App.editor.data
+    this.state={};
+    this.state.data = window.App.editor.state.data
     for (var i = 0; i < this.props.path.length; i++) {//stop before the final point so splicing can occour.
       var index = this.props.path[i]
-      this.data = this.data[index]
+      this.state.data = this.state.data[index]
     }
-    this.tag=this.data.title
+    this.tag=this.state.data.title
     this.condensed = false
 
     this.generateTextDom()
@@ -155,7 +155,7 @@ export default class Card extends Component {
         n = n + '';
         return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
       }
-      year = pad(new Date(this.data.datePublished).getFullYear()%100,2)
+      year = pad(new Date(this.state.data.datePublished).getFullYear()%100,2)
       if (year+"" === "NaN"){
         throw new Error()
       }
@@ -174,8 +174,8 @@ export default class Card extends Component {
 
   generateTextDom(){
     var str = ""
-    for (var i = 0; i < this.data.text.length; i++) {
-      str+= this.data.text[i]+"¶ \n"
+    for (var i = 0; i < this.state.data.text.length; i++) {
+      str+= this.state.data.text[i]+"¶ \n"
     }
     this.textDOM = <span>{str}</span>
   }
@@ -216,7 +216,7 @@ export default class Card extends Component {
           </div>
           <div className="cardHeadLower">
             <div className="cardAuthor">
-              {this.data.author} {this.formattedYear}
+              {this.state.data.author} {this.formattedYear}
             </div>
             <div className="cardButtons btn-group">
               <button className="btn btn-sm btn-primary">Quals</button>
