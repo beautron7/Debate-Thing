@@ -281,10 +281,12 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
           }
         }
       break; case "getRecentCards":
-        var results = [{
-          ID:false,
-          dateCaught: new Date(1800,0,0),//Chances are nobody will catch a card before this date, even if their os is wierd.
-        }]
+        var placeholder = {//a placeholder so comparisons don't break.
+          ID: false,
+          dateCaught: new Date(1800, 0, 0),//Chances are nobody will catch a card before this date, even if their os is wierd.
+        }
+        var results = [placeholder]
+
         var numResults = arg.params.numResults || 10
 
         for (var i = 0; i < self.data.cardDBs.length; i++) {
@@ -310,6 +312,12 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
             }
           }
         }
+
+        var placeholder_index = results.indexOf(placeholder)
+        if (~placeholder_index){
+          delete results[placeholder_index]
+        }
+
         event.sender.send("appStorage"+arg.replyChannel,{status:"ok",data:results})
       break; case "createNewDB":
         (async(name,path)=>{

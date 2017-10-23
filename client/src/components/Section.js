@@ -13,7 +13,14 @@ export default class Section extends Component {
   //   this.data.splice(after+1,0,["Sub Section"])
   //   this.forceUpdate()
   // }
-
+  
+  shouldComponentUpdate(newProps){
+    console.log("AHAHHHAHA")
+    if(newProps.data.length !== this.props.data.length){
+      return true;
+    }
+    return false;
+  }
 
   render(){
     const {
@@ -23,20 +30,14 @@ export default class Section extends Component {
 
     var _onDragStart=(ev)=> {
       this.enableCircles=false
-      this.forceUpdate()
+      // this.forceUpdate()
       // ev.prevenev.dataTransfer.dropEffect = "move"tDefault()
       ev.dataTransfer.setData(
         "text/plain",
         "secPath:"+JSON.stringify(this.props.path)
       )
-      console.log(
-        "DragStart",
-        "Section",
-        JSON.stringify(this.props.path),
-      );
     }
     // this.keyvals = this.keyvals? this.keyvals:[0,1]
-
 
     var [first, ...rest] = data
     this.children = []
@@ -51,12 +52,7 @@ export default class Section extends Component {
           if (self !== null && self !== undefined){
             self.textContent = first
             self.addEventListener("input",()=>{
-              var data = window.App.editor.data;
-              for (var i = 0; i < this.props.path.length; i++) {//stop before the final point so splicing can occour.
-                var index = this.props.path[i]
-                data = data[index]
-              }
-              data[0]=self.textContent
+              this.props.data[0]=self.textContent
             }, false)
           }
         }}

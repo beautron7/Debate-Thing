@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import './Circle.css'
 import './slideOpen.css'
+import Section from './Section'
 
 export default class Circle extends Component {
   static propTypes = {
@@ -13,44 +14,35 @@ export default class Circle extends Component {
     this.domCtxReady=false;
   }
 
-  static getDomCtx(self) {
-    if (self.domCtxReady){return true}
-    try {
-      self.dataContainer = window.App.editor.state.data
-      self.parentReactElement = window.App.editor.primarySection //used to forceUpdate
-      for (var i = 0; i < self.props.path.length-1; i++) {//stop before the final point so splicing can occour.
-        var index = self.props.path[i]
-        self.parentReactElement = self.parentReactElement.children[index]
-        self.dataContainer = self.dataContainer[index]
-      }
-      self.insertToIndex = self.props.path[self.props.path.length-1]
-      self.domCtxReady=true
-      return true
-    } catch (e) {
-      console.error(e)
-      return false
+  componentDidMount(){
+    this.getDomCtx();
+  }
+
+  getDomCtx() {
+    this.dataContainer = window.App.editor.state.data
+    this.parentReactElement = Section.primarySection //used to forceUpdate
+    //BUG: ^^^
+    ///The code is breaking here because Section.primarySection isntisn't actually a react component, and so it doesdoesn't have a forceUPDATE method
+    for (var i = 0; i < this.props.path.length-1; i++) {//stop before the final point so splicing can occour.
+      var index = this.props.path[i];
+      this.parentReactElement = this.parentReactElement.children[index]
+      this.dataContainer = this.dataContainer[index]
     }
+    this.insertToIndex = this.props.path[this.props.path.length-1]
+    this.domCtxReady=true
+    return true
   }
 
 
   static onDrop(ev,self) {
+    console.assert(self.domCtxReady)
     var text = ev.dataTransfer.getData("text/plain")
     if (text.slice(0,8) === "cardRef:") {
       ev.preventDefault();
-      Circle.getDomCtx(self) || console.error("Something messed up with the dom"); //short circuit
-      // var datacontainer = window.App.editor.data
-      // var parentReactElement = window.App.editor.primarySection //used to forceUpdate
-      // for (var i = 0; i < self.props.path.length-1; i++) {//stop before the final point so splicing can occour.
-      //   var index = self.props.path[i]
-      //   parentReactElement = parentReactElement.children[index]
-      //   datacontainer = datacontainer[index]
-      // }
-      // var insertToIndex = self.props.path[self.props.path.length-1]
       var cardInfo = JSON.parse(text.slice(8))
-      window.appStorage.getCard(cardInfo.cardID,cardInfo.collectionID).then(function (card) {
-        card.tag = card.tag? card.tag:card.title
+      window.appStorage.getCard(cardInfo.cardID,cardInfo.collectionID).then((card) => {
         self.dataContainer.splice(self.insertToIndex,0,card)
-        self.parentReactElement.forceUpdate()
+        // self.parentReactElement.forceUpdate()
       });
     }
     Circle.shrink(ev.target)
@@ -113,7 +105,6 @@ export default class Circle extends Component {
 
     self.clickID = setTimeout(()=>{
       Circle.endClick(self)
-      Circle.getDomCtx(self) || console.error("Something messed up with the dom"); //short circuit
       self.dataContainer.splice(self.insertToIndex,0,["New Section"])
       self.parentReactElement.forceUpdate()
     },1000)

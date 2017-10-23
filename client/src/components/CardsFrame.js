@@ -9,38 +9,24 @@ import Async from './Async.js'
 export default class CardsFrame extends Component {
   constructor(a,b,c){
     super(a,b,c)
-    this.data = []
+    this.state= {}
+    this.state.data = []
     window.appStorage.getRecentCards(10).then((cardRefs)=>{
-      this.updateData(cardRefs,0)
+      this.setState({
+        data:cardRefs.map( (x,i)=>(
+          window.appStorage.getCard(
+            x.ID,
+            x.collectionID,
+            true
+          )
+        ))
+      })
     })
   }
 
-  updateData(simpleData,delay){
-    delay = delay | 500
-    /* Delay is here to stop queries from being fired on every single word.
-     * if updateData is called less than (delay) secs milliseconds after
-     * a previous updateData call, then the old updateData call is canceled.
-     */
-    clearTimeout(this.dataPID);
-    this.dataPID = setTimeout(()=>{
-      this.data = []
-      for (var i = 0; i < simpleData.length; i++) {
-        if(simpleData[i].ID){
-          this.data[i] = window.appStorage.getCard(
-            simpleData[i].ID,
-            simpleData[i].collectionID,
-            true //Just metadata
-          );
-        }
-      }
-      this.forceUpdate();
-      
-    },delay)
-  }
-
   render(){
-    var data = this.data
-    if(data.length === 0){
+    var data = this.state.data  
+    if(this.state.data.length === 0){
       return (
         <div>Loading...</div>
       )

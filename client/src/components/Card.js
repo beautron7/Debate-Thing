@@ -45,20 +45,18 @@ class Style {
 
 export default class Card extends Component {
   toggleMode(){
-    if(this.mode === "view"){
-      this.mode="edit"
+    if(this.state.mode === "view"){
+      this.state.mode="edit"
       this.dom.children[0].children[2].style.height="2.75em"
       this.cardBodyDom.contentEditable = true;
-      this.forceUpdate()
     } else {
-      this.mode="view"
+      this.state.mode="view"
       this.dom.children[0].children[2].style.height="0"
       this.cardBodyDom.contentEditable = false;
-      this.forceUpdate()
     }
   }
 
-  clearFormattingKeepHighlight(){
+  static clearFormattingKeepHighlight(){
     document.execCommand("bold")
     document.execCommand("underline")
     document.execCommand("italic")
@@ -128,15 +126,15 @@ export default class Card extends Component {
 
   constructor(a,b,c){
     super(a,b,c);
-    this.mode="view"
-    this.hideLinebreaks=false;
     this.state={};
+    this.state.mode="view"
+    this.hideLinebreaks=false;
     this.state.data = window.App.editor.state.data
     for (var i = 0; i < this.props.path.length; i++) {//stop before the final point so splicing can occour.
       var index = this.props.path[i]
       this.state.data = this.state.data[index]
     }
-    this.tag=this.state.data.title
+    this.tag=this.state.data.title || "(No Title / Tag)"
     this.condensed = false
 
     this.generateTextDom()
@@ -225,7 +223,7 @@ export default class Card extends Component {
                 onClick={scope => this.toggleMode()}
                 className="btn btn-sm btn-primary"
               >
-                {this.mode==="view"? "Edit":"View"}
+                {this.state.mode==="view"? "Edit":"View"}
               </button>
             </div>
           </div>
