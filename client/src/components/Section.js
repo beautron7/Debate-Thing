@@ -13,6 +13,13 @@ export default class Section extends Component {
   //   this.data.splice(after+1,0,["Sub Section"])
   //   this.forceUpdate()
   // }
+
+  constructor(props){
+    super(props);
+    if(props.path.length == 0){
+      Section.Root=this
+    }
+  }
   
   shouldComponentUpdate(newProps){
     console.log("AHAHHHAHA")

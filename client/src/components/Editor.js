@@ -42,14 +42,13 @@ export default class Editor extends Component {
     //   bottom: '0em',
     // }
     
-    Section.primarySection = <Section
-      path={[]}
-      data={this.state.data}
-    />
 
     return (
       <div id="editor" className="scrollbar">
-        {Section.primarySection}
+        <Section
+          path={[]}
+          data={this.state.data}
+        />
       </div>
     )
   }
