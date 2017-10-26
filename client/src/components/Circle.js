@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import './Circle.css'
 import './slideOpen.css'
 import Section from './Section'
 
 export default class Circle extends Component {
-  static propTypes = {
-    path:PropTypes.arrayOf(PropTypes.number).isRequired
-  }
+  // static propTypes = {
+  //   path:PropTypes.arrayOf(PropTypes.number).isRequired
+  // }
 
   constructor(a,b,c){
     super(a,b,c)

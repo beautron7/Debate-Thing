@@ -17,8 +17,8 @@
     "font-awesome": "^4.7.0",
     "mz": "^2.6.0",
     "object-hash": "1.1.8",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "react-frame-component": "^1.1.1",
     "react-scripts": "1.0.10",
     "tinymce": "^4.6.6"

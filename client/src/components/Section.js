@@ -5,10 +5,10 @@ import Circle from './Circle.js'
 import PropTypes from 'prop-types'
 
 export default class Section extends Component {
-  static propTypes ={
-    data: PropTypes.array.isRequired,
-    path: PropTypes.arrayOf(PropTypes.number)
-  }
+  // static propTypes ={
+  //   data: PropTypes.array.isRequired,
+  //   path: PropTypes.arrayOf(PropTypes.number)
+  // }
   // createSubSection(after){
   //   this.data.splice(after+1,0,["Sub Section"])
   //   this.forceUpdate()

@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import './Tab.css'
 import './noselect.css'
 
 export default class Tab extends Component {
-  static propTypes = {
-    name: PropTypes.string.isRequired,
-    active: PropTypes.bool,
-    onClick: PropTypes.func,
-  }
+  // static propTypes = {
+  //   name: PropTypes.string.isRequired,
+  //   active: PropTypes.bool,
+  //   onClick: PropTypes.func,
+  // }
 
   render(){
     const {
