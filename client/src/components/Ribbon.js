@@ -7,6 +7,7 @@ import RibbonButton from './RibbonButton'
 import ButtonGroup from './ButtonGroup'
 import RibbonGroup from './RibbonGroup'
 import Row from './Row'
+import Card from './Card'
 
 window.Modals = Modals
 export default class Ribbon extends Component {
@@ -130,10 +131,19 @@ export default class Ribbon extends Component {
             <RibbonButton
               icon="F9"
               title={<u>Underline</u>}
+              onClick={scope => {
+                Card.clearFormattingKeepHighlight();
+                document.execCommand("underline")
+              }}
             />
             <RibbonButton
               icon="F10"
               title={<b><u>Emphasis</u></b>}
+              onClick={scope => {
+                Card.clearFormattingKeepHighlight();
+                document.execCommand("underline");
+                document.execCommand("bold")
+              }}
             />
             <RibbonButton
               icon={<span>¶</span>}
@@ -145,10 +155,12 @@ export default class Ribbon extends Component {
             <RibbonButton
               icon="F11"
               title="Highlight"
+              onClick={Card.highlight}
             />
             <RibbonButton
               icon="F12"
               title="Clear Formatting"
+              onClick={Card.clearFormattingKeepHighlight}
             />
             <RibbonButton
               title="Shrink/Grow Text"

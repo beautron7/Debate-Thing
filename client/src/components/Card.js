@@ -6,7 +6,6 @@ import RibbonButton from './RibbonButton'
 // import Frame from 'react-frame-component'
 //moved stuff to paragraph component
 
-// eslint-disable-next-line
 class Style {
   toJSON(){
     return ""
@@ -51,7 +50,8 @@ export default class Card extends Component {
       this.cardBodyDom.contentEditable = true;
     } else {
       this.state.mode="view"
-      this.dom.children[0].children[2].style.height="0"
+      console.log([this.cardBodyDom.children[0]])
+      this.dom.children[0].children[2].style.height="0"//the editbar
       this.cardBodyDom.contentEditable = false;
     }
   }
@@ -75,29 +75,25 @@ export default class Card extends Component {
     var {key, ctrlKey} = event
     console.log("a key was pressed",key,event);
 
-    var allowKey = 0;
-    allowKey += //if the following is true, or if allowKey is true, then allowKey is true
-      ["Up","Right","Left","Down"]
-        .map(x=>"Arrow"+x)
-        .indexOf(key) !== -1;
-
-    allowKey += //if the following is true, or if allowKey is true, then allowKey is true
-      ctrlKey && (
-        key === "c" ||
-
-        key === "b" ||
-        key === "u" ||
-        key === "i" ||
-
-        key === "w" ||
-        key === "p" ||
-
-        key === "z"
+    var allowKey = (
+      (
+        !~["Delete","Backspace"].indexOf(key) //delete, backspace never ok.
+      ) && (
+        (
+          ["Up","Right","Left","Down"]//allow arrow keys
+            .map(x=>"Arrow"+x)
+            .indexOf(key) !== -1
+        ) || (
+          ctrlKey && !~"xv".indexOf(key) //ctrl + anything but x
+        ) || (
+          ~["Home","End","PageUp","PageDown"].indexOf(key)
+        )
       )
+    )
     if(allowKey){return}
 
-    if(key==="F9" || key === "F10" || key ==="F12"){//formatters
-      this.clearFormattingKeepHighlight()
+    if(key==="F9" || key === "F10" || key ==="F12"){//Apply stylesd
+      Card.clearFormattingKeepHighlight()
       if(key == "F9" || key === "F10"){//Formatters that underline
         document.execCommand("underline")
       }
@@ -107,11 +103,11 @@ export default class Card extends Component {
       return
     } else if (key === "F11") {
       event.preventDefault()
-      this.highlight()
+      Card.highlight()
     }
 
     event.preventDefault()
-    if(key === "Enter"){//mark the card xx
+    if(key === "Enter"){//mark the card
       var prev_mark = this.cardBodyDom.querySelector('.card-marker')
       prev_mark && prev_mark.remove()
       var sel, range;
@@ -122,6 +118,37 @@ export default class Card extends Component {
       el.textContent=""
       range.insertNode(el);
     }
+  }
+
+  static getFormattingFromComputedStyle(dom){
+    var sty = window.getComputedStyle(dom);
+    return {
+      hilight: sty.backgroundColor != "rgba(0, 0, 0, 0)",
+      bold: sty.fontWeight == "bold",
+      ital: sty.fontStyle == "italic",
+      underline: ~sty.textDecoration.indexOf("underline"),
+    }
+  }
+
+  getFormatting(){
+    var root = this.cardBodyDom
+    var progress = []
+
+
+    function traverse(obj) {
+      if(obj.childNodes.length){
+        obj.childNodes.forEach(traverse)
+      } else {
+        progress.push({
+          length:obj.textContent.length,
+          sty: Card.getFormattingFromComputedStyle(obj.parentNode)
+        })
+      }
+    }
+
+    root.childNodes.forEach(traverse)
+
+    console.log(progress)
   }
 
   constructor(a,b,c){
@@ -187,18 +214,12 @@ export default class Card extends Component {
     }
   }
 
-  highlight(){
-    var $$$ = document.getSelection()
-    var selID = window.hash([$$$.toString,$$$.baseOffset,$$$.focusOffset]);
-    if(selID === this.selID){
-      document.execCommand("hiliteColor",true,"rgba(0,0,0,0)")
-      this.selID=""
-      return
+  static highlight(){
+    if (document.queryCommandValue("backColor") =="rgb(0, 255, 255)"){
+      document.execCommand("backColor",true,"rgba(0,0,0,0)")
+    } else {
+      document.execCommand("backColor",false,"cyan")
     }
-    document.execCommand("hiliteColor",false,"cyan")
-
-    selID = window.hash([$$$.toString,$$$.baseOffset,$$$.focusOffset]);
-    this.selID=selID
   }
 
   render(){
@@ -229,6 +250,11 @@ export default class Card extends Component {
           </div>
           <div className="cardHeadFormatingBar">
             <RibbonButton
+              icon="?"
+              size="lg"
+              onClick={this.getFormatting.bind(this)}
+            />
+            <RibbonButton
               icon={<i className="fa fa-bold fa-2x" />}
               size="lg"
               onClick={scope => document.execCommand("bold")}
@@ -249,15 +275,15 @@ export default class Card extends Component {
               title="Underline"
               size="lg"
               onClick={scope => {
-                this.clearFormattingKeepHighlight();
-                document.execCommand("underline")
+                Card.clearFormattingKeepHighlight();
+                document.execCommand("underline");
               }}
             />
             <RibbonButton
               title="Emphasis"
               size="lg"
               onClick={scope => {
-                this.clearFormattingKeepHighlight();
+                Card.clearFormattingKeepHighlight();
                 document.execCommand("underline");
                 document.execCommand("bold")
               }}
@@ -269,14 +295,14 @@ export default class Card extends Component {
             <RibbonButton
               icon={<img style={{filter:"brightness(0)"}} alt="hilite" src="img/hilite.ico"></img>}
               size="lg"
-              onClick={scope=>this.highlight()}
+              onClick={scope=>Card.highlight()}
             />
             <RibbonButton
               icon={<i className="glyphicon glyphicon-erase"></i>}
               tooltip="Clear Formatting"
               size="lg"
               onClick={scope => {
-                this.clearFormattingKeepHighlight();
+                Card.clearFormattingKeepHighlight();
               }}
             />
             <RibbonButton

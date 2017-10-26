@@ -14,10 +14,6 @@ export default class Circle extends Component {
     this.domCtxReady=false;
   }
 
-  componentDidMount(){
-    this.getDomCtx();
-  }
-
   getDomCtx() {
     this.dataContainer = window.App.editor.state.data
     this.parentReactElement = Section.Root
@@ -43,7 +39,6 @@ export default class Circle extends Component {
   }
 
   onDrop(ev) {
-    console.assert(this.domCtxReady)
     var text = ev.dataTransfer.getData("text/plain")
     if (text.slice(0,8) === "cardRef:") {
       ev.preventDefault();
