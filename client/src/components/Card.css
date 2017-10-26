@@ -15,17 +15,30 @@
 
 .card .card-marker:before{
   display:inline;
-  content: "MARK";
+  content: "\a";
+  white-space: pre;
+}
+.card .card-marker:after{
+  display:inline;
+  content: "MARK\a";
+  white-space: pre;
   background-color: #0af;
-  text-color:white;
   border-radius:1em;
   padding-left:0.25em;
   padding-right:0.25em;
+  font-style: normal;
 }
-
 .card .card-marker{
   display:inline;
 }
+/* SHOULD WORK BUT DOESNT
+.card .card-marker ~ * {
+  background: #0af;
+  visibility: hidden
+}
+.card *:has(.card-marker) ~ * {
+  visibility: hidden
+} */
 
 .card ::selection {
   background: rgba(0,0,0,0.2); /* WebKit/Blink Browsers */

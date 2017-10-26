@@ -114,9 +114,9 @@ export default class Card extends Component {
       sel = window.getSelection();
       range = sel.getRangeAt(0);
       var el = document.createElement("div")
+      range.insertNode(el);
       el.classList.add("card-marker")
       el.textContent=""
-      range.insertNode(el);
     }
   }
 

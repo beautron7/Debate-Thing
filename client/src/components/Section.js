@@ -65,7 +65,10 @@ export default class Section extends Component {
         }}
       >
       </span></div>,
-      <Circle key={0} path={path.concat(1)} />
+      <div key={-0.5} className="terminator" ></div>,      
+      
+      <Circle key={0} path={path.concat(1)} />,
+      <div key={0.5} className="terminator" ></div>,      
     ]
 
     content.push(

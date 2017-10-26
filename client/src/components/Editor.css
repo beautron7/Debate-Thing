@@ -42,7 +42,7 @@
 
 
 
-#editor > .section .section .terminator{
+#editor > .section .terminator{
   width: 100%;
-  height: 1px;
+  min-height: 1px;
 }
