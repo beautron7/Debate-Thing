@@ -5,22 +5,21 @@
   "main": "src/electron-starter.js",
   "homepage": "./",
   "devDependencies": {
+    "babel-plugin-root-import": "^5.1.0",
     "colors": "^1.1.2",
     "electron": "^1.6.11",
-    "foreman": "^2.0.0",
-    "react-scripts": "0.8.5"
+    "electron-react-devtools": "^0.4.0",
+    "foreman": "^2.0.0"
   },
   "dependencies": {
     "bootstrap": "^3.3.0",
     "bson": "^1.0.4",
+    "font-awesome": "^4.7.0",
     "mz": "^2.6.0",
     "object-hash": "1.1.8",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-frame-component": "^1.1.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "react-scripts": "1.0.10",
-    "react-tinymce": "^0.6.0",
-    "tinymce": "^4.6.6"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -29,6 +28,6 @@
     "eject": "react-scripts eject",
     "dev": "nf start",
     "electron": "electron .",
-    "electron-dev": "ELECTRON_START_URL=http://localhost:3000 & electron ."
+    "electron-dev": "ELECTRON_START_URL=http://localhost:3000 & electron . --inspect=9877 --remote-debugging-port=9876"
   }
 }

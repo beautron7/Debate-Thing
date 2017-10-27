@@ -34,6 +34,7 @@ html,*, body {
   --accent-secondary: #FB0;
   --btn-default: rgba(0,0,0,0.0);
   --btn-hover: gray;
+  --btn-down: lightgray;
 
   --highlight: cyan;
   --text-color: #000;
@@ -53,16 +54,16 @@ html,*, body {
   --canvas-4: #aaa;
 }
 
-/*html,*, body {
+/* html,*, body {
   --theme: dark-dev;
 
-  --section0: radial-gradient(ellipse at center, rgba(0,75,120,1) 0%, rgba(0,117,170,1) 100%);;
+  --section0: radial-gradient(ellipse at center, rgba(0,75,120N,1) 0%, rgba(0,117,170,1) 100%);;
   --section1: radial-gradient(ellipse at center, #075 0%, #094 100%);;
   --section2: #508;
   --section3: black;
 
   --accent-primary: #0AF;
-  --accent-secondary: #b80;
+  --accent-secondary: #960;
   --btn-default: rgba(0,0,0,0.0);
   --btn-hover: gray;
 
@@ -70,7 +71,7 @@ html,*, body {
   --text-color: #ddd;
 
   --ribbon-tab-active: var(--canvas-1);
-  --ribbon-tab-inactive: gray;
+  --ribbon-tab-inactive: dimgray;
   --ribbon-title-bar: var(--canvas-1);
   --ribbon-tab-active-border: black;
 
@@ -78,8 +79,8 @@ html,*, body {
   --canvas-scroll-bkg: #0000;
   --canvas-img-background: gray;
 
-  --canvas-1: #004560;
-  --canvas-2: #111;
-  --canvas-3: #035;
-  --canvas-4: #911;
-}*/
+  --canvas-1: rgb(30, 30, 30);
+  --canvas-2: rgb(40, 40, 40);
+  --canvas-3: rgb(50, 50, 50);
+  --canvas-4: rgb(60, 60, 60);
+} */

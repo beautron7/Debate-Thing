@@ -14,14 +14,15 @@
   cursor: default;
 }
 
-.ribbon-button:hover {
+.ribbon-button:hover{
   border-color: var(--btn-hover);
   background-color: var(--btn-hover);
 }
 
 .ribbon-button:active{
-  background-color: var(--btn-down);
+  background-color: rgba(0,0,0,0);
 }
+
 
 .ribbon-button.lg {
   --height: calc(2 * var(--baseheight));
@@ -36,8 +37,8 @@
 .ribbon-button .title {
   width: auto;
   padding: 0;
-  padding-left: 0.25em;
-  padding-right: 0.25em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
 }
 
 .ribbon-button .title, .ribbon-button .icon {
@@ -63,7 +64,7 @@
   font-size: var(--height);
   overflow: clip;
 }
-.ribbon-button.lg .icon img {
+.ribbon-button .icon img {
   width: var(--height);
   height: var(--height);
 }

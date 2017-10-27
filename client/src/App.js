@@ -7,11 +7,13 @@ import Editor from './components/Editor'
 import Tabbar from './components/Tabbar'
 import Ribbon from './components/Ribbon'
 import cache from './cache'
+import modal from './components/Modal'
 import './App.css';
 
 window.appStorage = cache
 window.hash = Hash
 window.electron = window.electron||window.nodeRequire('electron');
+window.modal=modal
 
 // var CARDS = [{
 //   url:'www.vox.com',

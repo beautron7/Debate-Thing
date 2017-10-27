@@ -34,7 +34,7 @@ export default class Tabbar extends Component {
 
     const {updateGUI} = window.App
 
-    const tabs = ['File','Edit','Settings','View'].map((x,i)=>(
+    const tabs = ['File','Editing','Settings','View'].map((x,i)=>(
       <Tab
         active={this.paneNumber===i}
         name={x}
@@ -54,9 +54,9 @@ export default class Tabbar extends Component {
     return (
       <div className='tab-container'>
         {tabs}
-        <i ariaLabel="close window" className="fa fa-window-thing fa-window-close"    onClick={x=>window.electron.remote.getCurrentWindow().close()}></i>
-        <i ariaLabel="restore-down / maximize window" className={"fa fa-window-thing fa-window-"+(window.state==='maximized'?'restore':'maximize')} onClick={this.toggleMaximize}></i>
-        <i ariaLabel="minimize window" className="fa fa-window-thing fa-window-minimize" onClick={x=>window.electron.remote.getCurrentWindow().minimize()}></i>
+        <i aria-label="close window" className="fa fa-window-thing fa-window-close"    onClick={x=>window.electron.remote.getCurrentWindow().close()}></i>
+        <i aria-label="restore-down / maximize window" className={"fa fa-window-thing fa-window-"+(window.state==='maximized'?'restore':'maximize')} onClick={this.toggleMaximize}></i>
+        <i aria-label="minimize window" className="fa fa-window-thing fa-window-minimize" onClick={x=>window.electron.remote.getCurrentWindow().minimize()}></i>
 
         <i style={{'float':'right'}} onClick={()=>{this.paneNumber=-1;updateGUI()}} className="tab glyphicon glyphicon-eject"></i>
       </div>

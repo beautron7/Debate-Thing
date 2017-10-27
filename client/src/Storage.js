@@ -19,7 +19,7 @@ function Loader(name,path,defaultdata) {
 }
 
 class Card {
-  constructor(data,path) {
+  constructor(data,path,collectionID) {
     this.ID = data.ID;
     this.title = data.title;
     this.dateCaught = new Date(data.dateCaught);
@@ -27,16 +27,13 @@ class Card {
     this.author = data.author;
     this.url = data.url;
     this.keywords = data.keywords;
-    this.dbSignature = data.dbSignature;
+    this.collectionID = collectionID;
     this.quals = data.quals;
     this.path=path
   }
 
   async getText(){
     console.log("Card text is being accessed".cyan);
-    if(this.text){
-      return this.text;
-    }
     var cardTextPath = this.path+"/cards/"+this.ID+".cardText.json";
     var fileExists = await self.fs.exists(cardTextPath);
     if (fileExists){
@@ -67,9 +64,6 @@ class CardCollection {
   async push(){
     var fileExists = await self.fs.exists(this.path+"/cardMetadata.json")
     if (!fileExists){throw new Error("cardMetadata.json was missing")}
-    for (var i = 0; i < this.cards.length; i++) {
-      delete this.cards[i].text
-    }
     var data = JSON.stringify(this)
     return await self.fs.writeFile(this.path+"/cardMetadata.json",data)
   }
@@ -97,7 +91,7 @@ class CardCollection {
     }
 
     for (var i = 0; i < data.cards.length; i++) {
-      this.cards[i] = new Card(data.cards[i],this.path)
+      this.cards[i] = new Card(data.cards[i],this.path,this.collectionID)
     }
   }
 
@@ -228,15 +222,11 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
             if(DB.cards[i].ID === arg.params.cardID){
               var card = DB.cards[i];
               (async ()=>{
-                if(arg.params.justMeta){
-                  var tmp = card.text
-                  delete card.text
-                  event.sender.send("appStorage"+arg.replyChannel,{status:"ok",data:card})
-                  card.text = tmp
-                } else {
-                  await card.getText()
-                  event.sender.send("appStorage"+arg.replyChannel,{status:"ok",data:card})
+                if(!arg.params.justMeta){
+                  card.text = await card.getText()
                 }
+                event.sender.send("appStorage"+arg.replyChannel,{status:"ok",data:card})
+                delete card.text;
               })();
               return
             }
@@ -291,10 +281,12 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
           }
         }
       break; case "getRecentCards":
-        var results = [{
-          ID:false,
-          dateCaught: new Date(1800,0,0),//Chances are nobody will catch a card before this date, even if their os is wierd.
-        }]
+        var placeholder = {//a placeholder so comparisons don't break.
+          ID: false,
+          dateCaught: new Date(1800, 0, 0),//Chances are nobody will catch a card before this date, even if their os is wierd.
+        }
+        var results = [placeholder]
+
         var numResults = arg.params.numResults || 10
 
         for (var i = 0; i < self.data.cardDBs.length; i++) {
@@ -320,6 +312,12 @@ electron.ipcMain.on('appStorage',(event,arg)=>{
             }
           }
         }
+
+        var placeholder_index = results.indexOf(placeholder)
+        if (~placeholder_index){
+          delete results[placeholder_index]
+        }
+
         event.sender.send("appStorage"+arg.replyChannel,{status:"ok",data:results})
       break; case "createNewDB":
         (async(name,path)=>{

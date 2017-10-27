@@ -1,162 +1,116 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import './Circle.css'
 import './slideOpen.css'
+import Section from './Section'
 
 export default class Circle extends Component {
-  static propTypes = {
-    path:PropTypes.arrayOf(PropTypes.number).isRequired
-  }
 
-  constructor(a,b,c){
-    super(a,b,c)
+  constructor(props){
+    super(props)
     this.domCtxReady=false;
   }
 
-  static getDomCtx(self) {
-    if (self.domCtxReady){return true}
-    try {
-      self.dataContainer = window.App.editor.data
-      console.log(window.App.editor.primarySection,self.props.path)
-      self.parentReactElement = window.App.editor.primarySection //used to forceUpdate
-      for (var i = 0; i < self.props.path.length-1; i++) {//stop before the final point so splicing can occour.
-        var index = self.props.path[i]
-        self.parentReactElement = self.parentReactElement.children[index]
-        self.dataContainer = self.dataContainer[index]
-      }
-      self.insertToIndex = self.props.path[self.props.path.length-1]
-      self.domCtxReady=true
-      return true
-    } catch (e) {
-      console.error(e)
-      return false
+  getDomCtx() {
+    this.dataContainer = window.App.editor.state.data
+    this.parentReactElement = Section.Root
+
+    for (var i = 0; i < this.props.path.length-1; i++) {//stop before the final point so splicing can occour.
+      var index = this.props.path[i];
+
+      this.parentReactElement = 
+      this.parentReactElement .children[index];
+      
+      this.dataContainer =
+      this.dataContainer [index];
     }
+
+    this.insertToIndex = this.props.path[this.props.path.length-1]
+    this.domCtxReady=true
   }
 
+  inject(obj){
+    this.getDomCtx() //Context needs to be gotten every time you inject because the path to a section is not stait
+    this.dataContainer.splice(this.insertToIndex, 0, obj) 
+    this.parentReactElement.forceUpdate()      
+  }
 
-  static onDrop(ev,self) {
+  onDrop(ev) {
     var text = ev.dataTransfer.getData("text/plain")
     if (text.slice(0,8) === "cardRef:") {
       ev.preventDefault();
-      Circle.getDomCtx(self) || console.error("Something messed up with the dom"); //short circuit
-      // var datacontainer = window.App.editor.data
-      // var parentReactElement = window.App.editor.primarySection //used to forceUpdate
-      // for (var i = 0; i < self.props.path.length-1; i++) {//stop before the final point so splicing can occour.
-      //   var index = self.props.path[i]
-      //   parentReactElement = parentReactElement.children[index]
-      //   datacontainer = datacontainer[index]
-      // }
-      // var insertToIndex = self.props.path[self.props.path.length-1]
       var cardInfo = JSON.parse(text.slice(8))
-      window.appStorage.getCard(cardInfo.cardID,cardInfo.collectionID).then(function (card) {
-        card.tag = card.tag? card.tag:card.title
-        self.dataContainer.splice(self.insertToIndex,0,card)
-        console.log(self)
-        self.parentReactElement.forceUpdate()
-      });
+      window.appStorage.
+        getCard(
+            cardInfo.cardID,
+            cardInfo.collectionID
+        )
+        .then(this.inject.bind(this));
     }
-    Circle.shrink(ev.target)
+    this.shrink();
   }
 
-  static onDragOver(ev,self) {
+  onDragOver(ev) {
     ev.preventDefault();
   }
 
-  static onDragEnter(ev,self) {
-    Circle.grow(ev.target)
+  onDragEnter(ev) {
+    this.grow(ev.target)
   }
 
-  static onDragLeave(ev,self) {
-    Circle.shrink(ev.target)
+  onDragLeave(ev) {
+    this.shrink(ev.target)
   }
 
-  static grow(dom){
-    dom.style.WebkitTransition=`
-      height 0.35s,
-      width 0.35s,
-      margin-top 0.35s,
-      margin-bottom: 0.35s,
-    `
-    dom.style.width="2em"
-    dom.style.height="2em"
-    dom.style.marginTop="0.5em"
-    dom.style.marginBottom="0.5em"
+  grow(){
+    this.dom.classList.remove("slow")
+    this.dom.classList.add("large")
   }
 
-  static shrink(dom){
-    dom.style.WebkitTransition=`
-      height 0.35s,
-      width 0.35s,
-      margin-top 0.35s,
-      margin-bottom: 0.35s
-    `
-    dom.style.marginTop="1em"
-    dom.style.marginBottom="1em"
-    dom.style.width="1em"
-    dom.style.height="1em"
+  shrink(){
+    this.dom.classList.remove("slow")
+    this.dom.classList.remove("large")
   }
 
 
-  static beginClick(self){
-    var btn = self.dom
-    var secs = 1;
-    clearTimeout(self.clickID)
-    btn.style.WebkitTransition=`
-      height ${secs}s,
-      width ${secs}s,
-      margin-top ${secs}s,
-      margin-bottom ${secs}s
-    `
+  beginClick(){
+    clearTimeout(this.clickID)
+    this.dom.classList.add("slow")
+    this.dom.classList.add("large")
 
-    btn.style.width="2em"
-    btn.style.height="2em"
-    btn.style.marginTop="0.5em"
-    btn.style.marginBottom="0.5em"
-
-    self.clickID = setTimeout(()=>{
-      Circle.endClick(self)
-      Circle.getDomCtx(self) || console.error("Something messed up with the dom"); //short circuit
-      self.dataContainer.splice(self.insertToIndex,0,["New Section"])
-      self.parentReactElement.forceUpdate()
+    this.clickID = setTimeout(()=>{
+      this.endClick()
+      this.inject(["New Section"])
     },1000)
   }
 
-  static endClick(self){
-    var btn = self.dom
-    var secs = 0.35
-    btn.style.WebkitTransition=`
-      height ${secs}s,
-      width ${secs}s,
-      margin-top ${secs}s,
-      margin-bottom ${secs}s
-    `
-
-    btn.style.marginTop="1em"
-    btn.style.marginBottom="1em"
-    btn.style.width="1em"
-    btn.style.height="1em"
-
-    clearTimeout(self.clickID)
+  endClick(){
+    this.dom.classList.remove("slow")
+    this.dom.classList.remove("large")
+    clearTimeout(this.clickID)
   }
 
   render(){
-    return (
+    return ([
+      <div key={-1} className="terminator"/>,
       <div
+        key={0}
         ref={self => {
           this.dom=self;
           if(self!=null){
-            Circle.endClick(this)//Fixes a random bug
+            this.endClick()//Fixes a random bug
           }
         }}
         className="circle animate-margin-top"
-        onDrop={ev=>Circle.onDrop(ev,this)}
-        onDragOver={ev=>Circle.onDragOver(ev,this)}
-        onDragEnter={ev=>Circle.onDragEnter(ev,this)}
-        onDragLeave={ev=>Circle.onDragLeave(ev,this)}
-        onMouseDown={ev=>Circle.beginClick(this)}
-        onMouseUp={ev=>Circle.endClick(this)}
+        onDrop={this.onDrop.bind(this)}
+        onDragOver={this.onDragOver.bind(this)}
+        onDragEnter={this.onDragEnter.bind(this)}
+        onDragLeave={this.onDragLeave.bind(this)}
+        onMouseDown={this.beginClick.bind(this)}
+        onMouseUp={this.endClick.bind(this)}
       >
-      </div>
-    )
+      </div>,
+      <div key={1} className="terminator"/>      
+    ])
   }
 }

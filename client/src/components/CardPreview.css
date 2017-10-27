@@ -1,4 +1,5 @@
 .card-preview {
+  position: relative;
   margin: 1em;
   width: auto;
   height: 6em;
@@ -73,6 +74,120 @@
   padding-left: 0.5em;
   padding-right: 0.5em;
 }
+
 .card-preview > .url {
   visibility: hidden;
 }
+
+
+
+
+/*TEXTPANE*/
+.card-preview{
+  --right:23%;
+}
+
+@media all and (max-width: 900px) {.card-preview{
+  --right:15em !important;
+}}
+
+.card-preview >        .text-pane {visibility: hidden;}                 /*Default, no touch*/
+.card-preview:hover >  .text-pane {visibility: visible;}                /*Tooltip on hover*/
+.card-preview > .text-pane:hover  {visibility: visible;}                /*Keep text pane Display visibility on hover*/
+.card-preview > .text-pane:active {visibility: visible;}                /*Stay up when focus shifts*/
+.card-preview:active > .text-pane {visibility: hidden;}                 /*Hide when drag begins*/
+.card-preview > .text-pane:active {visibility: visible}  
+
+.card-preview > .text-pane > .tri {
+  position: fixed;
+  transform: translateY(-3.5em);
+  right: calc(var(--right) - 0.75em);
+  z-index: 1;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 0px 10px 10px;
+  border-color: transparent transparent transparent var(--accent-secondary);
+}
+
+.card-preview > .text-pane > .fake-body  {
+  vertical-align: center;
+  --edge: 5em;  
+  background: var(--accent-secondary);
+
+  border-style: solid;    
+  border-width:0em 1em 0em 0em;  
+  border-color: rgba(0,0,0,0); 
+   background-clip: content-box; 
+
+
+  transform: translateX(1.1em) translateY(calc(-2.5em - 50%));
+  position: fixed;
+  right:var(--right); 
+  left:calc(100% - var(--right) - var(--edge) - 0.75em);  
+  height: var(--edge); 
+  z-index: 1;
+}
+
+@keyframes expand {
+  0% {
+    left:calc(100% - var(--right) - var(--edge));      
+    transform: translateX(1.1em) translateY(calc(-2.5em - 50%)); 
+  }
+
+  60% {/*Manually change contents and override color*/
+    height: calc(400%);
+  }
+  61% {
+    transform: translateX(1.1em);      
+    top:0%;
+    bottom:0%;
+    height: calc(100%);   
+  }
+  100% {
+    left:var(--right);    
+    transform: translateX(1.1em);  
+    
+    top:8em;
+    bottom: 1em;  
+    height: calc(100% - 9em);
+    overflow-y: scroll;     
+  }
+}
+
+@keyframes expand-pre-load {
+  0% {visibility: visible; height: auto}
+  50% {visibility: visible; height: auto}
+  51% {visibility: hidden; height: 0}
+  100% {visibility: hidden; height: 0}
+}
+@keyframes expand-post-load {
+  0% {visibility: hidden; height: 0}
+  50% {visibility: hidden; height: 0}
+  51% {visibility: visible; height: auto; color:var(--accent-primary)}
+  100% {visibility: visible; height: auto; color: black}
+}
+.card-preview > .text-pane:hover > .fake-body {
+  animation: expand 0.15s forwards;
+}
+.card-preview > .text-pane:hover > .fake-body > .pre-load {
+  animation: expand-pre-load 0.15s forwards;
+}
+
+.card-preview > .text-pane > .fake-body > .post-load {
+  visibility: hidden; 
+  height: 0;
+
+  white-space: pre-wrap !important;
+  text-align: left;
+}
+
+.card-preview > .text-pane:hover > .fake-body > .post-load {
+  animation: expand-post-load 0.15s forwards;
+}
+
+
+.card-preview > .text-pane > .fake-body::-webkit-scrollbar {background: #a00;}
+.card-preview > .text-pane > .fake-body::-webkit-scrollbar-thumb {border-radius: 1em;background:#a0a;}  
+ .card-preview > .text-pane > .fake-body::-webkit-scrollbar-track {border-radius: 1em; background:#00a;} 
+.card-preview > .text-pane > .fake-body::-webkit-scrollbar{border-radius: 1em;background-color: greenyellow;}

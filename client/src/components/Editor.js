@@ -10,6 +10,7 @@ export default class Editor extends Component {
     shrinkRightMargin:PropTypes.bool,
   }
   static traverse(array) {
+    console.log("Handing out keys to all the children");
     array.key=array.key? array.key:Math.random()
     if (Array.isArray(array)){
       for(var i = 1; i < array.length; i++){
@@ -19,16 +20,20 @@ export default class Editor extends Component {
   }
   constructor(a,b,c){
     super(a,b,c)
-    this.data = [
-      "Title"
-    ]
+    if(Editor.instance){
+      throw new Error("Editor can only be instanciated onece.")
+    } else {
+      Editor.instance = this;
+      window.App.editor=this;
+      this.state={data:["Title"]};
+    }
   }
 
   render(){
     //DEBUG fn
 
 
-    Editor.traverse(this.data)
+    Editor.traverse(this.state.data)
     //END DEBUG FN
     // var style={
     //   top: window.App.Ribbon.show? '7.8em':'1.8em',
@@ -36,12 +41,13 @@ export default class Editor extends Component {
     //   right: window.App.rightBar.show? '23%':'0',
     //   bottom: '0em',
     // }
+    
+
     return (
       <div id="editor" className="scrollbar">
         <Section
-          ref={self=>this.primarySection=self}
           path={[]}
-          data={this.data}
+          data={this.state.data}
         />
       </div>
     )

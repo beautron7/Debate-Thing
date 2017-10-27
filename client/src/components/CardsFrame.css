@@ -1,6 +1,5 @@
-.cards-frame {
-  overflow-y: scroll;
-  overflow-x: hidden;
+.cards-frame{
+  overflow-y: scroll;     
   width: 100%;
   /*max-height: 90%;*/
   height: calc(100% - 5.1em) !important;

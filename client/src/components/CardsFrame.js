@@ -4,48 +4,29 @@ import React, {Component} from 'react';
 import CardPreview from './CardPreview'
 import './scrollbar.css'
 import './CardsFrame.css'
+import Async from './Async.js'
 
 export default class CardsFrame extends Component {
   constructor(a,b,c){
     super(a,b,c)
-    this.data = []
-    window.appStorage.getRecentCards(10).then((simpleData)=>{
-      this.newData(simpleData,0)
-    })
-  }
-
-  newData(simpleData,delay){
-    console.log(simpleData)
-    delay = delay | 0
-    /* Delay is here to stop queries from being fired on every single word.
-     * if newData is called less than (delay) secs milliseconds after
-     * a previous newData call, then the old newData call is canceled.
-     */
-    clearTimeout(this.dataPID);
-    this.dataPID = setTimeout(()=>{
-      var promises = []
-      for (var i = 0; i < simpleData.length; i++) {
-        if(simpleData[i].ID){
-          promises[i] = window.appStorage.getCard(
-            simpleData[i].ID,
-            simpleData[i].collectionID,
-            true //Just metadata
-          );
-        }
-      }
-      Promise.all(promises)
-        .then((cards)=>{
-          console.log(cards)
-          this.data=cards
-          this.forceUpdate()
-        },delay)
+    this.state= {}
+    this.state.data = []
+    window.appStorage.getRecentCards(10).then((cardRefs)=>{
+      this.setState({
+        data:cardRefs.map( (x,i)=>(
+          window.appStorage.getCard(
+            x.ID,
+            x.collectionID,
+            true
+          )
+        ))
+      })
     })
   }
 
   render(){
-    var data = this.data
-
-    if(data.length === 0){
+    var data = this.state.data  
+    if(this.state.data.length === 0){
       return (
         <div>Loading...</div>
       )
@@ -57,27 +38,41 @@ export default class CardsFrame extends Component {
       return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
     }
 
-    const cardCollection = data.map((card, index) =>
-      (<CardPreview
-        ID={card.ID}
-        key={card.ID}
-        img={card.image}
-        title={card.title || "(No title)"}
-        author={
-          (
-            card.author ||
-            "(No author)"
-          ) + " " + pad (
-            (
-              (new Date(card.datePublished))
-                .getFullYear() % 100
-            ),
-            2
-          )
-        }
-        keywords={card.keywords}
-        url={card.url}
-      />)
+    function authorString(card){
+      return (
+        card.author ||
+        "(No author)"
+      ) + " " + pad (
+        (
+          (new Date(card.datePublished))
+            .getFullYear() % 100
+        ),
+        2
+      )
+    }
+
+    const cardCollection = data.map((promised_card, index) =>
+      (
+        <Async
+          key={"Async"+index}
+          promise={promised_card}
+          resolved={card=>(
+            <CardPreview
+              collectionID={card.collectionID}
+              ID={card.ID}
+              key={card.ID}
+              img={card.image}
+              title={card.title || "(No title)"}
+              author={authorString(card)}
+              keywords={card.keywords}
+              url={card.url}
+            />
+          )}
+          rejected={(data)=><div>ERROR: {data}</div>}
+        >
+          <CardPreview key={"Placeholder"+index} placeholder/>
+        </Async>
+      )
     );
 
     return (

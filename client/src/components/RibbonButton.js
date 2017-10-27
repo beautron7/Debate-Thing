@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import './RibbonButtons.css'
 
 export default class RibbonButton extends Component {
-  static propTypes = {
-    title:PropTypes.string,
-    dropdown:PropTypes.node,
-    icon:PropTypes.node,
-  }
+  // static propTypes = {
+  //   title:PropTypes.string,
+  //   dropdown:PropTypes.node,
+  //   icon:PropTypes.node,
+  // }
 
   render(){
     var {
