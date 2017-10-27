@@ -6,53 +6,19 @@ import RibbonButton from './RibbonButton'
 // import Frame from 'react-frame-component'
 //moved stuff to paragraph component
 
-class Style {
-  toJSON(){
-    return ""
-      + this.fontSize || ""
-      + this.textSettings || ""
-      + this.backgroundColor || this.textColor?
-        ("{"
-          + (this.backgroundColor || "")
-          + (",")
-          + (this.textColor || "") +
-        "}"):""
-  }
-
-  toStyleObj(){
-    return false //to be implemented
-  }
-
-  constructor(data){
-    if (typeof data === "string"){
-      var [
-        fontSize,
-        textSettings,
-        backgroundColor,
-        textColor,
-      ] = data.match(/^(?:\((\d+)\w*?\))?(?:<(.+?)>)?(?:\{(.*),(.*)\})?$/gm)
-
-      this.fontSize = fontSize;
-      this.textSettings = textSettings;
-      this.backgroundColor = backgroundColor;
-      this.textColor = textColor;
-    } else {
-      //now we make it from a style object
-    }
-  }
-}
-
 export default class Card extends Component {
   toggleMode(){
     if(this.state.mode === "view"){
-      this.state.mode="edit"
+      this.setState({mode:"edit"})
       this.dom.children[0].children[2].style.height="2.75em"
       this.cardBodyDom.contentEditable = true;
+      this.cardBodyDom.readonly = false;
     } else {
-      this.state.mode="view"
+      this.setState({mode:"view"})
       console.log([this.cardBodyDom.children[0]])
       this.dom.children[0].children[2].style.height="0"//the editbar
       this.cardBodyDom.contentEditable = false;
+      this.cardBodyDom.readonly = true
     }
   }
 
@@ -122,12 +88,16 @@ export default class Card extends Component {
 
   static getFormattingFromComputedStyle(dom){
     var sty = window.getComputedStyle(dom);
+
     return {
-      hilight: sty.backgroundColor != "rgba(0, 0, 0, 0)",
-      bold: sty.fontWeight == "bold",
-      ital: sty.fontStyle == "italic",
-      underline: ~sty.textDecoration.indexOf("underline"),
+      hilight: sty.backgroundColor !== "rgba(0, 0, 0, 0)",
+      bold: sty.fontWeight === "bold",
+      ital: sty.fontStyle === "italic",
     }
+  }
+
+  static isUnderlined(obj){
+    return !!~window.getComputedStyle(obj).textDecoration.indexOf("underline")
   }
 
   getFormatting(){
@@ -136,12 +106,22 @@ export default class Card extends Component {
 
 
     function traverse(obj) {
+      var is_underlined = Card.isUnderlined(obj);
+
       if(obj.childNodes.length){
-        obj.childNodes.forEach(traverse)
+        if(is_underlined) {
+          var first_index = progress.length;
+          obj.childNodes.forEach(traverse)
+          for (var i = first_index; i < progress.length; i++){
+            progress[i].underline=true;
+          }
+        } else {
+          obj.childNodes.forEach(traverse);
+        }
       } else {
         progress.push({
           length:obj.textContent.length,
-          sty: Card.getFormattingFromComputedStyle(obj.parentNode)
+          sty: {underline: is_underlined, ...Card.getFormattingFromComputedStyle(obj.parentNode)}
         })
       }
     }

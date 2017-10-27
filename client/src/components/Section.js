@@ -23,7 +23,11 @@ export default class Section extends Component {
   
   shouldComponentUpdate(newProps){
     console.log("AHAHHHAHA")
-    if(newProps.data.length !== this.props.data.length){
+    if(
+      newProps.data.length !== this.props.data.length ||
+      this.props.path+"" !== newProps.path+""
+      //^ place a section at the start of the doc. now add a card before it. needs to update.
+    ){
       return true;
     }
     return false;
@@ -64,33 +68,39 @@ export default class Section extends Component {
           }
         }}
       >
-      </span></div>,
-      <div key={-0.5} className="terminator" ></div>,      
-      
+      </span></div>,  
       <Circle key={0} path={path.concat(1)} />,
-      <div key={0.5} className="terminator" ></div>,      
-    ]
+    ];
 
-    content.push(
-      ...rest.map((x,i)=> (
-        <div key={x.key?x.key:(()=>{x.key=Math.random(); return x.key})()}>
-          {
-            Array.isArray(x)?
-              <Section
-                path={path.concat(...[i+1])}
-                ref={self=>this.children[i+1]=self}
-                data={x}/>
-              :<Card
-                path={path.concat(...[i+1])}
-                ref={self=>this.children[i+1]=self}
-              />
-          }
-          <Circle
-            path={path.concat(...[i+2])}
+    rest.forEach((x,i)=> {
+      x.key = x.key || Math.random();
+
+      if(Array.isArray(x)){
+        content.push(
+          <Section
+            key={x.key}
+            path={path.concat(...[i+1])}
+            ref={self=>this.children[i+1]=self}
+            data={x}
           />
-        </div>
-      ))
-    )
+        )
+      } else {
+        content.push(          
+          <Card
+            key={x.key}
+            path={path.concat(...[i+1])}
+            ref={self=>this.children[i+1]=self}
+          />
+        )
+      }
+
+      content.push(
+        <Circle
+          key={"circle"+x.key}
+          path={path.concat(...[i+2])}
+        />
+      )
+    })
 
     return (
       <div draggable="false" className="section" onDragStart={_onDragStart}>

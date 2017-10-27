@@ -1,7 +1,7 @@
 import Modal from '../components/Modal'
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import Async from '../components/Async'
+import React from 'react'
+// import ReactDOM from 'react-dom'
+// import Async from '../components/Async'
 
 export default function setupRound() {
   new Modal(

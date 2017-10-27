@@ -57,7 +57,7 @@ html,*, body {
 /* html,*, body {
   --theme: dark-dev;
 
-  --section0: radial-gradient(ellipse at center, rgba(0,75,120,1) 0%, rgba(0,117,170,1) 100%);;
+  --section0: radial-gradient(ellipse at center, rgba(0,75,120N,1) 0%, rgba(0,117,170,1) 100%);;
   --section1: radial-gradient(ellipse at center, #075 0%, #094 100%);;
   --section2: #508;
   --section3: black;

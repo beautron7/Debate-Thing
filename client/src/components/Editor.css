@@ -44,5 +44,9 @@
 
 #editor > .section .terminator{
   width: 100%;
+  min-height: 2px;
+}
+
+#editor > .section .terminator:nth-child(4){/*Dont ask why or how this works*/
   min-height: 1px;
 }
