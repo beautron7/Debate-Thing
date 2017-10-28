@@ -1,16 +1,41 @@
-.App {
-  text-align: center;
+@media (min-width: 1048px){.App {--sidebar-width: 23%;}}
+@media (max-width: 1048px){.App {--sidebar-width: 240px;}}
+
+.App .app-body{
+  top:1.8em;
 }
 
-.app-body {
+.App .ribbon ~ .app-body{
+  top:7.8em;
+}
+
+.App .app-body{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
   height: auto;
   overflow-y: hidden;
-  box-orient: horizontal;
-  /*flex-wrap: nowrap;*/
   position:absolute;
-  display: flex;
-  flex-flow: row;
+}
+
+
+.App > .app-body > #editor {
+  text-align: center;
+  top: 0em;
+  right: 0;
+  left: 0;
+  bottom: 0em;
+  overflow-y: scroll;
+}
+
+.App > .app-body > .side-bar.left ~ #editor {
+  left: var(--sidebar-width);
+}
+
+.App > .app-body > .side-bar.right ~ #editor {
+  right: var(--sidebar-width);
 }
 
 html {
@@ -18,15 +43,11 @@ html {
 
 }
 
-body {
-  /*filter: blur(0.1px);*/
-}
-
 html,*, body {
   --theme: light-dev;
 
   --section0: red;
-  --section1: blue;
+  --section1: darkcyan;
   --section2: green;
   --section3: white;
 

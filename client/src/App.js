@@ -62,7 +62,6 @@ class App extends Component {
     self.Tabbar.forceUpdate()
     self.Ribbon.forceUpdate()
     self.editor.forceUpdate()
-    self.Body.updateHeight()
     // self.forceUpdate()
   }
 
@@ -75,29 +74,8 @@ class App extends Component {
         <Ribbon
           ref={x=>this.Ribbon=x}
         />
-        <App.Body
-          ref={x=>this.Body=x}
-        />
-      </div>
-    );
-  }
-}
-
-App.Body = class Body extends Component {
-  updateHeight(){
-    this.dom.style.top= window.App.Ribbon.show? "7.8em":'1.8em'
-  }
-
-  render() {
-    var appBodyStyle={
-      top: window.App.Ribbon.show? '7.8em':'1.8em',
-      bottom: '0em',
-    }
-
-    return (
-      <div
+        <div
         className="app-body"
-        style={appBodyStyle}
         ref={x=>this.dom=x}
       >
         <Sidebar left
@@ -110,9 +88,6 @@ App.Body = class Body extends Component {
           />
         </Sidebar>
 
-        <Editor
-          ref={self => window.App.editor=self}
-        />
 
         <Sidebar right
           ref={self => window.App.rightBar=self}
@@ -123,6 +98,10 @@ App.Body = class Body extends Component {
             ref={self => window.App.cardFrame = self}
           />
         </Sidebar>
+        <Editor
+          ref={self => window.App.editor=self}
+        />
+      </div>
       </div>
     )
   }

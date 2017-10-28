@@ -23,24 +23,14 @@ export default class Sidebar extends Component {
       left,
       right,
       children,
-      // shrinkTopMargin,
     } = this.props;
 
-    var style = {}
-    if(right){style.order='1'}
-    if(left){style.order='-1'}
-    // if(!window.App.Ribbon.show){style.top='1.8em
-    // if(!this.show){
-    //   style.flexBasis="0.1em";
-    //   style.maxWidth="0";
-    //   style.visibility="hidden"
-    // } else {
-    //   style.flexBasis="23%"
-    //   style.visibility="visible"
-    //   style.maxWidth="9999999em";
-    // }
+    var className = "side-bar"
+    if(left)className+=" left";
+    if(right)className+=" right";
+
     return this.show? (
-      <div className="side-bar" style={style}>
+      <div className={className}>
         {children}
       </div>
     ):null

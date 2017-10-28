@@ -1,16 +1,23 @@
 .side-bar {
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 23%;
-  min-width:15em;
+  width: var(--sidebar-width);
   background-color: var(--canvas-1);
-  /*position: fixed;*/
+  /* display: inline-block; */
+  position: absolute;
   /*width: 23%;*/
   /*-webkit-box-flex: 1;
   box-flex: 1;*/
-  /*height: 100%;*/
+  height: 100%;
   /*padding-top: 0.5em;*/
   float:none;
+  bottom:0;
+
+}
+
+.side-bar.left{
+  left: 0;
+}
+.side-bar.right{
+  right: 0;
 }
 
 .side-bar .search-bar-container {
