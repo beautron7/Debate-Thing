@@ -9,8 +9,7 @@ import Async from './Async.js'
 export default class CardsFrame extends Component {
   constructor(a,b,c){
     super(a,b,c)
-    this.state= {}
-    this.state.data = []
+    this.state= {data:[]}
     window.appStorage.getRecentCards(10).then((cardRefs)=>{
       this.setState({
         data:cardRefs.map( (x,i)=>(

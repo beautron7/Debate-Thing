@@ -2,110 +2,91 @@ import React, {Component} from 'react';
 import './Editor.css'
 import Card from './Card.js'
 import Circle from './Circle.js'
-import PropTypes from 'prop-types'
 
 export default class Section extends Component {
-  // static propTypes ={
-  //   data: PropTypes.array.isRequired,
-  //   path: PropTypes.arrayOf(PropTypes.number)
-  // }
-  // createSubSection(after){
-  //   this.data.splice(after+1,0,["Sub Section"])
-  //   this.forceUpdate()
-  // }
+  static V_Section = class V_Section extends Array{};
 
   constructor(props){
     super(props);
-    if(props.path.length == 0){
+    if(props.path.length === 0){
       Section.Root=this
     }
   }
   
   shouldComponentUpdate(newProps){
     console.log("AHAHHHAHA")
-    if(
+    return (
       newProps.data.length !== this.props.data.length ||
       this.props.path+"" !== newProps.path+""
-      //^ place a section at the start of the doc. now add a card before it. needs to update.
-    ){
-      return true;
-    }
-    return false;
+    )
+  }
+
+  onDragStart(ev){
+    ev.dataTransfer.setData(
+      "text/plain",
+      "secPath:"+JSON.stringify(this.props.path)
+    )
   }
 
   render(){
     const {
       path,
-      data,
+      tree,
     }=this.props
+    this.children = [];
+    
+    tree.react = this;
 
-    var _onDragStart=(ev)=> {
-      this.enableCircles=false
-      // this.forceUpdate()
-      // ev.prevenev.dataTransfer.dropEffect = "move"tDefault()
-      ev.dataTransfer.setData(
-        "text/plain",
-        "secPath:"+JSON.stringify(this.props.path)
-      )
-    }
-    // this.keyvals = this.keyvals? this.keyvals:[0,1]
-
-    var [first, ...rest] = data
-    this.children = []
-
-    var content = [
-      <div key={-1}><span
-        className="heading"
-        contentEditable="plaintext-only"
-        ref={self=>{
-          // for path
-          this.children.push(self)
-          if (self !== null && self !== undefined){
-            self.textContent = first
-            self.addEventListener("input",()=>{
-              this.props.data[0]=self.textContent
-            }, false)
-          }
-        }}
-      >
-      </span></div>,  
-      <Circle key={0} path={path.concat(1)} />,
-    ];
-
-    rest.forEach((x,i)=> {
-      x.key = x.key || Math.random();
-
-      if(Array.isArray(x)){
-        content.push(
-          <Section
-            key={x.key}
-            path={path.concat(...[i+1])}
-            ref={self=>this.children[i+1]=self}
-            data={x}
-          />
-        )
-      } else {
-        content.push(          
-          <Card
-            key={x.key}
-            path={path.concat(...[i+1])}
-            ref={self=>this.children[i+1]=self}
-          />
-        )
-      }
-
-      content.push(
-        <Circle
-          key={"circle"+x.key}
-          path={path.concat(...[i+2])}
-        />
-      )
-    })
+    var title = tree.data
+    var child_nodes = tree.children;
+    console.log(tree)
 
     return (
-      <div draggable="false" className="section" onDragStart={_onDragStart}>
-        {content}
-        <div className="terminator" ></div>
+      <div draggable="false" className="section" onDragStart={this.onDragStart.bind(this)}>
+        <div key={-1}>
+          <span
+            className="heading"
+            contentEditable="plaintext-only"
+            ref={self=>{
+              this.children.push(self)
+              if (self !== null && self !== undefined){
+                self.textContent = title
+                self.addEventListener("input",()=>{
+                  this.props.data[0]=self.textContent
+                }, false)
+              }
+            }}
+          />
+        </div>
+        <Circle key={0} tree={tree} path={path.concat(1)} />
+        {child_nodes.map((x,i) => ([
+          ((x,i) => {
+            if(x.constructor === Section.V_Section){
+              return (
+                <Section
+                  key={x.key}
+                  path={path.concat(...[i+1])}
+                  tree={x}
+                  />
+              )
+            } else if (x.constructor === Card.V_Card){
+              return (
+                <Card
+                  key={x.key}
+                  tree={x}
+                  ref={self=>this.children[i+1]=self}
+                  />
+              )
+            }
+          })(x,i)
+          ,
+          <Circle
+            key={"circle"+x.key}
+            tree={tree}
+            path={path.concat(...[i+2])}
+            />
+        ]))}
+        <div className="terminator"></div>
       </div>
     )
   }

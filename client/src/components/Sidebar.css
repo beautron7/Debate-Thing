@@ -1,16 +1,9 @@
 .side-bar {
   width: var(--sidebar-width);
-  background-color: var(--canvas-1);
-  /* display: inline-block; */
   position: absolute;
-  /*width: 23%;*/
-  /*-webkit-box-flex: 1;
-  box-flex: 1;*/
   height: 100%;
-  /*padding-top: 0.5em;*/
-  float:none;
   bottom:0;
-
+  background-color: var(--canvas-1);
 }
 
 .side-bar.left{

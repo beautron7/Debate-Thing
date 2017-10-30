@@ -12,17 +12,17 @@ export default class Circle extends Component {
   }
 
   getDomCtx() {
-    this.dataContainer = window.App.editor.state.data
+    this.dataContainer = window.App.editor.state.data._root
     this.parentReactElement = Section.Root
 
     for (var i = 0; i < this.props.path.length-1; i++) {//stop before the final point so splicing can occour.
       var index = this.props.path[i];
 
-      this.parentReactElement = 
-      this.parentReactElement .children[index];
+      this.parentReactElement= 
+      this.parentReactElement.children[index];
       
-      this.dataContainer =
-      this.dataContainer [index];
+      this.dataContainer=
+      this.dataContainer.children[index];
     }
 
     this.insertToIndex = this.props.path[this.props.path.length-1]
@@ -31,7 +31,7 @@ export default class Circle extends Component {
 
   inject(obj){
     this.getDomCtx() //Context needs to be gotten every time you inject because the path to a section is not stait
-    this.dataContainer.splice(this.insertToIndex, 0, obj) 
+    this.dataContainer.appendChild(obj,this.insertToIndex-1) 
     this.parentReactElement.forceUpdate()      
   }
 
@@ -40,8 +40,8 @@ export default class Circle extends Component {
     if (text.slice(0,8) === "cardRef:") {
       ev.preventDefault();
       var cardInfo = JSON.parse(text.slice(8))
-      window.appStorage.
-        getCard(
+      window.appStorage
+        .getCard(
             cardInfo.cardID,
             cardInfo.collectionID
         )
@@ -80,7 +80,7 @@ export default class Circle extends Component {
 
     this.clickID = setTimeout(()=>{
       this.endClick()
-      this.inject(["New Section"])
+      this.inject("New Section")
     },1000)
   }
 
@@ -97,9 +97,9 @@ export default class Circle extends Component {
         key={0}
         ref={self => {
           this.dom=self;
-          if(self!=null){
-            this.endClick()//Fixes a random bug
-          }
+          // if(self!=null){
+          //   // this.endClick()//Fixes a random bug
+          // }
         }}
         className="circle animate-margin-top"
         onDrop={this.onDrop.bind(this)}

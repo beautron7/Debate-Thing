@@ -134,7 +134,7 @@ Modal.Picker = class Picker extends Modal.Dropdown {
           className="dropdown-btn"
           onClick={scope => this.toggle()}
         >
-          {this.selection==-1?
+          {this.selection=== -1?
             <div>
               {this.props.children}
               <span className="caret"></span>

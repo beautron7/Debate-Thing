@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 // import PropTypes from 'prop-types';
 import Modals from '../modals/AllModals'
-import Modal from './Modal'
 import './Ribbon.css'
 import RibbonButton from './RibbonButton'
 import ButtonGroup from './ButtonGroup'

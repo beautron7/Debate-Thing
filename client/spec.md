@@ -155,3 +155,17 @@ Files / documents / speeches are stored as json objects, and sections are stored
   ]
 ]
 ```
+There are three planned file extensions:
+
+### 1. sourcedoc
+this is the main extension for saving files. The contents of any sourcedoc file saved in your dedicated folder are indexed for fuzzy search. Copies of card text are not saved in these files.
+
+- 2AC blocks
+- 1AC SHM
+- RTE Case Neg
+- States CP
+
+### 2. .bundledspeech
+These files are the files you save to usb sticks and send in round; they contain copies of the cards text, so they can be opened on other peoples computer. You shouldn't save copies of these files because of this; instead, use:
+### 3. .speecharchive
+These files are just like bundled speeches but they sacrifice portability for file size. These arent indexed by the editor either, 

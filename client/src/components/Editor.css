@@ -1,9 +1,7 @@
 #editor {
   position: absolute;
-  display: inline-block;
   background: var(--section0);
   overflow-y: scroll;
-  overflow-x: hidden;
   color: var(--text-color)
 }
 
@@ -42,7 +40,7 @@
 
 #editor > .section .terminator{
   width: 100%;
-  min-height: 2px;
+  min-height: 1px;
 }
 
 #editor > .section .terminator:nth-child(4){/*Dont ask why or how this works*/

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
-import './Card.css'
-import './slideOpen.css'
-import RibbonButton from './RibbonButton'
+import ReactDOM from "react-dom";
+import './Card.css';
+import './slideOpen.css';
+import RibbonButton from './RibbonButton';
 // import Frame from 'react-frame-component'
 //moved stuff to paragraph component
 
@@ -19,6 +19,7 @@ export default class Card extends Component {
       this.dom.children[0].children[2].style.height="0"//the editbar
       this.cardBodyDom.contentEditable = false;
       this.cardBodyDom.readonly = true
+      this.saved_formatting = this.getFormatting()
     }
   }
 
@@ -60,7 +61,7 @@ export default class Card extends Component {
 
     if(key==="F9" || key === "F10" || key ==="F12"){//Apply stylesd
       Card.clearFormattingKeepHighlight()
-      if(key == "F9" || key === "F10"){//Formatters that underline
+      if(key === "F9" || key === "F10"){//Formatters that underline
         document.execCommand("underline")
       }
       if (key === "F10"){//formatters that bold
@@ -97,23 +98,27 @@ export default class Card extends Component {
   }
 
   static isUnderlined(obj){
-    return !!~window.getComputedStyle(obj).textDecoration.indexOf("underline")
+    if (obj.constructor === Text) {
+      return false
+    } else {
+      return !!~window.getComputedStyle(obj).textDecoration.indexOf("underline")  
+    }
   }
 
   getFormatting(){
     var root = this.cardBodyDom
     var progress = []
-
+    root.childNodes.forEach(traverse)
+    console.log(progress)
 
     function traverse(obj) {
       var is_underlined = Card.isUnderlined(obj);
-
       if(obj.childNodes.length){
         if(is_underlined) {
           var first_index = progress.length;
           obj.childNodes.forEach(traverse)
           for (var i = first_index; i < progress.length; i++){
-            progress[i].underline=true;
+            progress[i].sty.underline=true;
           }
         } else {
           obj.childNodes.forEach(traverse);
@@ -125,26 +130,30 @@ export default class Card extends Component {
         })
       }
     }
-
-    root.childNodes.forEach(traverse)
-
-    console.log(progress)
   }
 
-  constructor(a,b,c){
-    super(a,b,c);
-    this.state={};
-    this.state.mode="view"
-    this.hideLinebreaks=false;
-    this.state.data = window.App.editor.state.data
-    for (var i = 0; i < this.props.path.length; i++) {//stop before the final point so splicing can occour.
-      var index = this.props.path[i]
-      this.state.data = this.state.data[index]
+  constructor(props){
+    super(props);
+    
+    var data = this.props.tree.data
+    console.log(this.props.tree)
+
+    var str = "";
+
+    for (var i=0; i < data.text.length; i++) {
+      str+= data.text[i]+"¶ \n"
     }
-    this.tag=this.state.data.title || "(No Title / Tag)"
+
+    this.state={
+      mode:"view",
+      data:data,
+      text:<span>{str}</span>,
+    };
+
+    this.hideLinebreaks=false;    
+    this.tag = data.title || "(No Title / Tag)"
     this.condensed = false
 
-    this.generateTextDom()
   }
 
   togglePilcrows(){
@@ -170,19 +179,19 @@ export default class Card extends Component {
     return year
   }
 
-  animate_open(){
-    setTimeout(() => {//Animation
-      if(this.dom !== null)
-      this.dom.style.maxHeight="1000em" //well, 100em sounds large but not for debate standards.
-    })
-  }
+  // animate_open(){
+  //   setTimeout(() => {//Animation
+  //     if(this.dom !== null)
+  //     this.dom.style.maxHeight="1000em" //well, 100em sounds large but not for debate standards.
+  //   })
+  // }
 
   generateTextDom(){
     var str = ""
     for (var i = 0; i < this.state.data.text.length; i++) {
       str+= this.state.data.text[i]+"¶ \n"
     }
-    this.textDOM = <span>{str}</span>
+    this.setState({text:<span>{str}</span>})
   }
 
   tagListener(x){
@@ -195,7 +204,7 @@ export default class Card extends Component {
   }
 
   static highlight(){
-    if (document.queryCommandValue("backColor") =="rgb(0, 255, 255)"){
+    if (document.queryCommandValue("backColor") === "rgb(0, 255, 255)"){
       document.execCommand("backColor",true,"rgba(0,0,0,0)")
     } else {
       document.execCommand("backColor",false,"cyan")
@@ -203,8 +212,7 @@ export default class Card extends Component {
   }
 
   render(){
-
-    this.animate_open()
+    // this.animate_open()
 
     return(
       <div draggable="false" ref={x=>this.dom=x} className="card animate-max-height">
@@ -307,8 +315,9 @@ export default class Card extends Component {
       </div>
     )
   }
+
   componentDidMount(){
-    ReactDOM.render(this.textDOM,this.cardBodyDom)
+    ReactDOM.render(this.state.text,this.cardBodyDom)
     this.cardBodyDom.addEventListener("keypress",scope=>this.handleKey(scope))
     this.cardBodyDom.addEventListener("keydown",scope=>this.handleKey(scope))
   }

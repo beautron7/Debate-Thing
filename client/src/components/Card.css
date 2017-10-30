@@ -8,10 +8,22 @@
   margin:auto;
   border-radius: 1em;
   border-style: solid;
+  animation: open forwards 1s;
   /*overflow: hidden;*/
   /*To allow for sticky*/
 }
 
+@keyframes open{
+  from {
+    max-height: 0;
+  }
+  99% {
+    max-height: 100%;
+  }
+  to {
+    max-height: none;
+  }
+}
 
 .card .card-marker:before{
   display:inline;

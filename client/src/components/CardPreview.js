@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './CardPreview.css';
-import Async from './Async'
 
 export default class CardPreview extends Component {
   static TextPane = class TextPane extends Component {

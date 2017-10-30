@@ -4,50 +4,68 @@ import './Editor.css'
 import './scrollbar.css'
 import Section from './Section.js'
 
+
+class Tree {
+  static Node = class Node {
+    constructor(data,parent){
+      this.data = data;
+      this.key = window.qi;
+      this.parent = parent;
+      this.children = [];
+    }
+
+    appendChild(data,index){
+      console.log(this)
+      // index |= this.children.length
+      this.children.splice(
+        index,
+        0,
+        new Node(
+          data,
+          this
+        )
+      );
+    }
+  }
+
+  constructor(data){
+    var node = new Tree.Node(data);
+    this._root = node;
+  }
+}
+
+class CardNode extends Tree.Node {
+  constructor(data){
+    super(data);
+    delete this.children;
+  }
+};
+
+class SectionNode extends Tree.Node {};
+
 export default class Editor extends Component {
   static propTypes = {
     shrinkLeftMargin:PropTypes.bool,
     shrinkRightMargin:PropTypes.bool,
   }
-  static traverse(array) {
-    console.log("Handing out keys to all the children");
-    array.key=array.key? array.key:Math.random()
-    if (Array.isArray(array)){
-      for(var i = 1; i < array.length; i++){
-        Editor.traverse(array[i])
-      }
-    }
-  }
-  constructor(a,b,c){
-    super(a,b,c)
+
+  constructor(props){
+    super(props);
     if(Editor.instance){
       throw new Error("Editor can only be instanciated onece.")
     } else {
       Editor.instance = this;
       window.App.editor=this;
-      this.state={data:["Title"]};
+      this.state={data:new Tree("Title")};
     }
   }
 
   render(){
-    //DEBUG fn
-
-
-    Editor.traverse(this.state.data)
-    //END DEBUG FN
-    // var style={
-    //   top: window.App.Ribbon.show? '7.8em':'1.8em',
-    //   left: window.App.leftBar.show? '23%':'0',
-    //   right: window.App.rightBar.show? '23%':'0',
-    //   bottom: '0em',
-    // }
-    
-
     return (
       <div id="editor" className="scrollbar">
         <Section
           path={[]}
-          data={this.state.data}
+          tree={this.state.data._root}
         />
       </div>
     )

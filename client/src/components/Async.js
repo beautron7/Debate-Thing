@@ -1,15 +1,13 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import {Component} from 'react';
 
 export default class Async extends Component {
   shouldComponentUpdate(){return false}
 
   constructor(props,b,c){
     super(props,b,c)
-    this.state={}
+    this.state={status:"pending"}
 
     var prom;
-    this.state.status="pending"
 
     if (props.function){
       prom = new Promise(props.function);
@@ -18,39 +16,34 @@ export default class Async extends Component {
     }
 
     prom.then((data)=>{
-      this.state.data=data;
-      this.state.status="resolved";
+      this.setState({
+        status:"resolved",
+        data:data,
+      });
       this.forceUpdate(); //is ok
     }).catch((e)=>{
-      this.state.status="rejected";
-      this.state.data=e;
+      this.setState({
+        status:"rejected",
+        data:e,
+      })
       this.forceUpdate(); //is ok
     });
   }
 
-  shouldComponentUpdate(nextProps,nextState){
-    //props should be constant,
-    if(nextState.status !== this.state.status){
-      return true
-    }
-  }
-
   render(){
-    if(this.state.status=="resolved"){
-      for (prop of ["resolved","success","ready"]) {
-        if (this.props[prop]) {
-          return this.props[prop](this.state.data)
+    if(this.state.status==="resolved"){
+      for (var good_prop of ["resolved","success","ready"]) {
+        if (this.props[good_prop]) {
+          return this.props[good_prop](this.state.data)
         }
       }
-    }
-    if(this.state.status=="rejected"){
-      for (var prop of ["rejected","failed","error"]) {
-        if (this.props[prop]) {
-          return this.props[prop](this.state.data)
+    } else if(this.state.status==="rejected"){
+      for (var bad_prop of ["rejected","failed","error"]) {
+        if (this.props[bad_prop]) {
+          return this.props[bad_prop](this.state.data)
         }
       }
-    }
-    if(this.state.status=="pending"){
+    } else if(this.state.status==="pending"){
       return this.props.children
     }
     return this.props.children;

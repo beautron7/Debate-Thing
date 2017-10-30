@@ -10,12 +10,11 @@ export default class Sidebar extends Component {
 
   constructor(a,b,c){
     super(a,b,c)
-    this.show=true
-    this.toggleVis =()=> {
-      this.show = !this.show;
-      this.forceUpdate()
-      window.App.editor.forceUpdate()
-    }
+    this.state={visibility:true}
+  }
+
+  toggleVis(){
+    this.setState({visibility:!this.state.visibility})
   }
 
   render(){
@@ -29,10 +28,13 @@ export default class Sidebar extends Component {
     if(left)className+=" left";
     if(right)className+=" right";
 
-    return this.show? (
-      <div className={className}>
-        {children}
-      </div>
-    ):null
+    if(this.state.visibility){
+      return (
+        <div className={className}>
+          {children}
+        </div>
+      )
+    }
+    return null;
   }
 }
