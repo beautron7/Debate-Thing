@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import './Circle.css'
 import './slideOpen.css'
 import Section from './Section'
+import Tree from './Tree'
 
 export default class Circle extends Component {
 
@@ -12,9 +13,9 @@ export default class Circle extends Component {
   }
 
   getDomCtx() {
-    this.dataContainer = window.App.editor.state.data._root
+    var data = window.App.editor.state.data._root
     this.parentReactElement = Section.Root
-
+    this.dataContainer = data;
     for (var i = 0; i < this.props.path.length-1; i++) {//stop before the final point so splicing can occour.
       var index = this.props.path[i];
 
@@ -31,7 +32,7 @@ export default class Circle extends Component {
 
   inject(obj){
     this.getDomCtx() //Context needs to be gotten every time you inject because the path to a section is not stait
-    this.dataContainer.appendChild(obj,this.insertToIndex-1) 
+    this.dataContainer.addNode(obj,this.insertToIndex-1) 
     this.parentReactElement.forceUpdate()      
   }
 
@@ -45,7 +46,9 @@ export default class Circle extends Component {
             cardInfo.cardID,
             cardInfo.collectionID
         )
-        .then(this.inject.bind(this));
+        .then(data=>{
+          this.inject(new Tree.Node.CardNode(data))
+        });
     }
     this.shrink();
   }
@@ -80,7 +83,7 @@ export default class Circle extends Component {
 
     this.clickID = setTimeout(()=>{
       this.endClick()
-      this.inject("New Section")
+      this.inject(new Tree.Node.SectionNode("New Section"))
     },1000)
   }
 

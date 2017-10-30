@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import './Editor.css'
 import Card from './Card.js'
 import Circle from './Circle.js'
+import Tree from './Tree.js'
 
 export default class Section extends Component {
-  static V_Section = class V_Section extends Array{};
 
   constructor(props){
     super(props);
@@ -58,10 +58,10 @@ export default class Section extends Component {
             }}
           />
         </div>
-        <Circle key={0} tree={tree} path={path.concat(1)} />
+        <Circle key={0} tree={tree} path={1} />
         {child_nodes.map((x,i) => ([
           ((x,i) => {
-            if(x.constructor === Section.V_Section){
+            if(x instanceof Tree.Node.SectionNode){
               return (
                 <Section
                   key={x.key}
@@ -69,7 +69,7 @@ export default class Section extends Component {
                   tree={x}
                   />
               )
-            } else if (x.constructor === Card.V_Card){
+            } else if (x instanceof Tree.Node.CardNode){
               return (
                 <Card
                   key={x.key}
