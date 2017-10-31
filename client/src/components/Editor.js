@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import './Editor.css'
 import './scrollbar.css'
-import Tree from './Tree.js'
+import Tree, {SectionNode} from './Tree.js'
 import Section from './Section.js'
 
 export default class Editor extends Component {
@@ -18,7 +18,9 @@ export default class Editor extends Component {
     } else {
       Editor.instance = this;
       window.App.editor=this;
-      this.state={data:new Tree("Title")};
+      var tree =new Tree("Title")
+      tree._root=new SectionNode("Title");
+      this.state={data:tree};
     }
   }
 

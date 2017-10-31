@@ -3,7 +3,8 @@ import React, {Component} from 'react';
 import './Circle.css'
 import './slideOpen.css'
 import Section from './Section'
-import Tree from './Tree'
+import {CardNode, SectionNode} from './Tree'
+const Aux =p=>p.children;
 
 export default class Circle extends Component {
 
@@ -14,25 +15,13 @@ export default class Circle extends Component {
 
   getDomCtx() {
     var data = window.App.editor.state.data._root
-    this.parentReactElement = Section.Root
-    this.dataContainer = data;
-    for (var i = 0; i < this.props.path.length-1; i++) {//stop before the final point so splicing can occour.
-      var index = this.props.path[i];
-
-      this.parentReactElement= 
-      this.parentReactElement.children[index];
-      
-      this.dataContainer=
-      this.dataContainer.children[index];
-    }
-
-    this.insertToIndex = this.props.path[this.props.path.length-1]
-    this.domCtxReady=true
+    this.dataContainer = this.props.tree;
+    this.parentReactElement = this.dataContainer.react;
   }
 
   inject(obj){
     this.getDomCtx() //Context needs to be gotten every time you inject because the path to a section is not stait
-    this.dataContainer.addNode(obj,this.insertToIndex-1) 
+    this.dataContainer.addNode(obj,this.props.path) 
     this.parentReactElement.forceUpdate()      
   }
 
@@ -47,7 +36,7 @@ export default class Circle extends Component {
             cardInfo.collectionID
         )
         .then(data=>{
-          this.inject(new Tree.Node.CardNode(data))
+          this.inject(new CardNode(data))
         });
     }
     this.shrink();
@@ -83,7 +72,7 @@ export default class Circle extends Component {
 
     this.clickID = setTimeout(()=>{
       this.endClick()
-      this.inject(new Tree.Node.SectionNode("New Section"))
+      this.inject(new SectionNode("New Section"))
     },1000)
   }
 
@@ -94,8 +83,8 @@ export default class Circle extends Component {
   }
 
   render(){
-    return ([
-      <div key={-1} className="terminator"/>,
+    return (<Aux>
+      <div key={-1} className="terminator"/>
       <div
         key={0}
         ref={self => {
@@ -112,8 +101,8 @@ export default class Circle extends Component {
         onMouseDown={this.beginClick.bind(this)}
         onMouseUp={this.endClick.bind(this)}
       >
-      </div>,
+      </div>
       <div key={1} className="terminator"/>      
-    ])
+    </Aux>)
   }
 }

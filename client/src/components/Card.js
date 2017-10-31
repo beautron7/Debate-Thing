@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import './Card.css';
 import './slideOpen.css';
 import RibbonButton from './RibbonButton';
+import {CardNode} from './Tree'
 // import Frame from 'react-frame-component'
 //moved stuff to paragraph component
 
@@ -134,7 +135,9 @@ export default class Card extends Component {
 
   constructor(props){
     super(props);
+    console.assert(this.props.tree instanceof CardNode)
     
+    this.props.tree.react = this;
     var data = this.props.tree.data
     console.log(this.props.tree)
 
@@ -179,13 +182,6 @@ export default class Card extends Component {
     return year
   }
 
-  // animate_open(){
-  //   setTimeout(() => {//Animation
-  //     if(this.dom !== null)
-  //     this.dom.style.maxHeight="1000em" //well, 100em sounds large but not for debate standards.
-  //   })
-  // }
-
   generateTextDom(){
     var str = ""
     for (var i = 0; i < this.state.data.text.length; i++) {
@@ -212,8 +208,6 @@ export default class Card extends Component {
   }
 
   render(){
-    // this.animate_open()
-
     return(
       <div draggable="false" ref={x=>this.dom=x} className="card animate-max-height">
         <div className="cardHead">
