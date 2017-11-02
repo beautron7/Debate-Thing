@@ -20,7 +20,7 @@ export default class Circle extends Component {
 
   inject(obj){
     this.getDomCtx() //Context needs to be gotten every time you inject because the path to a section is not stait
-    this.dataContainer.addNode(obj,this.props.path) 
+    this.dataContainer.addChildNode(obj,this.props.path) 
     this.parentReactElement.forceUpdate()      
   }
 

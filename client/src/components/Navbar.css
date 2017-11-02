@@ -1,41 +1,41 @@
-.Folder {
+.Folder,.Endpoint {
   width: 100%;
   background-color: #0af;
 }
 
-.Folder > span.name > div.checkbox-toggle {
-  display: inline-block;
-  background-color: #921; 
-  width: 1.5em;
-  height: auto;
-  padding-left: 0.25em;
-}
-
-
-.Folder > span.name > div.checkbox-toggle > input.toggle-vis {
+.Folder input.toggle-vis, .Endpoint .caret-placeholder{
   vertical-align: middle;
-  appearance: none;
   display: inline-block;
   background-color: transparent; 
   margin: 0.25em;
-  width: 0;
-  height: 0;
+  width: 1px;
+  height: 1px;
   border-width: 0.6em;
   border-right: 0px;
-  border-color: transparent transparent transparent black;
+  border-color: transparent;
   border-style: solid;
 }
+.Folder input.toggle-vis {
+  border-left-color: black;
+  appearance: none;
+}
 
-.Folder > span.name > div.checkbox-toggle > input.toggle-vis:focus { outline: none; }
+.Folder input.toggle-vis:focus { outline: none; }
+
 .Folder input.toggle-vis:checked {
+  margin-left: 0.5em;
+  margin-right: 0em;
+  margin-bottom: 0.15em;
+  margin-top:0.35em;
   transform: rotate(45deg);
 }
 
-.Folder span.name {
+.Folder span.name, .Endpoint span.name {
   display: inline-block;
   vertical-align: middle;
   margin: auto;
   line-height: 1em;
+  /* max-height: 1em; */
   font-weight: bold;
 }
 

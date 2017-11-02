@@ -154,7 +154,7 @@ export default class Card extends Component {
     };
 
     this.hideLinebreaks=false;    
-    this.tag = data.title || "(No Title / Tag)"
+    this.props.tree.data.tag = data.title || "(No Title / Tag)"
     this.condensed = false
 
   }
@@ -192,9 +192,9 @@ export default class Card extends Component {
 
   tagListener(x){
     if (x !== null && x !== undefined){
-      x.textContent=this.tag
+      x.textContent=this.props.tree.data.tag
       x.addEventListener("input",()=>{
-        this.tag=x.textContent
+        this.props.tree.data.tag=x.textContent;
       }, false)
     }
   }

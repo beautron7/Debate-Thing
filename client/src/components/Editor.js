@@ -4,6 +4,7 @@ import './Editor.css'
 import './scrollbar.css'
 import {Tree, SectionNode} from './Tree.js'
 import Section from './Section.js'
+import Navbar from './Navbar'
 
 export default class Editor extends Component {
   static propTypes = {
@@ -20,6 +21,7 @@ export default class Editor extends Component {
       var tree =new Tree("Title")
       tree._root=new SectionNode("Title");
       this.state={data:tree};
+      Navbar.instance.setState({tree:tree})
     }
   }
 
