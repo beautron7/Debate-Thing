@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './Editor.css'
 import Card from './Card.js'
 import Circle from './Circle.js'
-import {CardNode,SectionNode} from './Tree.js'
+import {CardPoint,SectionNode} from './Tree.js'
 const Aux =p=> p.children;
 
 
@@ -71,7 +71,7 @@ export default class Section extends Component {
                       tree={x}
                       />
                   )
-                } else if (x instanceof CardNode){
+                } else if (x instanceof CardPoint){
                   return (
                     <Card
                       tree={x}

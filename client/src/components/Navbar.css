@@ -1,0 +1,45 @@
+.Folder {
+  width: 100%;
+  background-color: #0af;
+}
+
+.Folder > span.name > div.checkbox-toggle {
+  display: inline-block;
+  background-color: #921; 
+  width: 1.5em;
+  height: auto;
+  padding-left: 0.25em;
+}
+
+
+.Folder > span.name > div.checkbox-toggle > input.toggle-vis {
+  vertical-align: middle;
+  appearance: none;
+  display: inline-block;
+  background-color: transparent; 
+  margin: 0.25em;
+  width: 0;
+  height: 0;
+  border-width: 0.6em;
+  border-right: 0px;
+  border-color: transparent transparent transparent black;
+  border-style: solid;
+}
+
+.Folder > span.name > div.checkbox-toggle > input.toggle-vis:focus { outline: none; }
+.Folder input.toggle-vis:checked {
+  transform: rotate(45deg);
+}
+
+.Folder span.name {
+  display: inline-block;
+  vertical-align: middle;
+  margin: auto;
+  line-height: 1em;
+  font-weight: bold;
+}
+
+.Folder div.contents {
+  padding-left: 1.5em;
+  background-color: #fa0;
+}

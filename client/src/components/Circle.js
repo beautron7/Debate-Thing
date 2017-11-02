@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import './Circle.css'
 import './slideOpen.css'
 import Section from './Section'
-import {CardNode, SectionNode} from './Tree'
+import {CardPoint, SectionNode} from './Tree'
 const Aux =p=>p.children;
 
 export default class Circle extends Component {
@@ -14,7 +14,6 @@ export default class Circle extends Component {
   }
 
   getDomCtx() {
-    var data = window.App.editor.state.data._root
     this.dataContainer = this.props.tree;
     this.parentReactElement = this.dataContainer.react;
   }
@@ -36,7 +35,7 @@ export default class Circle extends Component {
             cardInfo.collectionID
         )
         .then(data=>{
-          this.inject(new CardNode(data))
+          this.inject(new CardPoint(data))
         });
     }
     this.shrink();

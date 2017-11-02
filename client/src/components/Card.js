@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import './Card.css';
 import './slideOpen.css';
 import RibbonButton from './RibbonButton';
-import {CardNode} from './Tree'
+import {CardPoint} from './Tree'
 // import Frame from 'react-frame-component'
 //moved stuff to paragraph component
 
@@ -135,7 +135,7 @@ export default class Card extends Component {
 
   constructor(props){
     super(props);
-    console.assert(this.props.tree instanceof CardNode)
+    console.assert(this.props.tree instanceof CardPoint)
     
     this.props.tree.react = this;
     var data = this.props.tree.data

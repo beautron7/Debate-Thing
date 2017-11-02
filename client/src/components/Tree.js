@@ -1,64 +1,43 @@
-export default class Tree {
-  static Node = class Node {
-    constructor(data,parent){
-      this.data = data;
-      this.key = window.qi+"";
-      this.parent = parent;
-      this.children = [];
-    }
-
-    static stdpad = 2
-    
-    visualize(padding){
-      var padding_char = " ".repeat(Node.stdpad*padding)
-      var str = (this.data);
-      padding_char+=" ".repeat(Node.stdpad);
-      for (var i = 0; i < this.children.length; i++) {
-        str += "\n"+this.children[i].visualize(padding+1)
-      }
-      return str.slice(0,-1)
-    }
-
-    addNode(node,index){
-      node.parent=this
-      this.children.splice(
-        index,
-        0,
-        node
-      );
-    }
-  }
-
+export class Tree {
   constructor(data){
-    var node = new Tree.Node(data);
+    var node = new Node(data);
     this._root = node;
   }
 }
 
-export class CardNode extends Tree.Node {
+export class Point {
   constructor(data){
-    super(data);
-    delete this.children;
+    this.data = data;
+    this.key = window.qi;
+  }
+}
+
+export class Node extends Point {
+  constructor(data,parent){
+    super(data)
+    this.parent = parent;
+    this.children = [];
   }
 
-  visualize(padding){
-    return (this.data.title||"no title")+" (Card) "+this.key.slice(0,5)
+  addChildNode(node,index){
+    node.parent=this
+    this.children.splice(
+      index,
+      0,
+      node
+    );
+  }
+}
+
+export class CardPoint extends Point {
+  constructor(data){
+    super(data);
+    this.parent = null;
   }
 };
 
-export class SectionNode extends Tree.Node {
+export class SectionNode extends Node {
   constructor(title){
     super(title)
-    this.react=null;
-  }
-  visualize(padding){
-    var str = (this.data+" (section) "+this.key.slice(0,5)+"\n");
-    var padding_char = " ".repeat(padding * Tree.Node.stdpad)
-    padding_char+=" ".repeat(Tree.Node.stdpad);
-
-    for (var i = 0; i < this.children.length; i++) {
-      str += padding_char+this.children[i].visualize(padding+1)+"\n"
-    }
-    return str.slice(0,-1)
   }
 };

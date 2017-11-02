@@ -5,6 +5,7 @@ import CardsFrame from './components/CardsFrame'
 import Editor from './components/Editor'
 import Tabbar from './components/Tabbar'
 import Ribbon from './components/Ribbon'
+import Navbar from './components/Navbar'
 import './App.css';
 
 export default class App extends Component {
@@ -13,23 +14,11 @@ export default class App extends Component {
       throw new Error('App may only be instanciated once');
     super(a,b,c);
 
-    this.Ribbon = {show:true};
-    this.Tabbar = {paneNumber:0};
-    this.leftBar = {toggleVis:()=>(0),show:true};
-    this.rightBar = {toggleVis:()=>(0),show:true};
-    this.cardFrame= {};
-  
     window.App = this;
   }
 
   updateGUI(){
-    console.log("GUI UPDATE IS DEPRICATED");
-    var self = window.App
-    self.rightBar.forceUpdate()
-    self.leftBar.forceUpdate()
-    self.Tabbar.forceUpdate()
-    self.Ribbon.forceUpdate()
-    self.editor.forceUpdate()
+    throw new Error("Hey, Fix ur code")
   }
 
   render() {
@@ -43,31 +32,32 @@ export default class App extends Component {
           />
         <div
           className="app-body"
-          ref={x=>this.dom=x}
+          ref={x=>this.Body=x}
           >
           <Sidebar left
-            ref={self => window.App.leftBar=self}
-            /* shrinkTopMargin={window.App.shrinkTopMargin} */
+            ref={self => window.App.LeftBar=self}
             >
             <Searchbar
               title="Find Section"
               id="docsearch"
               />
+            <Navbar
+              ref={self => window.App.CardFrame = self}
+              />
           </Sidebar>
           <Sidebar right
-            ref={self => window.App.rightBar=self}
-            /* shrinkTopMargin={window.App.shrinkTopMargin} */
+            ref={self => window.App.RightBar=self}
             >
             <Searchbar
               title="Search Cards"
               id="cardsSearch"
               />
             <CardsFrame
-              ref={self => window.App.cardFrame = self}
+              ref={self => window.App.CardFrame = self}
               />
           </Sidebar>
           <Editor
-            ref={self => window.App.editor=self}
+            ref={self => window.App.Editor=self}
             />
         </div>
       </div>
