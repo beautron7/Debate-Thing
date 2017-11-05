@@ -1,6 +1,6 @@
 /*Ribbon.css*/
 .ribbon {
-  height: 6em;
+  height: 84px;
   /*background-color: #0af;*/
   background-color: var(--ribbon-title-bar);
   text-align: left;

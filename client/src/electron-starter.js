@@ -31,6 +31,16 @@ appStorage.init()
 const windows = []
 const mac = process.platform === "darwin"
 
+
+
+var shouldQuit = app.makeSingleInstance((commandLine, workingDirectory) => {
+  createAnEditorWindow()
+});
+
+if (shouldQuit) {
+  app.quit();
+}
+
 function createAnEditorWindow () {
   const theWindow = new BrowserWindow({
     width: 800,
