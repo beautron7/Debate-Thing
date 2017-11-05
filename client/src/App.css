@@ -6,7 +6,7 @@
 }
 
 .App .ribbon ~ .app-body{
-  top:109.5px;
+  top:109.2px;
 }
 
 .App .app-body{
@@ -23,10 +23,10 @@
 
 .App > .app-body > #editor {
   text-align: center;
-  top: 0em;
+  top: 0;
   right: 0;
   left: 0;
-  bottom: 0em;
+  bottom: 0;
   overflow-y: scroll;
 }
 

@@ -29,9 +29,14 @@ colors.enabled = true
 appStorage.init()
 
 const windows = []
+const mac = process.platform === "darwin"
 
 function createAnEditorWindow () {
-  const theWindow = new BrowserWindow({width: 800, height: 600, frame: false})
+  const theWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    frame: mac
+  })
   windows.push(theWindow)
 
   const startUrl = process.env.ELECTRON_START_URL || url.format({
@@ -52,21 +57,21 @@ function createAnEditorWindow () {
     delete theWindow
   })
 
-  theWindow.on('maximize', function () {
-    theWindow.webContents.send('Window-State','maximized')
-  })
-
-  theWindow.on('unmaximize', function () {
-    theWindow.webContents.send('Window-State','unmaximized')
-  })
+  if(!mac){
+    theWindow.on('maximize', function () {
+      theWindow.webContents.send('Window-State','maximized')
+    })
+  
+    theWindow.on('unmaximize', function () {
+      theWindow.webContents.send('Window-State','unmaximized')
+    })
+  }
 }
 
 app.on('ready', createAnEditorWindow)
 
 app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+    app.quit() //Yeah, OSX normally keeps it open, but I havent found anyone who finds that usefu
 })
 
 app.on('activate', function () {
