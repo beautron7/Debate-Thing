@@ -65,6 +65,7 @@
   overflow-x: hidden;
 }
 .card-preview > .keywordContainer > .keyword {
+  white-space: nowrap;
   background-color: var(--accent-secondary);
   border-radius: 0.6em;
   font-size: 1em;

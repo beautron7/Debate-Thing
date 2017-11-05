@@ -1,45 +1,116 @@
-.Folder,.Endpoint {
+.nav-item {
+  position: relative;
+  --nav-height: 1.75em;
   width: 100%;
-  background-color: #0af;
+  min-height: var(--nav-height);
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.Folder input.toggle-vis, .Endpoint .caret-placeholder{
+.nav-item-box {
+  background: var(--canvas-3);
+}
+
+.nav-item-box.active {
+  background:#0af;
+}
+
+.breadcrumb {
+  margin: 0;
+  background: var(--canvas-3);
+} 
+
+.breadcrumb .breadcrumb-item::before{
+  color:black;
+}
+
+
+.nav-item .square {
+  position: absolute;
+  top:0;
+  left:0;
+  margin:0;
   vertical-align: middle;
   display: inline-block;
-  background-color: transparent; 
-  margin: 0.25em;
-  width: 1px;
-  height: 1px;
-  border-width: 0.6em;
-  border-right: 0px;
-  border-color: transparent;
-  border-style: solid;
+  text-align: center;
+  line-height: var(--nav-height);  
+  /* font-size: 1.75em; */
+  height: var(--nav-height);
+  width: var(--nav-height);
 }
-.Folder input.toggle-vis {
-  border-left-color: black;
+
+.nav-item.children input.toggle-vis{
   appearance: none;
 }
 
-.Folder input.toggle-vis:focus { outline: none; }
-
-.Folder input.toggle-vis:checked {
-  margin-left: 0.5em;
-  margin-right: 0em;
-  margin-bottom: 0.15em;
-  margin-top:0.35em;
-  transform: rotate(45deg);
+.nav-item.children input.toggle-vis:after{
+  font-family: FontAwesome;
+  vertical-align: middle;
+  display: inline-block;
+  background-color: transparent; 
+  margin: 0;
+  text-align: center;
+  line-height: var(--nav-height);  
+  /* font-size: 1.75em; */
+  height: var(--nav-height);
+  width: var(--nav-height);
+  /* border-width: 0.875em; */
+  /* border-color: transparent; */
+  /* border-style: solid; */
+  /* border-left-color: black; */
+  content: '\f07c';  
+  padding-left:0.2em;
 }
 
-.Folder span.name, .Endpoint span.name {
+.nav-item.children input.toggle-vis:checked:after {
+  content: '\f114';
+  padding: 0;  
+}
+
+.nav-item.children input.toggle-vis:checked ~ div.contents{
+  visibility: hidden;
+  height: 0;
+}
+
+.nav-item span.name {
+  position: absolute;
+  left: var(--nav-height);
+  right:0;
   display: inline-block;
   vertical-align: middle;
-  margin: auto;
+  height: var(--nav-height);
+  padding: calc(0.75em / 2);
   line-height: 1em;
   /* max-height: 1em; */
   font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-x: hidden;
 }
 
-.Folder div.contents {
-  padding-left: 1.5em;
-  background-color: #fa0;
+.nav-item span.name:hover {
+  --border-size: 1.5px;
+  border: solid var(--border-size);
+  padding: calc(0.37em - var(--border-size));
+}
+
+
+.nav-item div.contents {
+  /* position: absolute; */
+  /* top: calc(var(--nav-height)); */
+  /* left: var(--nav-height); */
+  /* right:0; */
+  padding-top: var(--nav-height);
+  padding-left: var(--nav-height);
+}
+
+.nav-item .slide-down-name{
+  position: absolute;
+  top: var(--nav-height);
+  left:0;
+  bottom:0;
+  width: var(--nav-height);
+  background: var(--canvas-3);
+  overflow-y: hidden;
+  padding: 0;
 }

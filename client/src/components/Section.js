@@ -43,7 +43,7 @@ export default class Section extends Component {
     var child_nodes = tree.children;
 
     return (
-      <div draggable="false" className="section" onDragStart={this.onDragStart.bind(this)}>
+      <div draggable="false" ref={self=>this.dom=self} className="section" onDragStart={this.onDragStart.bind(this)}>
         <div key={-1}>
           <span
             className="heading"
@@ -54,6 +54,7 @@ export default class Section extends Component {
                 self.textContent = title
                 self.addEventListener("input",()=>{
                   tree.data=self.textContent
+                  tree.nav.forceUpdate();
                 }, false)
               }
             }}

@@ -16,12 +16,14 @@ export default class Circle extends Component {
   getDomCtx() {
     this.dataContainer = this.props.tree;
     this.parentReactElement = this.dataContainer.react;
+    this.corresponding_nav_pane = this.dataContainer.nav;
   }
 
   inject(obj){
     this.getDomCtx() //Context needs to be gotten every time you inject because the path to a section is not stait
     this.dataContainer.addChildNode(obj,this.props.path) 
-    this.parentReactElement.forceUpdate()      
+    this.parentReactElement.forceUpdate()  
+    this.corresponding_nav_pane.forceUpdate()    
   }
 
   onDrop(ev) {

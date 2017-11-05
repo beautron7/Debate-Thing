@@ -195,6 +195,7 @@ export default class Card extends Component {
       x.textContent=this.props.tree.data.tag
       x.addEventListener("input",()=>{
         this.props.tree.data.tag=x.textContent;
+        this.props.tree.nav.forceUpdate()
       }, false)
     }
   }
@@ -305,13 +306,13 @@ export default class Card extends Component {
           contentEditable={true}
           ref={self => this.cardBodyDom = self}
         >
+          {this.state.text}
         </div>
       </div>
     )
   }
 
   componentDidMount(){
-    ReactDOM.render(this.state.text,this.cardBodyDom)
     this.cardBodyDom.addEventListener("keypress",scope=>this.handleKey(scope))
     this.cardBodyDom.addEventListener("keydown",scope=>this.handleKey(scope))
   }
