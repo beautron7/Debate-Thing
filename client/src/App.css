@@ -2,11 +2,11 @@
 @media (max-width: 1048px){.App {--sidebar-width: 240px;}}
 
 .App .app-body{
-  top:1.8em;
+  top:25px;
 }
 
 .App .ribbon ~ .app-body{
-  top:7.8em;
+  top:109.5px;
 }
 
 .App .app-body{

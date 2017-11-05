@@ -17,9 +17,6 @@ export default class Navbar extends Component {
   render(){
     return (
       <Aux>
-        {/* <Navbar.Breadcrumb
-          ref={x=>this.Breadcrumb=x}
-        /> */}
         <Navbar.SectionNav node={
           this.state.tree._root
         }/>

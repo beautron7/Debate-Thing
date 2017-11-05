@@ -1,13 +1,14 @@
 .ribbon-button {
   display: inline-block;
-  --baseheight:1em;
+  --baseheight:14px;
   --height:var(--baseheight);
   font-size: var(--baseheight);
 
   border-style: solid;
   border-color: var(--btn-default);
   background-color: var(--btn-default);
-  margin:0em;
+  border-width: 1.5px;
+  margin:px;
   user-select: none !important;
   color: var(--text-color);
   /*height: var(--height);*/
@@ -37,8 +38,8 @@
 .ribbon-button .title {
   width: auto;
   padding: 0;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  padding-left: 7px;
+  padding-right: 7px;
 }
 
 .ribbon-button .title, .ribbon-button .icon {
@@ -55,7 +56,7 @@
 }
 .ribbon-button.md .icon .glyphicon {
   /*font-size: var(--height)*/
-  margin-top: -0.1em;
+  margin-top: -1px;
 }
 .ribbon-button.lg .icon .glyphicon {
   font-size: var(--height);

@@ -28,6 +28,7 @@
   font-size: 3em;
   display: block;
   border-style: solid;
+  border-width: 1.5px;
 }
 
 #editor > .section .section > div > .heading {
