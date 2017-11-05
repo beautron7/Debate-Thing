@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 // import PropTypes from 'prop-types';
 import Tab from './Tab'
+import HideForMac from './HideForMac'
 import './Tabbar.css'
 
 export default class Tabbar extends Component {
@@ -44,21 +45,31 @@ export default class Tabbar extends Component {
     return (
       <div className='tab-container'>
         {tabs}
-        <i aria-label="close window" className="fa fa-window-thing fa-window-close"    onClick={x=>window.electron.remote.getCurrentWindow().close()}></i>
-        <i aria-label="restore-down / maximize window" className={"fa fa-window-thing fa-window-"+(this.state.maximized?'restore':'maximize')} onClick={this.toggleMaximize}></i>
-        <i aria-label="minimize window" className="fa fa-window-thing fa-window-minimize" onClick={x=>window.electron.remote.getCurrentWindow().minimize()}></i>
-
+        <HideForMac>
+          <i 
+            aria-label="close window"
+            className="fa fa-window-thing fa-window-close"
+            onClick={x=>window.electron.remote.getCurrentWindow().close()}
+            />
+          <i
+            aria-label="restore-down / maximize window"
+            className={"fa fa-window-thing fa-window-"+(this.state.maximized?'restore':'maximize')}
+            onClick={this.toggleMaximize}
+            />
+          <i
+            aria-label="minimize window"
+            className="fa fa-window-thing fa-window-minimize"
+            onClick={x=>window.electron.remote.getCurrentWindow().minimize()}
+            />
+        </HideForMac>
         <i
           style={{'float':'right'}}
-          onClick={
-            ()=>{
-              this.setState({paneNumber:-1})
-              window.App.Ribbon.setState({paneNumber:-1})
-            }
-          }
+          onClick={x=>{
+            this.setState({paneNumber:-1})
+            window.App.Ribbon.setState({paneNumber:-1})
+          }}
           className="tab glyphicon glyphicon-eject"
-          >
-        </i>
+          />
       </div>
     )
   }
