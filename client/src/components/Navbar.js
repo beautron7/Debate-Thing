@@ -17,9 +17,9 @@ export default class Navbar extends Component {
   render(){
     return (
       <Aux>
-        <Navbar.Breadcrumb
+        {/* <Navbar.Breadcrumb
           ref={x=>this.Breadcrumb=x}
-        />
+        /> */}
         <Navbar.SectionNav node={
           this.state.tree._root
         }/>
@@ -96,7 +96,7 @@ export default class Navbar extends Component {
                   if(x instanceof SectionNode){
                     return <SectionNav key={x.key} node={x}/>
                   } else if (x instanceof CardPoint){
-                    return <CardNav node={x} name={x.data.tag}/>
+                    return <CardNav    key={x.key} node={x} name={x.data.tag}/>
                   }
                 })
               }
@@ -121,7 +121,7 @@ export default class Navbar extends Component {
       return (
         <ol className="breadcrumb">
           {nodes.map((x,i)=>(
-            <li className="breadcrumb-item">
+            <li key={x.key} className="breadcrumb-item">
               {
                 x.href && <a onClick={x.onClick}>{x.name}</a>
               }
@@ -133,7 +133,8 @@ export default class Navbar extends Component {
       function traverse(node) {
         nodes.push({
           text:node.nav.props.name,
-          onClick:node.nav.scrollToEditorNode()
+          onClick:node.nav.scrollToEditorNode(),
+          key:node.key,
         })
         if(node.parent){
           traverse(node.parent)
