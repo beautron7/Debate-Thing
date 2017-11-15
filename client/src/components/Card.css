@@ -7,7 +7,8 @@
   background-color: var(--canvas-1);
   margin:auto;
   border-radius: 1em;
-  border-style: solid;
+  /* border-style: solid; */
+  box-shadow: 0 0 10px 0;
   animation: open forwards 1s;
   /*overflow: hidden;*/
   /*To allow for sticky*/
@@ -58,7 +59,8 @@
 
 .card > .cardHead {
   border-radius: 0.9em;
-  border-style: solid;
+  /* border-style: solid; */
+  box-shadow: 0 0 1px 1px;
   overflow: hidden;
   display:block;
   position: sticky;
@@ -127,6 +129,7 @@
   left:0em;
 
   border-style:groove;
+  
   border-top-right-radius: 1em;
   border-bottom-right-radius: 1em;
   padding-right: 0.5em;

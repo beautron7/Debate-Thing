@@ -60,7 +60,7 @@ export default class Navbar extends Component {
 
   static SectionNav = class SectionNav extends Component {
     scrollToEditorNode(event){
-      var pos = this.props.node.react.dom.scrollIntoView(true)
+      var pos = this.props.node.react.dom.scrollIntoView({behavior:"smooth"})
       if(event && event.stopPropagation) {
         event.stopPropagation()
       }

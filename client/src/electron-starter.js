@@ -24,7 +24,7 @@ const BrowserWindow = electron.BrowserWindow
 const path = require('path')
 const url = require('url')
 const colors = require('colors')
-const appStorage = require("./Storage.js").default
+const appStorage = require("./storage_main.js").default
 colors.enabled = true
 appStorage.init()
 

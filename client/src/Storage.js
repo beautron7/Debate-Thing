@@ -133,7 +133,7 @@ var self ={
     } else {
       console.log("appStorage already ready!")
     }
-  },//
+  },
 
 
   load:{

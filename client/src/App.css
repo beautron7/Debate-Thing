@@ -44,12 +44,17 @@ html {
 }
 
 html,*, body {
+
   --theme: light-dev;
 
-  --section0: red;
+  --root-section: orange;
+  --sub-section: rgba(0, 250, 62, 0.2);
+  --sub-section-shadow-color: black; 
+
+  /* --section0: red;
   --section1: darkcyan;
   --section2: green;
-  --section3: white;
+  --section3: white; */
 
   --accent-primary: #0AF;
   --accent-secondary: #FB0;
@@ -77,6 +82,9 @@ html,*, body {
 
 /* html,*, body {
   --theme: dark-dev;
+
+  --root: #000;
+  --section: rgba(255,255,255,0.2);
 
   --section0: radial-gradient(ellipse at center, rgba(0,75,120N,1) 0%, rgba(0,117,170,1) 100%);;
   --section1: radial-gradient(ellipse at center, #075 0%, #094 100%);;

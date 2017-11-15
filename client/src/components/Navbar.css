@@ -89,9 +89,10 @@
 }
 
 .nav-item span.name:hover {
-  --border-size: 1.5px;
-  border: solid var(--border-size);
-  padding: calc(0.37em - var(--border-size));
+  box-shadow: 0 0px 5px 0px;
+  /* --border-size: 1.5px; */
+  /* border: solid var(--border-size); */
+  /* padding: calc(0.37em - var(--border-size)); */
 }
 
 
