@@ -1,4 +1,4 @@
-.ribbon-button {
+ribbonbutton {
   display: inline-block;
   --baseheight:14px;
   --height:var(--baseheight);
@@ -15,34 +15,34 @@
   cursor: default;
 }
 
-.ribbon-button:hover{
+ribbonbutton:hover{
   border-color: var(--btn-hover);
   background-color: var(--btn-hover);
 }
 
-.ribbon-button:active{
+ribbonbutton:active{
   background-color: rgba(0,0,0,0);
 }
 
 
-.ribbon-button.lg {
+ribbonbutton.lg {
   --height: calc(2 * var(--baseheight));
 }
 
-.ribbon-button .icon {
+ribbonbutton .icon {
   width: var(--height);
   padding: 0;
   margin: 0;
 }
 
-.ribbon-button .title {
+ribbonbutton .title {
   width: auto;
   padding: 0;
   padding-left: 7px;
   padding-right: 7px;
 }
 
-.ribbon-button .title, .ribbon-button .icon {
+ribbonbutton .title, ribbonbutton .icon {
   height: var(--height);
   display: inline-block;
   line-height: var(--height);
@@ -50,22 +50,22 @@
   vertical-align: middle;
 }
 
-.ribbon-button .icon * {
+ribbonbutton .icon * {
   vertical-align: middle;
   display: block;
 }
-.ribbon-button.md .icon .glyphicon {
+ribbonbutton.md .icon .glyphicon {
   /*font-size: var(--height)*/
   margin-top: -1px;
 }
-.ribbon-button.lg .icon .glyphicon {
+ribbonbutton.lg .icon .glyphicon {
   font-size: var(--height);
 }
-.ribbon-button.lg .icon span {
+ribbonbutton.lg .icon span {
   font-size: var(--height);
   overflow: clip;
 }
-.ribbon-button .icon img {
+ribbonbutton .icon img {
   width: var(--height);
   height: var(--height);
 }

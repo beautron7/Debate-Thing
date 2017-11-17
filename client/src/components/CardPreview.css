@@ -1,32 +1,37 @@
-.card-preview {
+cardpreview {
+  display: block;
+  --height:84px;
   position: relative;
-  margin: 1em;
+  margin: 14px;
   width: auto;
-  height: 6em;
+  height: var(--height);
   background-color: var(--canvas-4);
   /*overflow-y: hidden;*/
-  box-shadow: 0px 5px 15px -2px rgba(0,0,0,0.75);
-  transition: margin 0.5s;
-  color: var(--text-color)
+  transition: box-shadow 0.5s;
+  color: var(--text-color);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-.card-preview:hover{
-  margin-left: 0.5em;
-  margin-right: 0.5em;
+cardpreview:hover{
+  /*margin-left: 7px;*/
+  /*margin-right: 7px;*/
   /*height: 6em;*/
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 
-.card-preview > img {
-  height: 5em;
-  width: 5em;
-  margin: 0.5em;
+cardpreview > img {
+  --margin: 7px;
+  height: calc(var(--height) - var(--margin) * 2);
+  width:  calc(var(--height) - var(--margin) * 2);
+  margin: var(--margin);
   float: left;
   background-color: var(--canvas-img-background);
 }
 
-.card-preview > .author {
+cardpreview > author {
+  display: block;
   text-align: left;
-  font-size: 1.5em;
+  font-size: 2rem;
 
   margin: 0;
   margin-top: 0.5em;
@@ -36,12 +41,9 @@
   height: 1.25em;
   overflow: hidden;
 }
-.card-preview > .author > span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
-.card-preview > .title {
+cardpreview > title {
+  display: block;
   line-height: 1.2em;
   font-size: 1em;
   font-style: italic;
@@ -54,17 +56,14 @@
   height: 2.4em;
   overflow: hidden;
 }
-.card-preview > .title > span {
-  overflow-y: hidden;
-  text-overflow: ellipsis;
-}
 
-.card-preview > .keywordContainer {
+cardpreview > keywordcontainer {
   text-align: left;
   max-width:90%;
   overflow-x: hidden;
 }
-.card-preview > .keywordContainer > .keyword {
+cardpreview > keywordcontainer > keyword {
+  display: inline;
   white-space: nowrap;
   background-color: var(--accent-secondary);
   border-radius: 0.6em;
@@ -76,7 +75,7 @@
   padding-right: 0.5em;
 }
 
-.card-preview > .url {
+cardpreview > .url {
   visibility: hidden;
 }
 
@@ -84,22 +83,22 @@
 
 
 /*TEXTPANE*/
-.card-preview{
+cardpreview{
   --right:23%;
 }
 
-@media all and (max-width: 900px) {.card-preview{
+@media all and (max-width: 900px) {cardpreview{
   --right:15em !important;
 }}
 
-.card-preview >        .text-pane {visibility: hidden;}                 /*Default, no touch*/
-.card-preview:hover >  .text-pane {visibility: visible;}                /*Tooltip on hover*/
-.card-preview > .text-pane:hover  {visibility: visible;}                /*Keep text pane Display visibility on hover*/
-.card-preview > .text-pane:active {visibility: visible;}                /*Stay up when focus shifts*/
-.card-preview:active > .text-pane {visibility: hidden;}                 /*Hide when drag begins*/
-.card-preview > .text-pane:active {visibility: visible}  
+cardpreview >        .text-pane {visibility: hidden;}                 /*Default, no touch*/
+cardpreview:hover >  .text-pane {visibility: visible;}                /*Tooltip on hover*/
+cardpreview > .text-pane:hover  {visibility: visible;}                /*Keep text pane Display visibility on hover*/
+cardpreview > .text-pane:active {visibility: visible;}                /*Stay up when focus shifts*/
+cardpreview:active > .text-pane {visibility: hidden;}                 /*Hide when drag begins*/
+cardpreview > .text-pane:active {visibility: visible}
 
-.card-preview > .text-pane > .tri {
+cardpreview > .text-pane > .tri {
   position: fixed;
   transform: translateY(-3.5em);
   right: calc(var(--right) - 0.75em);
@@ -111,48 +110,48 @@
   border-color: transparent transparent transparent var(--accent-secondary);
 }
 
-.card-preview > .text-pane > .fake-body  {
+cardpreview > .text-pane > .fake-body  {
   vertical-align: center;
-  --edge: 5em;  
+  --edge: 5em;
   background: var(--accent-secondary);
 
-  border-style: solid;    
-  border-width:0em 1em 0em 0em;  
-  border-color: rgba(0,0,0,0); 
-   background-clip: content-box; 
+  border-style: solid;
+  border-width:0em 1em 0em 0em;
+  border-color: rgba(0,0,0,0);
+   background-clip: content-box;
 
 
   transform: translateX(1.1em) translateY(calc(-2.5em - 50%));
   position: fixed;
-  right:var(--right); 
-  left:calc(100% - var(--right) - var(--edge) - 0.75em);  
-  height: var(--edge); 
+  right:var(--right);
+  left:calc(100% - var(--right) - var(--edge) - 0.75em);
+  height: var(--edge);
   z-index: 1;
 }
 
 @keyframes expand {
   0% {
-    left:calc(100% - var(--right) - var(--edge));      
-    transform: translateX(1.1em) translateY(calc(-2.5em - 50%)); 
+    left:calc(100% - var(--right) - var(--edge));
+    transform: translateX(1.1em) translateY(calc(-2.5em - 50%));
   }
 
   60% {/*Manually change contents and override color*/
     height: calc(400%);
   }
   61% {
-    transform: translateX(1.1em);      
+    transform: translateX(1.1em);
     top:0%;
     bottom:0%;
-    height: calc(100%);   
+    height: calc(100%);
   }
   100% {
-    left:var(--right);    
-    transform: translateX(1.1em);  
-    
+    left:var(--right);
+    transform: translateX(1.1em);
+
     top:8em;
-    bottom: 1em;  
+    bottom: 1em;
     height: calc(100% - 9em);
-    overflow-y: scroll;     
+    overflow-y: scroll;
   }
 }
 
@@ -168,27 +167,27 @@
   51% {visibility: visible; height: auto; color:var(--accent-primary)}
   100% {visibility: visible; height: auto; color: black}
 }
-.card-preview > .text-pane:hover > .fake-body {
+cardpreview > .text-pane:hover > .fake-body {
   animation: expand 0.15s forwards;
 }
-.card-preview > .text-pane:hover > .fake-body > .pre-load {
+cardpreview > .text-pane:hover > .fake-body > .pre-load {
   animation: expand-pre-load 0.15s forwards;
 }
 
-.card-preview > .text-pane > .fake-body > .post-load {
-  visibility: hidden; 
+cardpreview > .text-pane > .fake-body > .post-load {
+  visibility: hidden;
   height: 0;
 
   white-space: pre-wrap !important;
   text-align: left;
 }
 
-.card-preview > .text-pane:hover > .fake-body > .post-load {
+cardpreview > .text-pane:hover > .fake-body > .post-load {
   animation: expand-post-load 0.15s forwards;
 }
 
 
-.card-preview > .text-pane > .fake-body::-webkit-scrollbar {background: #a00;}
-.card-preview > .text-pane > .fake-body::-webkit-scrollbar-thumb {border-radius: 1em;background:#a0a;}  
- .card-preview > .text-pane > .fake-body::-webkit-scrollbar-track {border-radius: 1em; background:#00a;} 
-.card-preview > .text-pane > .fake-body::-webkit-scrollbar{border-radius: 1em;background-color: greenyellow;}
+cardpreview > .text-pane > .fake-body::-webkit-scrollbar {background: #a00;}
+cardpreview > .text-pane > .fake-body::-webkit-scrollbar-thumb {border-radius: 1em;background:#a0a;}
+ cardpreview > .text-pane > .fake-body::-webkit-scrollbar-track {border-radius: 1em; background:#00a;}
+cardpreview > .text-pane > .fake-body::-webkit-scrollbar{border-radius: 1em;background-color: greenyellow;}

@@ -27,7 +27,7 @@ export default class CardPreview extends Component {
 
       return <div ref={this.props._ref} className="text-pane">
         <div className="tri"></div>
-        <div 
+        <div
           onMouseEnter={scope => this.loadText()}
           onMouseLeave={scope => this.unloadText()}
           className="fake-body">
@@ -55,32 +55,30 @@ export default class CardPreview extends Component {
   render(){
     const keywordNodes = this.props.keywords ? this.props.keywords.map(
       (keyword,index) =>
-        <span
+        <keyword
           key={index}
-          className="keyword"
           draggable="false"
         >
           {keyword}
-        </span>
+        </keyword>
       ):null
 
     return (
-      <div 
-        className="card-preview"
-        onDragStart={event => this.onDragStart(event)} 
+      <cardpreview
+        onDragStart={event => this.onDragStart(event)}
         draggable="true"
         ref={x=>this.dom=x}
       >
         <img src={this.props.img} draggable="false" alt="" />
-        <div className="author" draggable="false"><span>{this.props.author}</span></div>
-        <div className="title" draggable="false"><span>{this.props.title}</span></div>
-        <div className="keywordContainer" draggable="false">{keywordNodes}</div>
+        <author draggable="false">{this.props.author}</author>
+        <title draggable="false">{this.props.title}</title>
+        <keywordcontainer draggable="false">{keywordNodes}</keywordcontainer>
         <CardPreview.TextPane
           _ref={x=>this.txtPN=x}
           collectionID={this.props.collectionID}
           cardID={this.props.ID}
         />
-      </div>
+      </cardpreview>
     )
   }
 }

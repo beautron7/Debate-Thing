@@ -1,4 +1,4 @@
-.tab-container {
+tabcontainer {
   height: 1.8em !important;
   /*background-color: #0af;*/
   overflow-y: hidden;
@@ -6,6 +6,7 @@
   clear: both;
   -webkit-app-region: drag;
   cursor: default;
+  display: block;
 }
 .fa-window-thing{
   margin-top:0.25em;

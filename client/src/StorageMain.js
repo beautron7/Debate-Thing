@@ -43,7 +43,7 @@ class Card {
     assert(
       (
         cardTextFileObj.textHash &&
-        HASH(cardTextFileObj.text) !== cardTextFileObj.textHash  
+        HASH(cardTextFileObj.text) !== cardTextFileObj.textHash
       ),
       "Hashing Error!"
     );
@@ -78,6 +78,9 @@ class Database {
 
 class DatabaseCollection {
   constructor(locations){
+    if(DatabaseCollection.instance)
+      throw new Error("Monoinstance required for DatabaseCollection");
+    DatabaseCollection.instance = this;
     this._databases = [];
     locations.forEach((path) => {
       this._databases.push(new Database(path))
@@ -92,14 +95,14 @@ class DatabaseCollection {
     var foldername = name.replace(char_blacklist,"")
 
     var files_in_folder = (await MZFS.readdir(path)).length
-    
+
     if(files_in_folder.length){
       path+="/"+foldername
       await MZFS.mkdir(path)
     }
 
     var tmp = new Date()
-    var collectionID = 
+    var collectionID =
       HASH({
         collectionName:name,
         created:tmp.toJSON(),
@@ -141,8 +144,8 @@ class ConfigFile {
    *    writeInterval: 1000,
    *    construct_sync: false, //set true to force the constructor to wait for the filesystem
    * })
-   * 
-   * foo.onReady(instance =>{
+   *
+   * foo.onReady(instance => {
    *   instance.data.prop = 5   //wont overwrite because prop2 resets write timeout.
    *   instance.prop2 = 10
    *   console.log(instance.prop) //5
@@ -151,7 +154,7 @@ class ConfigFile {
    */
 
   setter(...args) {
-    if(this.writeTimeoutId) 
+    if(this.writeTimeoutId)
       clearTimeout(this.write_timeout_id);
 
     Reflect.set(...args);
@@ -161,21 +164,24 @@ class ConfigFile {
         this.writeToDisk()
       },this.writeInterval)
     );
+
+    return true;
   }
 
   writeToDisk(){
-    fs.writeFile(this.path,this.data)
+    fs.writeFile(this.path,(this.options.encoding || JSON).stringify(this.data))
   }
 
   constructor(options) {
+    this.options = options;
     this.writeInterval = options.writeInterval || 1000;
     this.path=options.path;
 
     var init =(text)=> {//this exists so async is an option.
-      var data = (this.options.encoding || JSON).parse(text)
-      
+      var data = (options.encoding || JSON).parse(text)
+
       this.data = new Proxy(data,{
-        set: this.options.readOnly? ()=>{}:this.setter
+        set: options.readOnly? ()=>{}:this.setter.bind(this)
       })
 
       if(this.onReady){
@@ -183,27 +189,33 @@ class ConfigFile {
           func(this);
         })
       }
+
+      this.status="success"
     }
 
     if(options.construct_sync){
       try {
-        var text = fs.readFileSync(options.path);
+        var text = fs.readFileSync(options.path,"utf8");
         init(text)
       } catch (e) {
+        console.error(e)
         if(Array.isArray(this.onFail)){
           this.onFail.forEach(x=>{
             x(err)
           })
         }
+        this.status = "failed --- "+e.toString();
       }
     } else {
-      fs.readFile(options.path,{},(err,text) => {
+      fs.readFile(options.path,"utf8",(err,text) => {
         if(err){
+          console.error(e)
           if(Array.isArray(this.onFail)){
             this.onFail.forEach(x=>{
               x(err)
             })
           }
+          this.status = "failed --- "+e.toString();
         } else {
           init(text);
         }
@@ -212,14 +224,19 @@ class ConfigFile {
   }
 }
 
-
+module.exports = {
+  Card:Card,
+  Database:Database,
+  DatabaseCollection:DatabaseCollection,
+  ConfigFile:ConfigFile,
+}
 
 
 //****************************************************//
 
 // class Card {
 //   async getText(){
-    
+
 //   }
 // }
 

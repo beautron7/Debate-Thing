@@ -43,10 +43,10 @@ export default class Tabbar extends Component {
     ))
 
     return (
-      <div className='tab-container'>
+      <tabcontainer className='tab-container'>
         {tabs}
         <HideForMac>
-          <i 
+          <i
             aria-label="close window"
             className="fa fa-window-thing fa-window-close"
             onClick={x=>window.electron.remote.getCurrentWindow().close()}
@@ -62,7 +62,7 @@ export default class Tabbar extends Component {
             onClick={x=>window.electron.remote.getCurrentWindow().minimize()}
             />
         </HideForMac>
-        <i
+        <tab
           style={{'float':'right'}}
           onClick={x=>{
             this.setState({paneNumber:-1})
@@ -70,7 +70,7 @@ export default class Tabbar extends Component {
           }}
           className="tab glyphicon glyphicon-eject"
           />
-      </div>
+      </tabcontainer>
     )
   }
 }

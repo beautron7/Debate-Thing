@@ -1,4 +1,4 @@
-.tab {
+tab {
   min-width: 4em;
   height: 1.8em;
   float: left;
@@ -21,7 +21,7 @@
   background-color: var(--ribbon-tab-inactive);
 }
 
-.tab.active {
+tab.active {
   background-color: var(--ribbon-tab-active);
   border-color: var(--ribbon-tab-active-border);
   border-bottom-color: var(--ribbon-tab-active-border);
@@ -29,7 +29,7 @@
 }
 
 
-.tab:not(.active):hover{
+tab:not(.active):hover{
   /*background-color: var (--ribbon-tab-active);*/
   border-color: var(--ribbon-tab-active-border);
   border-style: dashed;

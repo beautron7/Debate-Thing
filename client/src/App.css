@@ -5,7 +5,7 @@
   top:25px;
 }
 
-.App .ribbon ~ .app-body{
+.App ribbon ~ .app-body{
   top:109.2px;
 }
 
@@ -44,17 +44,9 @@ html {
 }
 
 html,*, body {
-
-  --theme: light-dev;
-
-  --root-section: orange;
-  --sub-section: rgba(0, 250, 62, 0.2);
-  --sub-section-shadow-color: black; 
-
-  /* --section0: red;
-  --section1: darkcyan;
-  --section2: green;
-  --section3: white; */
+  --root-section:rgba(0, 128, 255, 1);
+  --sub-section: rgba(255, 128, 255, 0.3);
+  --sub-section-shadow-color: black;
 
   --accent-primary: #0AF;
   --accent-secondary: #FB0;

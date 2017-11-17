@@ -10,14 +10,14 @@ export default class RibbonGroup extends Component {
     } = this.props
 
     return (
-      <div className="ribbon-group">
-        <div className="top">
+      <ribbongroup>
+        <rbody>
           {children}
-          <div className="bottom">
-            <b><u>{title}</u></b>
-          </div>
-        </div>
-      </div>
+          <title>
+            {title}
+          </title>
+        </rbody>
+      </ribbongroup>
     )
   }
 }

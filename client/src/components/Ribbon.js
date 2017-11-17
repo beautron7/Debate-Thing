@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import Modals from '../modals/AllModals'
 import './Ribbon.css'
 import RibbonButton from './RibbonButton'
-import ButtonGroup from './ButtonGroup'
 import RibbonGroup from './RibbonGroup'
 import Row from './Row'
 import Card from './Card'
@@ -16,10 +15,10 @@ export default class Ribbon extends Component {
   }
 
   static spools = [
-    <div
+    <spool
       ref={x=>this.dom=x}
       >
-      <RibbonGroup title="Open"><ButtonGroup>
+      <RibbonGroup title="Open"><buttongroup>
         <RibbonButton
           title="Open file"
           icon={<i className="glyphicon glyphicon-floppy-open"></i>}
@@ -38,8 +37,8 @@ export default class Ribbon extends Component {
           size="md"
           tooltip="Open the most recently uploaded speech from the in-round airbox"
           />
-      </ButtonGroup></RibbonGroup>
-      <RibbonGroup title ="Save/Send"><ButtonGroup>
+      </buttongroup></RibbonGroup>
+      <RibbonGroup title ="Save/Send"><buttongroup>
         <Row>
           <RibbonButton
             title="Save File"
@@ -76,8 +75,8 @@ export default class Ribbon extends Component {
             tooltip="Upload the current file to this round's box"
           />
         </Row>
-      </ButtonGroup></RibbonGroup>
-      <RibbonGroup title="Config"><ButtonGroup>
+      </buttongroup></RibbonGroup>
+      <RibbonGroup title="Config"><buttongroup>
         <RibbonButton
           title="Set up Round"
           icon={<i className="fa fa-wrench"></i>}
@@ -89,9 +88,9 @@ export default class Ribbon extends Component {
           icon={<i className="fa fa-user"></i>}
           size="md"
         />
-      </ButtonGroup></RibbonGroup>
+      </buttongroup></RibbonGroup>
       <RibbonGroup title="Print">
-        <ButtonGroup>
+        <buttongroup>
           <RibbonButton
             title="Print"
             icon={<i className="fa fa-print"></i>}
@@ -107,12 +106,12 @@ export default class Ribbon extends Component {
             icon={<i className="fa fa-file-pdf-o"></i>}
             size="md"
           />
-        </ButtonGroup>
+        </buttongroup>
       </RibbonGroup>
-    </div>,
-    <div>
+    </spool>,
+    <spool>
       <RibbonGroup title="Format">
-        <ButtonGroup>
+        <buttongroup>
           <RibbonButton
             icon={<i className="fa fa-bold" />}
             onClick={scope => document.execCommand("bold")}
@@ -127,8 +126,8 @@ export default class Ribbon extends Component {
               document.execCommand("underline")
             }}
           />
-        </ButtonGroup>
-        <ButtonGroup>
+        </buttongroup>
+        <buttongroup>
           <RibbonButton
             icon="F9"
             title={<u>Underline</u>}
@@ -151,8 +150,8 @@ export default class Ribbon extends Component {
             tooltip="Toggle condensed text mode"
             title="Condense All"
           />
-        </ButtonGroup>
-        <ButtonGroup>
+        </buttongroup>
+        <buttongroup>
           <RibbonButton
             icon="F11"
             title="Highlight"
@@ -167,10 +166,10 @@ export default class Ribbon extends Component {
             title="Shrink/Grow Text"
             icon={<i className="glyphicon glyphicon-text-size"></i>}
           />
-        </ButtonGroup>
+        </buttongroup>
       </RibbonGroup>
       <RibbonGroup title="Research">
-        <ButtonGroup>
+        <buttongroup>
           <RibbonButton
             title="Add Card"
             icon={<i className="fa fa-file-text-o"></i>}
@@ -187,15 +186,15 @@ export default class Ribbon extends Component {
             icon={<i className="glyphicon glyphicon-save-file"></i>}
             size="md"
           />
-        </ButtonGroup>
+        </buttongroup>
       </RibbonGroup>
-    </div>,
-    <div>
+    </spool>,
+    <spool>
       <span>Settings</span>
-    </div>,
-    <div>
+    </spool>,
+    <spool>
       <RibbonGroup title = "Panes">
-        <ButtonGroup>
+        <buttongroup>
           <RibbonButton
             icon={<i className="fa fa-search"></i>}
             onClick={x=>window.App.LeftBar.toggleVis()}
@@ -206,16 +205,16 @@ export default class Ribbon extends Component {
             onClick={x=>window.App.RightBar.toggleVis()}
             title="Research"
             />
-        </ButtonGroup>
+        </buttongroup>
       </RibbonGroup>
-    </div>,
+    </spool>,
   ]
 
   render(){
     return this.state.paneNumber !== -1? (
-      <div className='ribbon'>
+      <ribbon className='ribbon'>
         {Ribbon.spools[this.state.paneNumber]}
-      </div>
+      </ribbon>
     ):null
   }
 }

@@ -102,7 +102,7 @@ export default class Card extends Component {
     if (obj.constructor === Text) {
       return false
     } else {
-      return !!~window.getComputedStyle(obj).textDecoration.indexOf("underline")  
+      return !!~window.getComputedStyle(obj).textDecoration.indexOf("underline")
     }
   }
 
@@ -136,7 +136,7 @@ export default class Card extends Component {
   constructor(props){
     super(props);
     console.assert(this.props.tree instanceof CardPoint)
-    
+
     this.props.tree.react = this;
     var data = this.props.tree.data
     console.log(this.props.tree)
@@ -153,7 +153,7 @@ export default class Card extends Component {
       text:<span>{str}</span>,
     };
 
-    this.hideLinebreaks=false;    
+    this.hideLinebreaks=false;
     this.props.tree.data.tag = data.title || "(No Title / Tag)"
     this.condensed = false
 
@@ -210,7 +210,7 @@ export default class Card extends Component {
 
   render(){
     return(
-      <div draggable="false" ref={x=>this.dom=x} className="card animate-max-height">
+      <card draggable="false" ref={x=>this.dom=x} className="card animate-max-height">
         <div className="cardHead">
           <div
             ref={scope => this.tagListener(scope)}
@@ -308,7 +308,7 @@ export default class Card extends Component {
         >
           {this.state.text}
         </div>
-      </div>
+      </card>
     )
   }
 

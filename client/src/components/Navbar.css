@@ -7,6 +7,12 @@
   box-sizing: border-box;
 }
 
+div.root {
+  box-shadow: inset 0 0px 6px 0px black;
+  min-height: 100%;
+  padding: 1em;
+}
+
 .nav-item-box {
   background: var(--canvas-3);
 }
@@ -18,7 +24,7 @@
 .breadcrumb {
   margin: 0;
   background: var(--canvas-3);
-} 
+}
 
 .breadcrumb .breadcrumb-item::before{
   color:black;
@@ -33,7 +39,7 @@
   vertical-align: middle;
   display: inline-block;
   text-align: center;
-  line-height: var(--nav-height);  
+  line-height: var(--nav-height);
   /* font-size: 1.75em; */
   height: var(--nav-height);
   width: var(--nav-height);
@@ -47,10 +53,10 @@
   font-family: FontAwesome;
   vertical-align: middle;
   display: inline-block;
-  background-color: transparent; 
+  background-color: transparent;
   margin: 0;
   text-align: center;
-  line-height: var(--nav-height);  
+  line-height: var(--nav-height);
   /* font-size: 1.75em; */
   height: var(--nav-height);
   width: var(--nav-height);
@@ -58,13 +64,13 @@
   /* border-color: transparent; */
   /* border-style: solid; */
   /* border-left-color: black; */
-  content: '\f07c';  
+  content: '\f07c';
   padding-left:0.2em;
 }
 
 .nav-item.children input.toggle-vis:checked:after {
   content: '\f114';
-  padding: 0;  
+  padding: 0;
 }
 
 .nav-item.children input.toggle-vis:checked ~ div.contents{

@@ -30,9 +30,9 @@ export default class Sidebar extends Component {
 
     if(this.state.visibility){
       return (
-        <div className={className}>
+        <sidebar className={className}>
           {children}
-        </div>
+        </sidebar>
       )
     }
     return null;

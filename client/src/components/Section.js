@@ -14,7 +14,7 @@ export default class Section extends Component {
       Section.Root=this
     }
   }
-  
+
   shouldComponentUpdate(newProps){
     console.log("AHAHHHAHA")
     return (
@@ -36,16 +36,15 @@ export default class Section extends Component {
       tree,
     }=this.props
     this.children = [];
-    
+
     tree.react = this;
 
     var title = tree.data
     var child_nodes = tree.children;
 
     return (
-      <div draggable="false" ref={self=>this.dom=self} className="section" onDragStart={this.onDragStart.bind(this)}>
-        <div key={-1}>
-          <span
+      <section draggable="false" ref={self=>this.dom=self} onDragStart={this.onDragStart.bind(this)}>
+          <heading
             className="heading"
             contentEditable="plaintext-only"
             ref={self=>{
@@ -59,7 +58,6 @@ export default class Section extends Component {
               }
             }}
           />
-        </div>
         <Circle key={0} tree={tree} path={0} />
         {child_nodes.map((x,i) => (
           <Aux key={x.key}>
@@ -87,8 +85,8 @@ export default class Section extends Component {
               />
           </Aux>
         ))}
-        <div className="terminator"></div>
-      </div>
+        <terminator/>
+      </section>
     )
   }
 }

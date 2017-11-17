@@ -1,4 +1,4 @@
-#editor .circle {
+#editor circle {
   width: 1em;
   height: 1em;
 	border-radius: 50%;
@@ -8,27 +8,35 @@
   margin-bottom: 1em;
   transition: border-color 0.3s;
   border: 1px solid black;
+  display: block;
 }
-#editor .circle:hover{
+
+/*#editor circle:hover{
   border: 1px solid white;
-}
+}*/
+/*
+#editor circle::before, #editor circle::after {
+  width: 100%;
+  min-height: 1px;
+  display: block;
+}*/
 
 
-#editor .circle.large {
+#editor circle.large {
   width:2em;
   height:2em;
   margin-top:0.5em;
   margin-bottom:0.5em;
 }
 
-#editor .circle:not(.large) {
+#editor circle:not(.large) {
   width:1em;
   height:1em;
   margin-top:1em;
   margin-bottom:1em;
 }
 
-#editor .circle:not(.slow) {
+#editor circle:not(.slow) {
   transition:
     height 0.35s,
     width 0.35s,
@@ -37,11 +45,11 @@
     border-color 0.3s,
 }
 
-#editor .circle.slow {
+#editor circle.slow {
   transition:
     height 1s,
     width 1s,
     margin-top 1s,
     margin-bottom 1s,
-    border-color 0.3s,    
+    border-color 0.3s,
 }

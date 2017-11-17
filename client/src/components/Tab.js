@@ -16,14 +16,14 @@ export default class Tab extends Component {
       active,
       onClick,
     } = this.props
-    var classes='tab noselect '
+    var classes='noselect'
 
     if (active===true) {
       classes+= 'active '
     }
 
     return (
-      <div onClick={onClick} className={classes}><span>{name}</span></div>
+      <tab onClick={onClick} className={classes}><span>{name}</span></tab>
     )
   }
 }

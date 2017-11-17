@@ -1,4 +1,4 @@
-.side-bar {
+sidebar {
   width: var(--sidebar-width);
   position: absolute;
   height: 100%;
@@ -6,16 +6,12 @@
   background-color: var(--canvas-1);
 }
 
-.side-bar.left{
+sidebar.left{
   left: 0;
 }
-.side-bar.right{
+sidebar.right{
   right: 0;
 }
 
-.side-bar .search-bar-container {
-  /*box-shadow: 0px 10px 18px -3px rgba(0,0,0,0.75);
-  box-shadow: 0px 5px 50px -5px rgba(0,0,0,0.75);*/
-  border-bottom: solid;
-  border-width: 1.5px;
+sidebar .search-bar-container {
 }

@@ -1,37 +1,42 @@
-//Odds and ends
-Array.prototype.remove = function(i) {
-  if (typeof i === "number"){
-    this.splice(index,1)
-  } else {
-    this.splice(this.indexOf(i),1)
-  }
-  return this;
-}
+const electron                       = require('electron')
+const {app, BrowserWindow}           = electron
+const path                           = require('path')
+const url                            = require('url')
+const colors                         = require('colors'); colors.enabled = true;
+const oldStorage                     = require("./Storage.js").default; oldStorage.init();
+const newStorage                     = require("./StorageMain.js")
+const MainIpc                        = new (require("./ipc/MainIpc.js").default)();
 
-console.error = function (...args) {
-  for (var i = 0; i < args.length; i++) {
-    if (typeof args[i] === "string"){
-      args[i]=args[i].underline.bold.red
+//Odds and ends
+  // Array.prototype.remove = function(i) {
+  //   if (typeof i === "number"){
+  //     this.splice(index,1)
+  //   } else {
+  //     this.splice(this.indexOf(i),1)
+  //   }
+  //   return this;
+  // }
+
+  console.error = function (...args) {
+    for (var i = 0; i < args.length; i++) {
+      if (typeof args[i] === "string"){
+        args[i]=args[i].underline.bold.red
+      }
     }
+    console.log(...args)
   }
-  console.log(...args)
-}
 //End odds and ends
 
-const electron = require('electron')
-const app = electron.app
-const BrowserWindow = electron.BrowserWindow
-const path = require('path')
-const url = require('url')
-const colors = require('colors')
-const appStorage = require("./storage_main.js").default
-colors.enabled = true
-appStorage.init()
+
+
+MainIpc.register("usrSettings",new newStorage.ConfigFile({
+  path:"./cfg/usrSettings.json",
+  writeInterval: 1000,
+  construct_sync: true,
+}))
 
 const windows = []
 const mac = process.platform === "darwin"
-
-
 
 var shouldQuit = app.makeSingleInstance((commandLine, workingDirectory) => {
   createAnEditorWindow()
@@ -49,7 +54,7 @@ function createAnEditorWindow () {
   })
   windows.push(theWindow)
 
-  const startUrl = process.env.ELECTRON_START_URL || url.format({
+  const startUrl =  process.env.ELECTRON_START_URL || url.format({
     pathname: path.join(__dirname, '/../build/index.html'),
     protocol: 'file:',
     slashes: true
@@ -71,7 +76,7 @@ function createAnEditorWindow () {
     theWindow.on('maximize', function () {
       theWindow.webContents.send('Window-State','maximized')
     })
-  
+
     theWindow.on('unmaximize', function () {
       theWindow.webContents.send('Window-State','unmaximized')
     })

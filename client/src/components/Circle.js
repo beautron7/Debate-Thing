@@ -21,9 +21,9 @@ export default class Circle extends Component {
 
   inject(obj){
     this.getDomCtx() //Context needs to be gotten every time you inject because the path to a section is not stait
-    this.dataContainer.addChildNode(obj,this.props.path) 
-    this.parentReactElement.forceUpdate()  
-    this.corresponding_nav_pane.forceUpdate()    
+    this.dataContainer.addChildNode(obj,this.props.path)
+    this.parentReactElement.forceUpdate()
+    this.corresponding_nav_pane.forceUpdate()
   }
 
   onDrop(ev) {
@@ -85,8 +85,8 @@ export default class Circle extends Component {
 
   render(){
     return (<Aux>
-      <div key={-1} className="terminator"/>
-      <div
+
+      <circle
         key={0}
         ref={self => {
           this.dom=self;
@@ -102,8 +102,7 @@ export default class Circle extends Component {
         onMouseDown={this.beginClick.bind(this)}
         onMouseUp={this.endClick.bind(this)}
       >
-      </div>
-      <div key={1} className="terminator"/>      
+      </circle>
     </Aux>)
   }
 }
