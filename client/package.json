@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "main": "src/electron-starter.js",
+  "main": "src/electron/electron-starter.js",
   "homepage": "./",
   "devDependencies": {
     "babel-plugin-root-import": "^5.1.0",
@@ -31,6 +31,6 @@
     "eject": "react-scripts eject",
     "dev": "nf start",
     "electron": "electron .",
-    "electron-dev": "ELECTRON_START_URL=http://localhost:3000 & electron . --inspect=9877 --remote-debugging-port=9876"
+    "electron-dev": "electron . --inspect=9877 --remote-debugging-port=9876"
   }
 }

@@ -1,3 +1,5 @@
+process.title="Debate-App Developer Preview"
+
 const net = require('net');
 const port = process.env.PORT ? (process.env.PORT - 100) : 3000;
 

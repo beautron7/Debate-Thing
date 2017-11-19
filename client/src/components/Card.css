@@ -115,7 +115,7 @@ card > .cardHead > .cardHeadFormatingBar {
 }
 
 
-card > .cardHead > .cardHeadFormatingBar > .ribbon-button {
+card > .cardHead > .cardHeadFormatingBar > ribbonbutton {
   margin-left: 0.5em;
   margin-top: 0.25em;
   float: left;
