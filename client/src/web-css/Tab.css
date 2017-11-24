@@ -1,0 +1,36 @@
+tab {
+  min-width: 4em;
+  height: 1.8em;
+  float: left;
+  text-align: center;
+
+  margin: 0.25em 0 0 0.25em;
+
+  border: 1px;
+  border-bottom: 0;
+  border-top-right-radius: 0.3em;
+  border-top-left-radius: 0.3em;
+  border-style: solid;
+  border-color: white;
+  padding: 0.2em 0.6em 0.1em 0.6em;
+  font-size: 1em;
+
+  -webkit-app-region: no-drag;
+
+  color: var(--text-color);
+  background-color: var(--ribbon-tab-inactive);
+}
+
+tab.active {
+  background-color: var(--ribbon-tab-active);
+  border-color: var(--ribbon-tab-active-border);
+  border-bottom-color: var(--ribbon-tab-active-border);
+  color: var(--text-color);
+}
+
+
+tab:not(.active):hover{
+  /*background-color: var (--ribbon-tab-active);*/
+  border-color: var(--ribbon-tab-active-border);
+  border-style: dashed;
+}

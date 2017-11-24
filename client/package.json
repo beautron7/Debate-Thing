@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "main": "src/electron/electron-starter.js",
+  "main": "src/main-js/electron-starter.js",
   "homepage": "./",
   "devDependencies": {
     "babel-plugin-root-import": "^5.1.0",

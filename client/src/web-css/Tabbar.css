@@ -1,0 +1,32 @@
+tabcontainer {
+  height: 1.8em !important;
+  /*background-color: #0af;*/
+  overflow-y: hidden;
+  clear: both;
+  -webkit-app-region: drag;
+  cursor: default;
+  display: block;
+}
+
+icon{
+  height: 1.8em;
+  width: 2.8em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  float:right;
+  -webkit-app-region: no-drag;
+  color:black;
+  transition: background-color 0.25s;
+
+  margin:0;
+  padding:0.4em;
+  text-align: center;
+  display: inline-block;
+}
+icon.fa:hover{
+  background-color: #0af;
+}
+
+icon.fa.fa-times:hover{
+  background-color: #f00;
+}
