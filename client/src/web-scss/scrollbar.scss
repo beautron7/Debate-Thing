@@ -1,0 +1,27 @@
+.scrollbar{
+	overflow-y: scroll;
+	
+	::-webkit-scrollbar
+	{
+	  border-radius: 10px;
+		width: 10px;
+		visibility: hidden;
+		/*background-color: var(--canvas-scroll-bkg);*/
+	}
+
+	::-webkit-scrollbar-thumb
+	{
+		transition: background-color 1s;
+		-webkit-transition: background-color 1s;
+		background-color: rgba(0,0,0,0.2);
+		border-radius: 10px;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background-color: rgba(0,0,0,0.4);
+	}
+	::-webkit-scrollbar-thumb:active {
+		background-color: rgba(0,0,0,0.5);
+	}
+
+}

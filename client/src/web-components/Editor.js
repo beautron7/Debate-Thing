@@ -74,11 +74,14 @@ export default class Editor extends Component {
 
           var has_children                   = current_child_node.children && current_child_node.children.length,
               is_first_child                 = i==0,
-              is_partially_offscreen = scrollPos > top_to_top_vertical_offset + 10;
+              is_partially_offscreen         = scrollPos > top_to_top_vertical_offset + 10;
 
           if(has_children && is_partially_offscreen){//Do we need to check children for activity?
             traverse(current_child_node,dom_is_clean);
           } else {
+            nav_dom
+              .querySelectorAll(".active")
+              .forEach(el => el.classList.remove("active"))
             Navbar.instance.Breadcrumb.setState({activeNode:current_child_node});
           }
           break;

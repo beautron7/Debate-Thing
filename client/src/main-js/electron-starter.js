@@ -4,15 +4,19 @@ const {app, BrowserWindow}           = electron
 const path                           = require('path')
 const url                            = require('url')
 const oldStorage                     = require("./Storage.js").default; oldStorage.init();
-const newStorage                     = require("./StorageMain.js")
+// const newStorage                     = require("./StorageMain.js")
 const MainIpc                        = new (require("./MainIpc.js").default)();
 require("./EHC").run();
 
-MainIpc.register("usrSettings",new newStorage.ConfigFile({
-  path:"./cfg/usrSettings.json",
-  writeInterval: 1000,
-  construct_sync: true,
-}))
+// var usrSettings = new newStorage.ConfigFile({
+//   path:"./cfg/usrSettings.json",
+//   writeInterval: 1000,
+//   construct_sync: true,
+// });
+// var databaseCollection = new newStorage.DatabaseCollection(usrSettings.data.cardSrces)
+
+// MainIpc.register("usrSettings",usrSettings)
+// MainIpc.register("databaseCollection",databaseCollection)
 
 const windows = []
 const mac = process.platform === "darwin"

@@ -1,5 +1,6 @@
 class MainRemote {
 	constructor(channel){
+		this.handler = this.handler.bind(this)
 		this.data = {}
 		var electron = require("electron")
 
@@ -18,24 +19,23 @@ class MainRemote {
 	}
 
 	handler(event,msg){
-		console.log("NEW STORAGE")
 		var reply     =(data)=> {event.sender.send("ipc_proxy_reply ("+msg.replyChannel+")",{status:"ok",  data:data})}
 		var replyFail =(data)=> {event.sender.send("ipc_proxy_reply ("+msg.replyChannel+")",{status:"fail",data:data})}
 		try {
-			console.log("MSG",msg)
+			var value = this.getValue(msg.path)
 			switch (msg.action) {
 				case "setValue":
-					this.getValue(msg.path)[msg.prop]=msg.value
+					value[msg.prop]=msg.value
 					reply();
 					break;
 				case "getValue":
-					reply(this.getValue(msg.path))
+					reply(value)
 					break;
 				case "callSync":
-					reply(this.getValue(msg.path)(...msg.arguments))
+					reply(value(...msg.arguments))
 					break;
 				case "callAsync":
-					this.getValue(msg.path)(...msg.arguments).then(reply)
+					value(...msg.arguments).then(reply)
 					break;
 			}
 		} catch (e) {
@@ -50,7 +50,6 @@ class MainRemote {
 		for (var key of sentPath) {
 			value = value[key]
 		}
-		console.log('keys:',sentPath,'value:',value)
 		return value
 	}
 }

@@ -1,14 +1,22 @@
 Debate App
 ----------
 
+![Screenshot](https://raw.githubusercontent.com/beautron7/Debate-Thing/dev/screenshot%20of%20client.png)
 
 
 #### What is this?
-This app is a replacement for the Verbatim+Word combo that most teams use for debate. While Verbatim is a great program, It has some limitations and inefficiencies, most of which are a result of running on top of word.
+This app is intended to be used as an alternative for Paperless Debate's Verbatim,
+which most policy debate teams use to author files.
+While Verbatim is a good program,
+It has some inherent limitations because it is built off of word.
 
-Compared to verbatim, you should notice faster performance, better compatibility when running on a mac, more consistent formatting when other people send you files, and smaller file sizes.
+Compared to verbatim,
+you should notice faster performance,
+better compatibility when running on a Mac,
+and smaller file sizes.
+It also will eventually be much easier to search for evidence or analytics compared to verbatim.
 
-The main drawback is it doesn't look like a word document. (see screenshots)
+This program was designed to expand upon the functionality of verbatim, but it looks dramticaly different (a lot more colorfull).
 
 
 
@@ -16,14 +24,13 @@ The main drawback is it doesn't look like a word document. (see screenshots)
 Glad you asked. This program has / will have:
 
 1. ###### Better storage efficiency
-  - Only save one copy of a card in the dropbox, and have all your files contain a reference to it, compared to having 100 copies of wilderson.
-  - Save cards with file if its on a flashdrive
+  - This program only saves one copy of each card, so whenever you save a new file, it just contains a reference to the card. you won't notice this, but it stops the same evidecne from existing in multple places on your dropbox.
 2. ###### Drag and drop
+    In the final version, you should be able to
   - Drag and drop cards from a reaserch pane with a search bar
   - Drag and drop sections from one doc to another
 3. ###### A Better file format
-  - More Subheadings (not limited to pockets blocks and hats)
-    - Simply click and hold on the black circle where you want to insert a heading
+  - Limitless Subheadings (instead of having pockets, hats, and blocks, you just have sections)
   - No way to accidentally change card text
   - Can be easily exported to a .html file which can be opened on virtualy anything (computer, phone, watch, kindle).
   - Space efficiency
@@ -33,7 +40,7 @@ Glad you asked. This program has / will have:
 5. ###### Native \_\_\_\_\_\_\_\_\_\_ Support
   - Better wiki Support
   - One click upload, no wierd formatting.
-  - Tabroom support that integrates with the wiki
+  - Tabroom support & integration with the wiki
 6. ###### Improved in-round file organization
   - Send to speech includes an option to create a file name based off the current speech
   - More Reliable V-Tub

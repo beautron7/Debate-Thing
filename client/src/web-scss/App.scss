@@ -18,29 +18,27 @@
   height: auto;
   overflow-y: hidden;
   position:absolute;
-}
 
+  #editor {
+    text-align: center;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    overflow-y: scroll;
+  }
 
-.App > .app-body > #editor {
-  text-align: center;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  overflow-y: scroll;
-}
+  .side-bar.left ~ #editor {
+    left: var(--sidebar-width);
+  }
 
-.App > .app-body > .side-bar.left ~ #editor {
-  left: var(--sidebar-width);
-}
-
-.App > .app-body > .side-bar.right ~ #editor {
-  right: var(--sidebar-width);
+  .side-bar.right ~ #editor {
+    right: var(--sidebar-width);
+  }
 }
 
 html {
   height:100%;
-
 }
 
 html,*, body {

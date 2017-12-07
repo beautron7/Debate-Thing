@@ -1,0 +1,56 @@
+ribbongroup {
+  display: inline;
+  height: 42px;
+
+  > rbody {
+    font-size: 14px;
+    width: auto;
+    display: inline-block;
+    height: 84px;
+
+    border-style: solid;
+    border-color: rgba(0,0,0,0.2);
+    border-width: 1.5px;
+    border-top-width: 0;
+    border-left-width:0;
+    border-bottom-width:0;
+
+    > title {
+      display: block;
+      width: 100%;
+      height: 14px;
+      line-height: 14px;
+      text-align: center;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    > buttongroup {
+      vertical-align: top;/*Remove this for a meme*/
+      display: inline-flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: flex-start;
+      align-content: stretch;
+
+      width: auto;
+      height: 70px;
+      padding-left: 3.5px;
+      padding-right: 3.5px;
+
+      > div.row {
+        display: inline;
+        margin: 0;
+      }
+    }
+  }
+}
+
+
+
+
+/*
+ribbongroup > rbody > buttongroup > div.row > .ribbon-button{
+  display: inline;
+}*/

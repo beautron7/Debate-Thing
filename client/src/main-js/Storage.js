@@ -1,3 +1,7 @@
+//oldStorage
+//
+//
+//
 const electron = require('electron')
 
 function Loader(name,path,defaultdata) {
@@ -33,7 +37,7 @@ class Card {
   }
 
   async getText(){
-    console.log("Card text is being accessed".cyan);
+    console.log("Card text is being accessed VIA LEGACY".cyan);
     var cardTextPath = this.path+"/cards/"+this.ID+".cardText.json";
     var fileExists = await self.fs.exists(cardTextPath);
     if (fileExists){

@@ -48,8 +48,7 @@ function callMain(args,callback){
 
   window.electron.ipcRenderer.once("ipc_proxy_reply ("+args.replyChannel+")",(event,reply)=>{
     if (reply.status==="ok") {
-      if (callback instanceof Function)
-        callback(reply.data);
+      callback(reply.data);//WHY ARE YOU NOT RESOLVING????
     } else {
       console.error("RenderIpc Failed --- reply was:",reply);
     }

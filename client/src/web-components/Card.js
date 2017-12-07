@@ -11,13 +11,13 @@ export default class Card extends Component {
   toggleMode(){
     if(this.state.mode === "view"){
       this.setState({mode:"edit"})
-      this.dom.children[0].children[2].style.height="2.75em"
+      this.dom.classList.add("editing")
       this.cardBodyDom.contentEditable = true;
       this.cardBodyDom.readonly = false;
     } else {
       this.setState({mode:"view"})
       console.log([this.cardBodyDom.children[0]])
-      this.dom.children[0].children[2].style.height="0"//the editbar
+      this.dom.classList.remove("editing")
       this.cardBodyDom.contentEditable = false;
       this.cardBodyDom.readonly = true
       this.saved_formatting = this.getFormatting()
