@@ -1,0 +1,1233 @@
+/* line 1, src/web-scss/index.scss */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif; }
+
+/* html,*, body {
+  --theme: dark-dev;
+
+  --root: #000;
+  --section: rgba(255,255,255,0.2);
+
+  --section0: radial-gradient(ellipse at center, rgba(0,75,120N,1) 0%, rgba(0,117,170,1) 100%);;
+  --section1: radial-gradient(ellipse at center, #075 0%, #094 100%);;
+  --section2: #508;
+  --section3: black;
+
+  --accent-primary: #0AF;
+  --accent-secondary: #960;
+  --btn-default: rgba(0,0,0,0.0);
+  --btn-hover: gray;
+
+  --highlight: cyan;
+  --text-color: #ddd;
+
+  --ribbon-tab-active: $canvas-1;
+  --ribbon-tab-inactive: dimgray;
+  --ribbon-title-bar: $canvas-1;
+  --ribbon-tab-active-border: black;
+
+  --canvas-scroll: #07A;
+  --canvas-scroll-bkg: #0000;
+  --canvas-img-background: gray;
+
+  --canvas-1: rgb(30, 30, 30);
+  --canvas-2: rgb(40, 40, 40);
+  --canvas-3: rgb(50, 50, 50);
+  --canvas-4: rgb(60, 60, 60);
+} */
+@media (min-width: 1048px) {
+  /* line 1, src/web-scss/_App.scss */
+  .App {
+    --sidebar-width: 23%; } }
+
+@media (max-width: 1048px) {
+  /* line 2, src/web-scss/_App.scss */
+  .App {
+    --sidebar-width: 240px; } }
+
+/* line 4, src/web-scss/_App.scss */
+.App .app-body {
+  top: 25px; }
+
+/* line 8, src/web-scss/_App.scss */
+.App ribbon ~ .app-body {
+  top: 109.2px; }
+
+/* line 12, src/web-scss/_App.scss */
+.App .app-body {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  overflow-y: hidden;
+  position: absolute; }
+  /* line 22, src/web-scss/_App.scss */
+  .App .app-body #editor {
+    text-align: center;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    overflow-y: scroll; }
+  /* line 31, src/web-scss/_App.scss */
+  .App .app-body .side-bar.left ~ #editor {
+    left: var(--sidebar-width); }
+  /* line 35, src/web-scss/_App.scss */
+  .App .app-body .side-bar.right ~ #editor {
+    right: var(--sidebar-width); }
+
+/* line 40, src/web-scss/_App.scss */
+html {
+  height: 100%; }
+
+/* html,*, body {
+  --theme: dark-dev;
+
+  --root: #000;
+  --section: rgba(255,255,255,0.2);
+
+  --section0: radial-gradient(ellipse at center, rgba(0,75,120N,1) 0%, rgba(0,117,170,1) 100%);;
+  --section1: radial-gradient(ellipse at center, #075 0%, #094 100%);;
+  --section2: #508;
+  --section3: black;
+
+  --accent-primary: #0AF;
+  --accent-secondary: #960;
+  --btn-default: rgba(0,0,0,0.0);
+  --btn-hover: gray;
+
+  --highlight: cyan;
+  --text-color: #ddd;
+
+  --ribbon-tab-active: $canvas-1;
+  --ribbon-tab-inactive: dimgray;
+  --ribbon-title-bar: $canvas-1;
+  --ribbon-tab-active-border: black;
+
+  --canvas-scroll: #07A;
+  --canvas-scroll-bkg: #0000;
+  --canvas-img-background: gray;
+
+  --canvas-1: rgb(30, 30, 30);
+  --canvas-2: rgb(40, 40, 40);
+  --canvas-3: rgb(50, 50, 50);
+  --canvas-4: rgb(60, 60, 60);
+} */
+/* line 3, src/web-scss/_ButtonGroup.scss */
+ribbongroup {
+  display: inline;
+  height: 42px; }
+  /* line 7, src/web-scss/_ButtonGroup.scss */
+  ribbongroup > rbody {
+    font-size: 14px;
+    width: auto;
+    display: inline-block;
+    height: 84px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.2);
+    border-width: 1.5px;
+    border-top-width: 0;
+    border-left-width: 0;
+    border-bottom-width: 0; }
+    /* line 22, src/web-scss/_ButtonGroup.scss */
+    ribbongroup > rbody title {
+      display: block;
+      width: 100%;
+      height: 14px;
+      line-height: 14px;
+      text-align: center;
+      font-weight: bold;
+      text-decoration: underline; }
+    /* line 32, src/web-scss/_ButtonGroup.scss */
+    ribbongroup > rbody > buttongroup {
+      vertical-align: top;
+      /*Remove this for a meme*/
+      display: inline-flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: flex-start;
+      align-align-content: stretch;
+      width: auto;
+      height: 70px;
+      padding-left: 3.5px;
+      padding-right: 3.5px; }
+      /* line 57, src/web-scss/_ButtonGroup.scss */
+      ribbongroup > rbody > buttongroup > div.row {
+        display: inline;
+        margin: 0; }
+
+/*
+ribbongroup > rbody > buttongroup > div.row > .ribbon-button{
+  display: inline;
+}*/
+/*transition: all 0.3s cubic-bezier(.25,.8,.25,1);*/
+/* line 6, src/web-scss/_shadows.scss */
+.box-1 {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+
+/* line 10, src/web-scss/_shadows.scss */
+.box-2 {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+
+/* line 14, src/web-scss/_shadows.scss */
+.box-3 {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); }
+
+/* line 18, src/web-scss/_shadows.scss */
+.box-4 {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
+
+/* line 22, src/web-scss/_shadows.scss */
+.box-5 {
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22); }
+
+/* html,*, body {
+  --theme: dark-dev;
+
+  --root: #000;
+  --section: rgba(255,255,255,0.2);
+
+  --section0: radial-gradient(ellipse at center, rgba(0,75,120N,1) 0%, rgba(0,117,170,1) 100%);;
+  --section1: radial-gradient(ellipse at center, #075 0%, #094 100%);;
+  --section2: #508;
+  --section3: black;
+
+  --accent-primary: #0AF;
+  --accent-secondary: #960;
+  --btn-default: rgba(0,0,0,0.0);
+  --btn-hover: gray;
+
+  --highlight: cyan;
+  --text-color: #ddd;
+
+  --ribbon-tab-active: $canvas-1;
+  --ribbon-tab-inactive: dimgray;
+  --ribbon-title-bar: $canvas-1;
+  --ribbon-tab-active-border: black;
+
+  --canvas-scroll: #07A;
+  --canvas-scroll-bkg: #0000;
+  --canvas-img-background: gray;
+
+  --canvas-1: rgb(30, 30, 30);
+  --canvas-2: rgb(40, 40, 40);
+  --canvas-3: rgb(50, 50, 50);
+  --canvas-4: rgb(60, 60, 60);
+} */
+/* line 4, src/web-scss/_Card.scss */
+card {
+  display: block;
+  position: static;
+  display: block;
+  width: calc(100% - 60px);
+  max-width: calc(100% - 60px);
+  background-color: #ddd;
+  margin: auto;
+  border-radius: 1em;
+  box-shadow: 0 0 10px 0;
+  animation: open forwards 1s; }
+  /* line 16, src/web-scss/_Card.scss */
+  card .card-marker {
+    display: inline; }
+    /* line 19, src/web-scss/_Card.scss */
+    card .card-marker:before {
+      display: inline;
+      content: "\a";
+      white-space: pre; }
+    /* line 24, src/web-scss/_Card.scss */
+    card .card-marker:after {
+      display: inline;
+      content: "MARK\a";
+      white-space: pre;
+      background-color: #0af;
+      border-radius: 1em;
+      padding-left: 0.25em;
+      padding-right: 0.25em;
+      font-style: normal; }
+  /* line 38, src/web-scss/_Card.scss */
+  card::selection {
+    background: rgba(0, 0, 0, 0.2);
+    /* WebKit/Blink Browsers */ }
+  /* line 42, src/web-scss/_Card.scss */
+  card .cardHead {
+    border-radius: 0.9em;
+    /* border-style: solid; */
+    box-shadow: 0 0 1px 1px;
+    overflow: hidden;
+    display: block;
+    position: sticky;
+    top: 0em; }
+    /* line 51, src/web-scss/_Card.scss */
+    card .cardHead .cardHeadLower {
+      background: #ddd;
+      position: relative;
+      height: 2.75em; }
+      /* line 55, src/web-scss/_Card.scss */
+      card .cardHead .cardHeadLower .cardButtons {
+        position: absolute;
+        right: 3.5px;
+        top: 50%;
+        transform: translateY(-50%); }
+      /* line 61, src/web-scss/_Card.scss */
+      card .cardHead .cardHeadLower .cardAuthor {
+        font-size: 1.5em;
+        font-weight: bold;
+        border-style: groove;
+        border-top-right-radius: 1em;
+        border-bottom-right-radius: 1em;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+        position: absolute;
+        left: 0em;
+        top: 50%;
+        text-align: left;
+        background: #ccc;
+        transform: translateY(-50%);
+        max-width: calc(100% - 8em);
+        overflow-y: hidden;
+        height: 1.5em;
+        white-space: nowrap; }
+        /* line 86, src/web-scss/_Card.scss */
+        card .cardHead .cardHeadLower .cardAuthor::-webkit-scrollbar {
+          background-color: rgba(0, 0, 0, 0.1);
+          border-radius: 1em; }
+        /* line 90, src/web-scss/_Card.scss */
+        card .cardHead .cardHeadLower .cardAuthor::-webkit-scrollbar-thumb {
+          background-color: rgba(0, 0, 0, 0.4);
+          border-radius: 1em; }
+        /* line 94, src/web-scss/_Card.scss */
+        card .cardHead .cardHeadLower .cardAuthor::-webkit-scrollbar-thumb:hover {
+          background-color: rgba(0, 0, 0, 0.6); }
+        /* line 97, src/web-scss/_Card.scss */
+        card .cardHead .cardHeadLower .cardAuthor::-webkit-scrollbar-thumb:active {
+          background-color: rgba(0, 0, 0, 0.8); }
+    /* line 102, src/web-scss/_Card.scss */
+    card .cardHead .cardHeadUpper {
+      min-width: 100%;
+      min-height: 1em;
+      font-size: 1.5em;
+      font-weight: bold;
+      padding-left: 0.5em;
+      padding-top: 0.25em;
+      background: #ddd;
+      text-align: left; }
+    /* line 118, src/web-scss/_Card.scss */
+    card .cardHead .cardHeadFormatingBar {
+      height: 0;
+      background: #bbb;
+      text-align: left;
+      overflow-y: hidden;
+      transition: height 1s; }
+      /* line 124, src/web-scss/_Card.scss */
+      card .cardHead .cardHeadFormatingBar > ribbonbutton {
+        margin-left: 7px;
+        margin-top: 3.5px;
+        float: left; }
+  /* line 133, src/web-scss/_Card.scss */
+  card .cardBody {
+    min-height: 10em;
+    text-align: left;
+    white-space: pre-wrap;
+    font-family: Calibri;
+    font-size: 12; }
+    /* line 139, src/web-scss/_Card.scss */
+    card .cardBody .hi {
+      background-color: cyan; }
+    /* line 140, src/web-scss/_Card.scss */
+    card .cardBody .bold {
+      font-weight: bold; }
+    /* line 141, src/web-scss/_Card.scss */
+    card .cardBody .emphasis {
+      font-weight: bold; }
+    /* line 142, src/web-scss/_Card.scss */
+    card .cardBody .ital {
+      font-style: italic; }
+    /* line 143, src/web-scss/_Card.scss */
+    card .cardBody .udln {
+      text-decoration: underline; }
+    /* line 144, src/web-scss/_Card.scss */
+    card .cardBody .cptl {
+      text-transform: uppercase; }
+
+@keyframes open {
+  from {
+    max-height: 0; }
+  99% {
+    max-height: 100%; }
+  to {
+    max-height: none; } }
+
+/* html,*, body {
+  --theme: dark-dev;
+
+  --root: #000;
+  --section: rgba(255,255,255,0.2);
+
+  --section0: radial-gradient(ellipse at center, rgba(0,75,120N,1) 0%, rgba(0,117,170,1) 100%);;
+  --section1: radial-gradient(ellipse at center, #075 0%, #094 100%);;
+  --section2: #508;
+  --section3: black;
+
+  --accent-primary: #0AF;
+  --accent-secondary: #960;
+  --btn-default: rgba(0,0,0,0.0);
+  --btn-hover: gray;
+
+  --highlight: cyan;
+  --text-color: #ddd;
+
+  --ribbon-tab-active: $canvas-1;
+  --ribbon-tab-inactive: dimgray;
+  --ribbon-title-bar: $canvas-1;
+  --ribbon-tab-active-border: black;
+
+  --canvas-scroll: #07A;
+  --canvas-scroll-bkg: #0000;
+  --canvas-img-background: gray;
+
+  --canvas-1: rgb(30, 30, 30);
+  --canvas-2: rgb(40, 40, 40);
+  --canvas-3: rgb(50, 50, 50);
+  --canvas-4: rgb(60, 60, 60);
+} */
+/* line 5, src/web-scss/_CardPreview.scss */
+cardpreview {
+  display: block;
+  height: 84px;
+  position: relative;
+  margin: 14px;
+  width: auto;
+  height: 84px;
+  background-color: #aaa;
+  transition: box-shadow 0.5s;
+  color: #000;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+
+/* line 18, src/web-scss/_CardPreview.scss */
+cardpreview:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); }
+
+/* line 22, src/web-scss/_CardPreview.scss */
+cardpreview > img {
+  height: 70px;
+  width: 70px;
+  margin: 7px;
+  float: left;
+  background-color: white; }
+
+/* line 30, src/web-scss/_CardPreview.scss */
+cardpreview > author {
+  display: block;
+  text-align: left;
+  font-size: 2rem;
+  margin: 0;
+  margin-top: 0.5em;
+  margin-left: 4em;
+  margin-right: 0em;
+  height: 1.25em;
+  overflow: hidden; }
+
+/* line 44, src/web-scss/_CardPreview.scss */
+cardpreview > title {
+  display: block;
+  line-height: 1.2em;
+  font-size: 1em;
+  font-style: italic;
+  text-align: left;
+  margin: 0;
+  margin-left: 5.0em;
+  margin-right: 0;
+  height: 2.4em;
+  overflow: hidden; }
+
+/* line 59, src/web-scss/_CardPreview.scss */
+cardpreview > keywordcontainer {
+  text-align: left;
+  max-width: 90%;
+  overflow-x: hidden; }
+
+/* line 64, src/web-scss/_CardPreview.scss */
+cardpreview > keywordcontainer > keyword {
+  display: inline;
+  white-space: nowrap;
+  background-color: #FB0;
+  border-radius: 0.6em;
+  font-size: 1em;
+  height: 1.2em;
+  margin-left: 0.1em;
+  margin-right: 0.1em;
+  padding-left: 0.5em;
+  padding-right: 0.5em; }
+
+/* line 77, src/web-scss/_CardPreview.scss */
+cardpreview > .url {
+  visibility: hidden; }
+
+/*TEXTPANE*/
+/* line 85, src/web-scss/_CardPreview.scss */
+cardpreview {
+  --right: 23%; }
+
+@media all and (max-width: 1050px) {
+  /* line 89, src/web-scss/_CardPreview.scss */
+  cardpreview {
+    --right: 15em !important; } }
+
+/* line 93, src/web-scss/_CardPreview.scss */
+cardpreview > .text-pane {
+  visibility: hidden; }
+
+/*Default, no touch*/
+/* line 94, src/web-scss/_CardPreview.scss */
+cardpreview:hover > .text-pane {
+  visibility: visible; }
+
+/*Tooltip on hover*/
+/* line 95, src/web-scss/_CardPreview.scss */
+cardpreview > .text-pane:hover {
+  visibility: visible; }
+
+/*Keep text pane Display visibility on hover*/
+/* line 96, src/web-scss/_CardPreview.scss */
+cardpreview > .text-pane:active {
+  visibility: visible; }
+
+/*Stay up when focus shifts*/
+/* line 97, src/web-scss/_CardPreview.scss */
+cardpreview:active > .text-pane {
+  visibility: hidden; }
+
+/*Hide when drag begins*/
+/* line 98, src/web-scss/_CardPreview.scss */
+cardpreview > .text-pane:active {
+  visibility: visible; }
+
+/* line 100, src/web-scss/_CardPreview.scss */
+cardpreview > .text-pane > .tri {
+  position: fixed;
+  transform: translateY(-3.5em);
+  right: calc(var(--right) - 0.75em);
+  z-index: 1;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 0px 10px 10px;
+  border-color: transparent transparent transparent #FB0; }
+
+/* line 112, src/web-scss/_CardPreview.scss */
+cardpreview > .text-pane > .fake-body {
+  vertical-align: center;
+  background: #FB0;
+  border-style: solid;
+  border-width: 0em 1em 0em 0em;
+  border-color: transparent;
+  background-clip: content-box;
+  transform: translateX(1.1em) translateY(calc(-2.5em - 50%));
+  position: fixed;
+  right: var(--right);
+  left: calc(100% - var(--right) - $edge - 0.75em);
+  height: 5em;
+  z-index: 1; }
+
+@keyframes expand {
+  0% {
+    left: calc(100% - var(--right) - $edge);
+    transform: translateX(1.1em) translateY(calc(-2.5em - 50%)); }
+  60% {
+    /*Manually change contents and override color*/
+    height: calc(400%); }
+  61% {
+    transform: translateX(1.1em);
+    top: 0%;
+    bottom: 0%;
+    height: calc(100%); }
+  100% {
+    left: var(--right);
+    transform: translateX(1.1em);
+    top: 8em;
+    bottom: 1em;
+    height: calc(100% - 9em);
+    overflow-y: scroll; } }
+
+@keyframes expand-pre-load {
+  0% {
+    visibility: visible;
+    height: auto; }
+  50% {
+    visibility: visible;
+    height: auto; }
+  51% {
+    visibility: hidden;
+    height: 0; }
+  100% {
+    visibility: hidden;
+    height: 0; } }
+
+@keyframes expand-post-load {
+  0% {
+    visibility: hidden;
+    height: 0; }
+  50% {
+    visibility: hidden;
+    height: 0; }
+  51% {
+    visibility: visible;
+    height: auto;
+    color: #0AF; }
+  100% {
+    visibility: visible;
+    height: auto;
+    color: black; } }
+
+/* line 169, src/web-scss/_CardPreview.scss */
+cardpreview > .text-pane:hover > .fake-body {
+  animation: expand 0.15s forwards; }
+
+/* line 172, src/web-scss/_CardPreview.scss */
+cardpreview > .text-pane:hover > .fake-body > .pre-load {
+  animation: expand-pre-load 0.15s forwards; }
+
+/* line 176, src/web-scss/_CardPreview.scss */
+cardpreview > .text-pane > .fake-body > .post-load {
+  visibility: hidden;
+  height: 0;
+  white-space: pre-wrap !important;
+  text-align: left; }
+
+/* line 184, src/web-scss/_CardPreview.scss */
+cardpreview > .text-pane:hover > .fake-body > .post-load {
+  animation: expand-post-load 0.15s forwards; }
+
+/* line 189, src/web-scss/_CardPreview.scss */
+cardpreview > .text-pane > .fake-body::-webkit-scrollbar {
+  background: #a00; }
+
+/* line 190, src/web-scss/_CardPreview.scss */
+cardpreview > .text-pane > .fake-body::-webkit-scrollbar-thumb {
+  border-radius: 1em;
+  background: #a0a; }
+
+/* line 191, src/web-scss/_CardPreview.scss */
+cardpreview > .text-pane > .fake-body::-webkit-scrollbar-track {
+  border-radius: 1em;
+  background: #00a; }
+
+/* line 192, src/web-scss/_CardPreview.scss */
+cardpreview > .text-pane > .fake-body::-webkit-scrollbar {
+  border-radius: 1em;
+  background-color: greenyellow; }
+
+/* line 1, src/web-scss/_CardsFrame.scss */
+.cards-frame {
+  overflow-y: scroll;
+  width: 100%;
+  /*max-height: 90%;*/
+  height: calc(100%) !important;
+  margin: auto;
+  /*background  -color: #069*/
+  /*height: auto;*/
+  /*max-height: 100%;*/
+  box-shadow: inset 0 0px 6px 0px black; }
+
+/* line 1, src/web-scss/_Circle.scss */
+#editor circle {
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  background-color: #000;
+  margin: auto;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  transition: border-color 0.3s;
+  border: 1px solid black;
+  display: block; }
+
+/*#editor circle:hover{
+  border: 1px solid white;
+}*/
+/*
+#editor circle::before, #editor circle::after {
+  width: 100%;
+  min-height: 1px;
+  display: block;
+}*/
+/* line 25, src/web-scss/_Circle.scss */
+#editor circle.large {
+  width: 2em;
+  height: 2em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em; }
+
+/* line 32, src/web-scss/_Circle.scss */
+#editor circle:not(.large) {
+  width: 1em;
+  height: 1em;
+  margin-top: 1em;
+  margin-bottom: 1em; }
+
+/* line 39, src/web-scss/_Circle.scss */
+#editor circle:not(.slow) {
+  transition: height 0.35s, width 0.35s, margin-top 0.35s, margin-bottom 0.35s, border-color 0.3s; }
+
+/* line 48, src/web-scss/_Circle.scss */
+#editor circle.slow {
+  transition: height 1s, width 1s, margin-top 1s, margin-bottom 1s, border-color 0.3s; }
+
+/* line 1, src/web-scss/_Editor.scss */
+#editor {
+  position: absolute;
+  background: #0080ff;
+  overflow-y: scroll;
+  color: #000;
+  overflow-y: scroll; }
+  /* line 9, src/web-scss/_Editor.scss */
+  #editor::-webkit-scrollbar {
+    border-radius: 10px;
+    width: 10px;
+    visibility: hidden;
+    background-color: #f3f3f3; }
+  /* line 17, src/web-scss/_Editor.scss */
+  #editor::-webkit-scrollbar-thumb {
+    transition: background-color 1s;
+    -webkit-transition: background-color 1s;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px; }
+  /* line 25, src/web-scss/_Editor.scss */
+  #editor::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.4); }
+  /* line 28, src/web-scss/_Editor.scss */
+  #editor::-webkit-scrollbar-thumb:active {
+    background-color: rgba(0, 0, 0, 0.5); }
+
+/* line 34, src/web-scss/_Editor.scss */
+#editor > section {
+  /*root section*/
+  position: static;
+  width: 100%;
+  margin: auto; }
+
+/* line 40, src/web-scss/_Editor.scss */
+#editor > section section {
+  /*non root section*/
+  box-shadow: 0px 1px 5px 0px;
+  width: calc(100% - 60px);
+  background: rgba(0, 0, 0, 0.2);
+  background: rgba(255, 128, 255, 0.3);
+  margin: auto; }
+
+/* #editor > section section section{
+  background: var(--section2);
+} */
+/* line 54, src/web-scss/_Editor.scss */
+#editor > section > heading {
+  font-size: 3em;
+  display: block;
+  border-style: solid;
+  border-width: 1.5px; }
+
+/* line 61, src/web-scss/_Editor.scss */
+#editor > section section > heading {
+  font-size: 2em;
+  display: block;
+  text-decoration: underline; }
+
+/* line 69, src/web-scss/_Editor.scss */
+#editor > section terminator {
+  width: 100%;
+  min-height: 1px;
+  display: block; }
+
+/*
+#editor > section terminator:nth-child(4){/*Dont ask why or how this works
+  min-height: 1px;
+}*/
+/* line 1, src/web-scss/_Modal.scss */
+.modal-back {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  visibility: visible;
+  display: block; }
+
+/* line 13, src/web-scss/_Modal.scss */
+.modal-back .modal-title {
+  /*margin: 0.5em;*/
+  padding-left: 0.25em;
+  vertical-align: middle;
+  position: absolute;
+  /*top:7em;*/
+  left: 23%;
+  right: 23%;
+  top: 112px;
+  height: 48px;
+  background-color: darkred;
+  color: White;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  -webkit-app-region: drag; }
+
+/* line 29, src/web-scss/_Modal.scss */
+.modal-back .modal-title span {
+  font-size: 32px; }
+
+/* line 33, src/web-scss/_Modal.scss */
+.modal-back .modal-title i.fa-times {
+  position: fixed;
+  right: calc(23% + 13px);
+  top: 122px;
+  font-size: 1.5em;
+  width: 1em;
+  -webkit-app-region: no-drag; }
+
+/* line 42, src/web-scss/_Modal.scss */
+.modal-back > .modal-title > i.fa-times:hover {
+  color: #999; }
+
+/* line 45, src/web-scss/_Modal.scss */
+.modal-back .modal-title i.fa-times:active {
+  color: #000; }
+
+/* line 49, src/web-scss/_Modal.scss */
+.modal-back .modal-body {
+  -webkit-transform: translate3d(0, 0, 0);
+  /* HACK: fixes laggy scrolling*/
+  -webkit-backface-visibility: hidden;
+  /* HACK: fixes laggy scrolling */
+  -webkit-perspective: 1000;
+  /* HACK: fixes laggy scrolling */
+  /*margin: 0.5em;*/
+  padding-left: 0.25em;
+  vertical-align: center;
+  position: absolute;
+  /*top:7em;*/
+  left: 23%;
+  right: 23%;
+  top: 160px;
+  height: auto;
+  max-height: calc(100% - 200px);
+  overflow-y: scroll;
+  background-color: white;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px; }
+
+/* line 69, src/web-scss/_Modal.scss */
+.modal-back .modal-body::-webkit-scrollbar {
+  border-radius: 8px;
+  width: 12px;
+  background-color: #f3f3f3; }
+
+/* line 76, src/web-scss/_Modal.scss */
+.modal-back .modal-body::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #0BF; }
+
+/* line 84, src/web-scss/_Modal.scss */
+.modal-back .modal-body .HalfButton {
+  margin-left: calc(100% / 24);
+  margin-right: calc(100% / 24);
+  margin-bottom: 10px;
+  text-align: center; }
+
+/*medium gray*/
+/*darkest gray*/
+/* line 96, src/web-scss/_Modal.scss */
+.dropdown .dropdown-btn {
+  position: relative;
+  height: auto;
+  display: inline-block;
+  padding: 5px 14px 5px 14px;
+  border-radius: 4px;
+  border-color: lightgray;
+  border-style: solid;
+  background: white; }
+  /* line 106, src/web-scss/_Modal.scss */
+  .dropdown .dropdown-btn:hover {
+    background: lightgray; }
+  /* line 109, src/web-scss/_Modal.scss */
+  .dropdown .dropdown-btn:active {
+    background: darkgray; }
+
+/* line 113, src/web-scss/_Modal.scss */
+.dropdown ul {
+  position: absolute;
+  top: 30px;
+  left: 0px;
+  background-color: white;
+  list-style-type: none;
+  padding: 0;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
+  z-index: 10; }
+
+/* line 124, src/web-scss/_Modal.scss */
+.dropdown ul li {
+  margin: 8px 4px 8px 4px;
+  font-size: 14px;
+  padding: 0px 10px 0px 10px;
+  border-radius: 5px;
+  background-color: white; }
+  /* line 131, src/web-scss/_Modal.scss */
+  .dropdown ul li:hover {
+    background-color: lightgray; }
+  /* line 134, src/web-scss/_Modal.scss */
+  .dropdown ul li:active {
+    background-color: darkgray; }
+
+/* line 138, src/web-scss/_Modal.scss */
+.dropdown select.hidden {
+  height: 0;
+  visibility: hidden; }
+
+/* line 2, src/web-scss/_Navbar.scss */
+.nav-item {
+  position: relative;
+  width: 100%;
+  min-height: 1.75em;
+  padding: 0;
+  box-sizing: border-box; }
+
+/* line 10, src/web-scss/_Navbar.scss */
+div.root {
+  box-shadow: inset 0 0px 6px 0px black;
+  min-height: 100%;
+  padding: 1em; }
+
+/* line 16, src/web-scss/_Navbar.scss */
+.nav-item-box {
+  background: #ccc; }
+
+/* line 20, src/web-scss/_Navbar.scss */
+.nav-item-box.active {
+  background: #0af; }
+
+/* line 24, src/web-scss/_Navbar.scss */
+.breadcrumb {
+  white-space: nowrap;
+  overflow-x: hidden;
+  margin: 0;
+  background: #ccc; }
+
+/* line 31, src/web-scss/_Navbar.scss */
+.breadcrumb .breadcrumb-item::before {
+  color: black;
+  padding-right: 0; }
+
+/* line 37, src/web-scss/_Navbar.scss */
+.nav-item .square {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  vertical-align: middle;
+  display: inline-block;
+  text-align: center;
+  line-height: 1.75em;
+  /* font-size: 1.75em; */
+  height: 1.75em;
+  width: 1.75em; }
+
+/* line 51, src/web-scss/_Navbar.scss */
+.nav-item.children input.toggle-vis {
+  appearance: none; }
+
+/* line 55, src/web-scss/_Navbar.scss */
+.nav-item.children input.toggle-vis:after {
+  font-family: FontAwesome;
+  vertical-align: middle;
+  display: inline-block;
+  background-color: transparent;
+  margin: 0;
+  text-align: center;
+  line-height: 1.75em;
+  /* font-size: 1.75em; */
+  height: 1.75em;
+  width: 1.75em;
+  /* border-width: 0.875em; */
+  /* border-color: transparent; */
+  /* border-style: solid; */
+  /* border-left-color: black; */
+  content: '\f07c';
+  padding-left: 0.2em; }
+
+/* line 74, src/web-scss/_Navbar.scss */
+.nav-item.children input.toggle-vis:checked:after {
+  content: '\f114';
+  padding: 0; }
+
+/* line 79, src/web-scss/_Navbar.scss */
+.nav-item.children input.toggle-vis:checked ~ div.contents {
+  visibility: hidden;
+  height: 0; }
+
+/* line 84, src/web-scss/_Navbar.scss */
+.nav-item span.name {
+  position: absolute;
+  left: 1.75em;
+  right: 0;
+  display: inline-block;
+  vertical-align: middle;
+  height: 1.75em;
+  padding: calc(0.75em / 2);
+  line-height: 1em;
+  /* max-height: 1em; */
+  font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-x: hidden; }
+
+/* line 100, src/web-scss/_Navbar.scss */
+.nav-item span.name:hover {
+  box-shadow: 0 0px 5px 0px;
+  border: solid 1.5px;
+  padding: calc(0.37em - $border-size); }
+
+/* line 108, src/web-scss/_Navbar.scss */
+.nav-item div.contents {
+  /* position: absolute; */
+  /* top: calc($nav-height); */
+  /* left: $nav-height; */
+  /* right:0; */
+  padding-top: 1.75em;
+  padding-left: 1.75em; }
+
+/* line 117, src/web-scss/_Navbar.scss */
+.nav-item .slide-down-name {
+  position: absolute;
+  top: 1.75em;
+  left: 0;
+  bottom: 0;
+  width: 1.75em;
+  background: #ccc;
+  overflow-y: hidden;
+  padding: 0; }
+
+/* line 1, src/web-scss/_Noselect.scss */
+.noselect {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently*/ }
+
+/*Ribbon.css*/
+/* line 2, src/web-scss/_Ribbon.scss */
+ribbon {
+  height: 84px;
+  display: block;
+  /*background-color: #0af;*/
+  background-color: #ddd;
+  text-align: left;
+  border-bottom-color: black;
+  border-bottom-style: dotted;
+  border-bottom-width: 1.5px; }
+
+/* line 2, src/web-scss/_RibbonButtons.scss */
+ribbonbutton {
+  --height: 14px;
+  display: inline-block;
+  font-size: 14px;
+  border-style: solid;
+  border-color: transparent;
+  background-color: transparent;
+  border-width: 1.5px;
+  margin: 0;
+  user-select: none !important;
+  color: #000;
+  /*height: var(--height);*/
+  cursor: default; }
+  /* line 17, src/web-scss/_RibbonButtons.scss */
+  ribbonbutton:hover {
+    border-color: gray;
+    background-color: gray; }
+  /* line 22, src/web-scss/_RibbonButtons.scss */
+  ribbonbutton:active {
+    background-color: transparent; }
+  /* line 26, src/web-scss/_RibbonButtons.scss */
+  ribbonbutton .lg {
+    --height: 28px; }
+  /* line 30, src/web-scss/_RibbonButtons.scss */
+  ribbonbutton .icon {
+    width: var(--height);
+    padding: 0;
+    margin: 0; }
+    /* line 34, src/web-scss/_RibbonButtons.scss */
+    ribbonbutton .icon * {
+      vertical-align: middle;
+      display: block; }
+    /* line 38, src/web-scss/_RibbonButtons.scss */
+    ribbonbutton .icon img {
+      width: var(--height);
+      height: var(--height); }
+  /* line 44, src/web-scss/_RibbonButtons.scss */
+  ribbonbutton .title {
+    width: auto;
+    padding: 0;
+    padding-left: 7px;
+    padding-right: 7px; }
+  /* line 51, src/web-scss/_RibbonButtons.scss */
+  ribbonbutton .title, ribbonbutton .icon {
+    height: var(--height);
+    display: inline-block;
+    line-height: var(--height);
+    text-align: center;
+    vertical-align: middle; }
+
+/* line 62, src/web-scss/_RibbonButtons.scss */
+ribbonbutton.md .icon .glyphicon {
+  /*font-size: var(--height)*/
+  margin-top: -1px; }
+
+/* line 69, src/web-scss/_RibbonButtons.scss */
+ribbonbutton.lg .icon .glyphicon {
+  font-size: var(--height); }
+
+/* line 73, src/web-scss/_RibbonButtons.scss */
+ribbonbutton.lg .icon span {
+  font-size: var(--height);
+  overflow: clip; }
+
+/* line 1, src/web-scss/_Searchbar.scss */
+.search-bar {
+  max-width: 90%;
+  margin: auto;
+  padding-bottom: 1em;
+  padding-top: 1em; }
+
+/* line 8, src/web-scss/_Searchbar.scss */
+.search-bar-container {
+  background-color: #ccc; }
+
+/*transition: all 0.3s cubic-bezier(.25,.8,.25,1);*/
+/* line 6, src/web-scss/_shadows.scss */
+.box-1 {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+
+/* line 10, src/web-scss/_shadows.scss */
+.box-2 {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+
+/* line 14, src/web-scss/_shadows.scss */
+.box-3 {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); }
+
+/* line 18, src/web-scss/_shadows.scss */
+.box-4 {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
+
+/* line 22, src/web-scss/_shadows.scss */
+.box-5 {
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22); }
+
+/* line 1, src/web-scss/_Sidebar.scss */
+sidebar {
+  width: var(--sidebar-width);
+  position: absolute;
+  height: 100%;
+  bottom: 0;
+  background-color: #ddd; }
+
+/* line 9, src/web-scss/_Sidebar.scss */
+sidebar.left {
+  left: 0; }
+
+/* line 12, src/web-scss/_Sidebar.scss */
+sidebar.right {
+  right: 0; }
+
+/* line 1, src/web-scss/_slideOpen.scss */
+.animate-max-height {
+  max-height: 0;
+  -webkit-transition: max-height 5s ease-in-out;
+  -moz-transition: max-height 5s ease-in-out;
+  -o-transition: max-height 5s ease-in-out;
+  transition: max-height 5s ease-in-out;
+  transition-timing-function: linear; }
+
+/* line 10, src/web-scss/_slideOpen.scss */
+.animate-margin-top {
+  -webkit-transition: margin-top 0.35s ease-in-out;
+  -moz-transition: margin-top 0.35s ease-in-out;
+  -o-transition: margin-top 0.35s ease-in-out;
+  transition: margin-top 0.35s ease-in-out; }
+
+/* line 1, src/web-scss/_tab.scss */
+tab {
+  min-width: 4em;
+  height: 1.8em;
+  float: left;
+  text-align: center;
+  margin: 0.25em 0 0 0.25em;
+  border: 1px;
+  border-bottom: 0;
+  border-top-right-radius: 0.3em;
+  border-top-left-radius: 0.3em;
+  border-style: solid;
+  border-color: white;
+  padding: 0.2em 0.6em 0.1em 0.6em;
+  font-size: 14px;
+  -webkit-app-region: no-drag;
+  color: var(--text-color);
+  background-color: var(--ribbon-tab-inactive); }
+
+/* line 24, src/web-scss/_tab.scss */
+tab.active {
+  background-color: var(--ribbon-tab-active);
+  border-color: var(--ribbon-tab-active-border);
+  border-bottom-color: var(--ribbon-tab-active-border);
+  color: var(--text-color); }
+
+/* line 32, src/web-scss/_tab.scss */
+tab:not(.active):hover {
+  /*background-color: var (--ribbon-tab-active);*/
+  border-color: var(--ribbon-tab-active-border);
+  border-style: dashed; }
+
+/* line 1, src/web-scss/_Tabbar.scss */
+tabcontainer {
+  height: 1.8em !important;
+  /*background-color: #0af;*/
+  overflow-y: hidden;
+  clear: both;
+  -webkit-app-region: drag;
+  cursor: default;
+  display: block; }
+
+/* line 11, src/web-scss/_Tabbar.scss */
+icon {
+  height: 1.8em;
+  width: 2.8em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  float: right;
+  -webkit-app-region: no-drag;
+  color: black;
+  transition: background-color 0.25s, color 0.25s;
+  margin: 0;
+  padding: 0.4em;
+  text-align: center;
+  display: inline-block; }
+
+/* line 26, src/web-scss/_Tabbar.scss */
+icon.fa:hover {
+  background-color: #aaa; }
+
+/* line 30, src/web-scss/_Tabbar.scss */
+icon.fa.fa-times:hover {
+  color: white;
+  background-color: #f00; }

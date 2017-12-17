@@ -1,0 +1,42 @@
+@media (min-width: 1048px){.App {--sidebar-width: 23%;}}
+@media (max-width: 1048px){.App {--sidebar-width: 240px;}}
+
+.App .app-body{
+  top:25px;
+}
+
+.App ribbon ~ .app-body{
+  top:109.2px;
+}
+
+.App .app-body{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  overflow-y: hidden;
+  position:absolute;
+
+  #editor {
+    text-align: center;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    overflow-y: scroll;
+  }
+
+  .side-bar.left ~ #editor {
+    left: var(--sidebar-width);
+  }
+
+  .side-bar.right ~ #editor {
+    right: var(--sidebar-width);
+  }
+}
+
+html {
+  height:100%;
+}

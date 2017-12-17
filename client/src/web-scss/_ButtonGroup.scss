@@ -1,3 +1,5 @@
+@import "Theme";
+
 ribbongroup {
   display: inline;
   height: 42px;
@@ -8,14 +10,16 @@ ribbongroup {
     display: inline-block;
     height: 84px;
 
-    border-style: solid;
-    border-color: rgba(0,0,0,0.2);
-    border-width: 1.5px;
-    border-top-width: 0;
-    border-left-width:0;
-    border-bottom-width:0;
+    border: {
+      style: solid;
+      color: rgba(0,0,0,0.2);
+      width: 1.5px;
+      top-width: 0;
+      left-width:0;
+      bottom-width:0;
+    }
 
-    > title {
+    title {
       display: block;
       width: 100%;
       height: 14px;
@@ -27,17 +31,28 @@ ribbongroup {
 
     > buttongroup {
       vertical-align: top;/*Remove this for a meme*/
+
       display: inline-flex;
-      flex-direction: column;
-      flex-wrap: wrap;
+
+      flex: {
+        direction: column;
+        wrap: wrap;
+      }
+
       justify-content: space-around;
-      align-items: flex-start;
-      align-content: stretch;
+
+      align: {
+        items: flex-start;
+        align-content: stretch;
+      }
 
       width: auto;
       height: 70px;
-      padding-left: 3.5px;
-      padding-right: 3.5px;
+
+      padding: {
+        left: 3.5px;
+        right: 3.5px;
+      }
 
       > div.row {
         display: inline;

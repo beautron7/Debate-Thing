@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 // import PropTypes from 'prop-types';
 
 import CardPreview from './CardPreview'
-import '../web-css/scrollbar.css'
-import '../web-css/CardsFrame.css'
+// import '../web-css/scrollbar.css'
+// import '../web-css/CardsFrame.css'
 import Async from './Async.js'
 
 export default class CardsFrame extends Component {

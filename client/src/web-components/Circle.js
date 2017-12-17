@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 // import PropTypes from 'prop-types';
-import '../web-css/Circle.css'
-import '../web-css/slideOpen.css'
+// import '../web-css/Circle.css'
+// import '../web-css/slideOpen.css'
 import Section from './Section'
 import {CardPoint, SectionNode} from '../web-js/Tree'
 const Aux =p=>p.children;

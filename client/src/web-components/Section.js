@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import '../web-css/Editor.css'
+// import '../web-css/Editor.css'
 import Card from './Card.js'
 import Circle from './Circle.js'
 import {CardPoint,SectionNode} from '../web-js/Tree.js'

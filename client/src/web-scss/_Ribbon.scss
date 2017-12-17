@@ -3,7 +3,7 @@ ribbon {
   height: 84px;
   display: block;
   /*background-color: #0af;*/
-  background-color: var(--ribbon-title-bar);
+  background-color: $ribbon-title-bar;
   text-align: left;
   border-bottom-color: black;
   border-bottom-style:dotted;

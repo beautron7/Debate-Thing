@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from "react-dom";
-import '../web-css/Card.css';
-import '../web-css/slideOpen.css';
+// import '../web-css/Card.css';
+// import '../web-css/slideOpen.css';
 import RibbonButton from './RibbonButton';
 import {CardPoint} from '../web-js/Tree'
 // import Frame from 'react-frame-component'

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 // import PropTypes from 'prop-types';
-import '../web-css/RibbonButtons.css'
+// import '../web-css/RibbonButtons.css'
 
 export default class RibbonButton extends Component {
   // static propTypes = {

@@ -1,0 +1,77 @@
+$baseheight:14px;
+ribbonbutton {
+  --height: $baseheight;
+  display: inline-block;
+  font-size: $baseheight;
+
+  border-style: solid;
+  border-color: $btn-default;
+  background-color: $btn-default;
+  border-width: 1.5px;
+  margin:0;
+  user-select: none !important;
+  color: $text-color;
+  /*height: var(--height);*/
+  cursor: default;
+
+  &:hover{
+    border-color: $btn-hover;
+    background-color: $btn-hover;
+  }
+
+  &:active {
+    background-color: rgba(0,0,0,0);
+  }
+
+  .lg {
+    --height: 2 * $baseheight;
+  }
+
+  .icon {
+    width: var(--height);
+    padding: 0;
+    margin: 0;
+    & * {
+      vertical-align: middle;
+      display: block;
+    }
+    img {
+      width: var(--height);
+      height: var(--height);
+    }
+  }
+
+  .title {
+    width: auto;
+    padding: 0;
+    padding-left: 7px;
+    padding-right: 7px;
+  }
+
+  .title, .icon {
+    height: var(--height);
+    display: inline-block;
+    line-height: var(--height);
+    text-align: center;
+    vertical-align: middle;
+  }
+}
+
+
+ribbonbutton.md .icon {
+  .glyphicon {
+    /*font-size: var(--height)*/
+    margin-top: -1px;
+  }
+}
+
+ribbonbutton.lg .icon {
+  .glyphicon {
+    font-size: var(--height);
+  }
+
+  span {
+    font-size: var(--height);
+    overflow: clip;
+  }
+}

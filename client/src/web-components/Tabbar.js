@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 // import PropTypes from 'prop-types';
 import Tab from './Tab'
 import HideForMac from './HideForMac'
-import '../web-css/Tabbar.css'
+// import '../web-css/Tabbar.css'
 
 export default class Tabbar extends Component {
   constructor(a,b,c){

@@ -1,0 +1,11 @@
+{
+  "files": {
+    "web-scss/index.scss": {
+      "output": "web-css/index.css",
+      "format": "scss"
+    }
+  },
+  "autowatch": [
+    "scss/index.scss",
+  ]
+}

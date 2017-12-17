@@ -1,6 +1,6 @@
 import  React, {Component} from 'react';
 import ReactDOM from 'react-dom'
-import '../web-css/Modal.css'
+// import '../web-css/Modal.css'
 
 export default class Modal {
   constructor(title,body){

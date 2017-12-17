@@ -1,11 +1,13 @@
 @import "shadows";
+@import "Theme";
+
 card {
   display: block;
   position: static;
   display:block;
   width:calc(100% - 60px);
   max-width: calc(100% - 60px);
-  background-color: var(--canvas-1);
+  background-color: $canvas-1;
   margin:auto;
   border-radius: 1em;
   box-shadow: 0 0 10px 0;
@@ -14,12 +16,12 @@ card {
   .card-marker{
     display:inline;
 
-    :before{
+    &:before {
       display:inline;
       content: "\a";
       white-space: pre;
     }
-    :after{
+    &:after {
       display:inline;
       content: "MARK\a";
       white-space: pre;
@@ -33,11 +35,11 @@ card {
     }
   }
 
-  ::selection {
+  &::selection {
     background: dark(0.2); /* WebKit/Blink Browsers */
   }
 
-  >.cardHead {
+  .cardHead {
     border-radius: 0.9em;
     /* border-style: solid; */
     box-shadow: 0 0 1px 1px;
@@ -46,27 +48,27 @@ card {
     position: sticky;
     top:0em;
 
-    >.cardHeadLower {
-      background: var(--canvas-1);
+    .cardHeadLower {
+      background: $canvas-1;
       position: relative;
       height: 2.75em;
-      >.cardButtons{
+      .cardButtons{
         position: absolute;
         right: 3.5px;
         top: 50%;
         transform: translateY(-50%);
       }
-      >.cardAuthor {
+      .cardAuthor {
         font: {
           size: 1.5em;
           weight: bold
         };
-        border{
+        border: {
           style: groove;
           top-right-radius: 1em;
           bottom-right-radius: 1em;
         }
-        padding{
+        padding: {
           left: 0.5em;
           right: 0.5em;
         }
@@ -74,30 +76,30 @@ card {
         left:0em;
         top: 50%;
         text-align: left;
-        background: var(--canvas-3);
+        background: $canvas-3;
         transform: translateY(-50%);
         max-width: calc(100% - 8em);
         overflow-y: hidden;
         height: 1.5em ;
         white-space: nowrap;
 
-        ::-webkit-scrollbar {
+        &::-webkit-scrollbar {
           background-color: dark(0.1);
           border-radius: 1em;
         }
-        ::-webkit-scrollbar-thumb{
+        &::-webkit-scrollbar-thumb{
           background-color: dark(0.4);
           border-radius: 1em;
         }
-        ::-webkit-scrollbar-thumb:hover{
+        &::-webkit-scrollbar-thumb:hover{
           background-color: dark(0.6);
         }
-        ::-webkit-scrollbar-thumb:active{
+        &::-webkit-scrollbar-thumb:active{
           background-color: dark(0.8);
         }
       }
     }
-    >.cardHeadUpper {
+    .cardHeadUpper {
       min:{
         width: 100%;
         height: 1em;
@@ -110,12 +112,12 @@ card {
         left: 0.5em;
         top: 0.25em;
       }
-      background: var(--canvas-1);
+      background: $canvas-1;
       text-align: left;
     }
-    >.cardHeadFormatingBar {
+    .cardHeadFormatingBar {
       height: 0;
-      background: var(--canvas-2);
+      background: $canvas-2;
       text-align: left;
       overflow-y: hidden;
       transition: height 1s;
@@ -134,7 +136,7 @@ card {
     white-space: pre-wrap;
     font-family: Calibri;
     font-size: 12;
-    .hi{background-color: var(--highlight)}
+    .hi{background-color: $highlight}
     .bold {font-weight: bold;}
     .emphasis {font-weight: bold;}
     .ital {font-style:italic;}

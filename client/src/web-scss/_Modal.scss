@@ -70,14 +70,14 @@
 {
   border-radius: 8px;
 	width: 12px;
-	background-color: var(--canvas-scroll-bkg);
+	background-color: $canvas-scroll-bkg;
 }
 
 .modal-back .modal-body::-webkit-scrollbar-thumb
 {
 	border-radius: 8px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: var(--canvas-scroll);
+	background-color: $canvas-scroll;
 }
 
 
@@ -88,12 +88,10 @@
   text-align: center;
 }
 
-.dropdown {
-  --btn-0:white;
-  --btn-1:lightgray;/*medium gray*/
-  --btn-2:darkgray;/*darkest gray*/
-  --btn-3:gray;
-}
+$btn-0:white;
+$btn-1:lightgray;/*medium gray*/
+$btn-2:darkgray;/*darkest gray*/
+$btn-3:gray;
 
 .dropdown .dropdown-btn {
   position: relative;
@@ -102,21 +100,21 @@
 
   padding: 5px 14px 5px 14px;
   border-radius: 4px;
-  border-color:var(--btn-1);
+  border-color:$btn-1;
   border-style: solid;
-  background: var(--btn-0);
-}
-.dropdown .dropdown-btn:hover{
-  background: var(--btn-1);
-}
-.dropdown .dropdown-btn:active{
-  background: var(--btn-2);
+  background: $btn-0;
+  &:hover{
+    background: $btn-1;
+  }
+  &:active{
+    background: $btn-2;
+  }
 }
 .dropdown ul {
   position: absolute;
   top:30px;
   left:0px;
-  background-color: var(--btn-0);
+  background-color: $btn-0;
   list-style-type: none;
   padding: 0;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
@@ -128,13 +126,14 @@
   font-size: 14px;
   padding: 0px 10px 0px 10px;
   border-radius: 5px;
-  background-color: var(--btn-0);
-}
-.dropdown ul li:hover{
-  background-color: var(--btn-1);
-}
-.dropdown ul li:active{
-  background-color: var(--btn-2)
+  background-color: $btn-0;
+
+  &:hover {
+    background-color: $btn-1;
+  }
+  &:active {
+    background-color: $btn-2
+  }
 }
 .dropdown select.hidden {
   height: 0;

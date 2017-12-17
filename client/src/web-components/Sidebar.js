@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 // import PropTypes from 'prop-types';
-import '../web-css/Sidebar.css'
+// import '../web-css/Sidebar.css'
 
 export default class Sidebar extends Component {
   // static propTypes = {

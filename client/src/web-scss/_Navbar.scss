@@ -1,8 +1,8 @@
+$nav-height: 1.75em;
 .nav-item {
   position: relative;
-  --nav-height: 1.75em;
   width: 100%;
-  min-height: var(--nav-height);
+  min-height: $nav-height;
   padding: 0;
   box-sizing: border-box;
 }
@@ -14,7 +14,7 @@ div.root {
 }
 
 .nav-item-box {
-  background: var(--canvas-3);
+  background: $canvas-3;
 }
 
 .nav-item-box.active {
@@ -25,7 +25,7 @@ div.root {
   white-space: nowrap;
   overflow-x: hidden;
   margin: 0;
-  background: var(--canvas-3);
+  background: $canvas-3;
 }
 
 .breadcrumb .breadcrumb-item::before{
@@ -42,10 +42,10 @@ div.root {
   vertical-align: middle;
   display: inline-block;
   text-align: center;
-  line-height: var(--nav-height);
+  line-height: $nav-height;
   /* font-size: 1.75em; */
-  height: var(--nav-height);
-  width: var(--nav-height);
+  height: $nav-height;
+  width: $nav-height;
 }
 
 .nav-item.children input.toggle-vis{
@@ -59,10 +59,10 @@ div.root {
   background-color: transparent;
   margin: 0;
   text-align: center;
-  line-height: var(--nav-height);
+  line-height: $nav-height;
   /* font-size: 1.75em; */
-  height: var(--nav-height);
-  width: var(--nav-height);
+  height: $nav-height;
+  width: $nav-height;
   /* border-width: 0.875em; */
   /* border-color: transparent; */
   /* border-style: solid; */
@@ -83,11 +83,11 @@ div.root {
 
 .nav-item span.name {
   position: absolute;
-  left: var(--nav-height);
+  left: $nav-height;
   right:0;
   display: inline-block;
   vertical-align: middle;
-  height: var(--nav-height);
+  height: $nav-height;
   padding: calc(0.75em / 2);
   line-height: 1em;
   /* max-height: 1em; */
@@ -99,28 +99,28 @@ div.root {
 
 .nav-item span.name:hover {
   box-shadow: 0 0px 5px 0px;
-  /* --border-size: 1.5px; */
-  /* border: solid var(--border-size); */
-  /* padding: calc(0.37em - var(--border-size)); */
+  $border-size: 1.5px;
+  border: solid $border-size;
+  padding: calc(0.37em - $border-size);
 }
 
 
 .nav-item div.contents {
   /* position: absolute; */
-  /* top: calc(var(--nav-height)); */
-  /* left: var(--nav-height); */
+  /* top: calc($nav-height); */
+  /* left: $nav-height; */
   /* right:0; */
-  padding-top: var(--nav-height);
-  padding-left: var(--nav-height);
+  padding-top: $nav-height;
+  padding-left: $nav-height;
 }
 
 .nav-item .slide-down-name{
   position: absolute;
-  top: var(--nav-height);
+  top: $nav-height;
   left:0;
   bottom:0;
-  width: var(--nav-height);
-  background: var(--canvas-3);
+  width: $nav-height;
+  background: $canvas-3;
   overflow-y: hidden;
   padding: 0;
 }

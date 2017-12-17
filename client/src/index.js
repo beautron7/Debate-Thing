@@ -9,7 +9,6 @@ import IPC from './web-js/RenderIpc.js';
 import Cache from './cache';
 
 import './web-css/index.css';
-import './web-css/shadows.css';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'font-awesome/css/font-awesome.css'
 

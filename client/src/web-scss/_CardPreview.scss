@@ -1,13 +1,17 @@
+@import "Theme";
+$height: 84px;
+$margin: 7px;
+
 cardpreview {
   display: block;
-  --height:84px;
+  height:$height;
   position: relative;
   margin: 14px;
   width: auto;
-  height: var(--height);
-  background-color: var(--canvas-4);
+  height: $height;
+  background-color: $canvas-4;
   transition: box-shadow 0.5s;
-  color: var(--text-color);
+  color: $text-color;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
@@ -16,12 +20,11 @@ cardpreview:hover{
 }
 
 cardpreview > img {
-  --margin: 7px;
-  height: calc(var(--height) - var(--margin) * 2);
-  width:  calc(var(--height) - var(--margin) * 2);
-  margin: var(--margin);
+  height: $height - $margin * 2;
+  width:  $height - $margin * 2;
+  margin: $margin;
   float: left;
-  background-color: var(--canvas-img-background);
+  background-color: $canvas-img-background;
 }
 
 cardpreview > author {
@@ -61,7 +64,7 @@ cardpreview > keywordcontainer {
 cardpreview > keywordcontainer > keyword {
   display: inline;
   white-space: nowrap;
-  background-color: var(--accent-secondary);
+  background-color: $accent-secondary;
   border-radius: 0.6em;
   font-size: 1em;
   height: 1.2em;
@@ -103,13 +106,13 @@ cardpreview > .text-pane > .tri {
   height: 0;
   border-style: solid;
   border-width: 10px 0px 10px 10px;
-  border-color: transparent transparent transparent var(--accent-secondary);
+  border-color: transparent transparent transparent $accent-secondary
 }
 
 cardpreview > .text-pane > .fake-body  {
   vertical-align: center;
-  --edge: 5em;
-  background: var(--accent-secondary);
+  $edge: 5em;
+  background: $accent-secondary;
 
   border-style: solid;
   border-width:0em 1em 0em 0em;
@@ -120,14 +123,14 @@ cardpreview > .text-pane > .fake-body  {
   transform: translateX(1.1em) translateY(calc(-2.5em - 50%));
   position: fixed;
   right:var(--right);
-  left:calc(100% - var(--right) - var(--edge) - 0.75em);
-  height: var(--edge);
+  left:calc(100% - var(--right) - $edge - 0.75em);
+  height: $edge;
   z-index: 1;
 }
 
 @keyframes expand {
   0% {
-    left:calc(100% - var(--right) - var(--edge));
+    left:calc(100% - var(--right) - $edge);
     transform: translateX(1.1em) translateY(calc(-2.5em - 50%));
   }
 
@@ -160,7 +163,7 @@ cardpreview > .text-pane > .fake-body  {
 @keyframes expand-post-load {
   0% {visibility: hidden; height: 0}
   50% {visibility: hidden; height: 0}
-  51% {visibility: visible; height: auto; color:var(--accent-primary)}
+  51% {visibility: visible; height: auto; color:$accent-primary}
   100% {visibility: visible; height: auto; color: black}
 }
 cardpreview > .text-pane:hover > .fake-body {

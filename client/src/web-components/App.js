@@ -6,7 +6,7 @@ import Editor from './Editor'
 import Tabbar from './Tabbar'
 import Ribbon from './Ribbon'
 import Navbar from './Navbar'
-import '../web-css/App.css';
+// import '../web-css/App.css';
 
 export default class App extends Component {
   constructor(a,b,c){

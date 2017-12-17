@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import '../web-css/Navbar.css'
+// import '../web-css/Navbar.css'
 import RibbonButton from '../web-components/RibbonButton.js'
 import {Tree, CardPoint, SectionNode} from '../web-js/Tree'
 const Aux =(props)=>props.children;

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import '../web-css/Editor.css'
-import '../web-css/scrollbar.css'
+// import '../web-css/Editor.css'
+// import '../web-css/scrollbar.css'
 import {Tree, SectionNode} from '../web-js/Tree.js'
 import Section from './Section.js'
 import Navbar from './Navbar'
@@ -49,6 +49,9 @@ export default class Editor extends Component {
 
   handleScroll(ev){
     var scrollPos = ev.target.scrollTop;
+    if(this.state.data._root.children[0].nav == null || this.state.data._root.children[0].nav.dom == null){
+      return //HACK: if navbar is hidden, it doesn't traverse
+    }
     traverse(this.state.data._root,false)
 
     function traverse(node,dom_is_clean){
