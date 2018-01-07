@@ -1,5 +1,6 @@
 @media (min-width: 1048px){.App {--sidebar-width: 23%;}}
 @media (max-width: 1048px){.App {--sidebar-width: 240px;}}
+$sidebar-width: var(--sidebar-width);
 
 .App .app-body{
   top:25px;
@@ -29,14 +30,10 @@
   }
 
   .side-bar.left ~ #editor {
-    left: var(--sidebar-width);
+    left: $sidebar-width;
   }
 
   .side-bar.right ~ #editor {
-    right: var(--sidebar-width);
+    right: $sidebar-width;
   }
-}
-
-html {
-  height:100%;
 }

@@ -2,9 +2,8 @@
 @import "Theme";
 
 card {
-  display: block;
   position: static;
-  display:block;
+  display:  block;
   width:calc(100% - 60px);
   max-width: calc(100% - 60px);
   background-color: $canvas-1;

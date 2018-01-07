@@ -47,9 +47,9 @@
 }
 
 .modal-back .modal-body {
-  -webkit-transform: translate3d(0, 0, 0);/* HACK: fixes laggy scrolling*/
-  -webkit-backface-visibility: hidden; /* HACK: fixes laggy scrolling */
-  -webkit-perspective: 1000;/* HACK: fixes laggy scrolling */
+  // -webkit-transform: translate3d(0, 0, 0);/* HACK: fixes laggy scrolling*/
+  // -webkit-backface-visibility: hidden; /* HACK: fixes laggy scrolling */
+  // -webkit-perspective: 1000;/* HACK: fixes laggy scrolling */
   /*margin: 0.5em;*/
   padding-left:0.25em;
   vertical-align: center;

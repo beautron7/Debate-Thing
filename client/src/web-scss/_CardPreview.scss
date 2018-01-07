@@ -3,6 +3,7 @@ $height: 84px;
 $margin: 7px;
 
 cardpreview {
+  --right:23%;
   display: block;
   height:$height;
   position: relative;
@@ -13,78 +14,106 @@ cardpreview {
   transition: box-shadow 0.5s;
   color: $text-color;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  &:hover{box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);}
+
+  img {
+    height: $height - $margin * 2;
+    width:  $height - $margin * 2;
+    margin: $margin;
+    float: left;
+    background-color: $canvas-img-background;
+  }
+
+  author {
+    display: block;
+    text-align: left;
+    font-size: 2rem;
+
+    margin: 0;
+    margin-top: 0.5em;
+    margin-left: 4em;
+    margin-right: 0em;
+
+    height: 1.25em;
+    overflow: hidden;
+  }
+
+  title {
+    display: block;
+    line-height: 1.2em;
+    font-size: 1em;
+    font-style: italic;
+    text-align: left;
+
+    margin: 0;
+    margin-left:5.0em;
+    margin-right:0;
+
+    height: 2.4em;
+    overflow: hidden;
+  }
+
+  keywordcontainer {
+    text-align: left;
+    max-width:90%;
+    overflow-x: hidden;
+
+    keyword {
+      display: inline;
+      white-space: nowrap;
+      background-color: $accent-secondary;
+      border-radius: 0.6em;
+      font-size: 1em;
+      height: 1.2em;
+      margin-left: 0.1em;
+      margin-right: 0.1em;
+      padding-left: 0.5em;
+      padding-right: 0.5em;
+    }
+
+    .url {
+      visibility: hidden;
+    }
+  }
+
+  .text-pane .tri {
+    position: fixed;
+    transform: translateY(-3.5em);
+    right: calc(var(--right) - 0.75em);
+    z-index: 1;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 0px 10px 10px;
+    border-color: transparent transparent transparent $accent-secondary
+  }
+
+  .text-pane .fake-body  {
+    vertical-align: center;
+    $edge: 5em;
+    background: $accent-secondary;
+    background-clip: content-box;
+    transform: translateX(1.1em) translateY(calc(-2.5em - 50%));
+    position: fixed;
+    right:var(--right);
+    left:calc(100% - var(--right) - $edge - 0.75em);
+    height: $edge;
+    z-index: 1;
+    border: {
+      style: solid;
+      width:0em 1em 0em 0em;
+      color: rgba(0,0,0,0);
+    }
+    &::-webkit-scrollbar {background: #a00;}
+    &::-webkit-scrollbar-thumb {border-radius: 1em;background:#a0a;}
+    &::-webkit-scrollbar-track {border-radius: 1em; background:#00a;}
+    &::-webkit-scrollbar{border-radius: 1em;background-color: greenyellow;}
+  }
 }
-
-cardpreview:hover{
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-}
-
-cardpreview > img {
-  height: $height - $margin * 2;
-  width:  $height - $margin * 2;
-  margin: $margin;
-  float: left;
-  background-color: $canvas-img-background;
-}
-
-cardpreview > author {
-  display: block;
-  text-align: left;
-  font-size: 2rem;
-
-  margin: 0;
-  margin-top: 0.5em;
-  margin-left: 4em;
-  margin-right: 0em;
-
-  height: 1.25em;
-  overflow: hidden;
-}
-
-cardpreview > title {
-  display: block;
-  line-height: 1.2em;
-  font-size: 1em;
-  font-style: italic;
-  text-align: left;
-
-  margin: 0;
-  margin-left:5.0em;
-  margin-right:0;
-
-  height: 2.4em;
-  overflow: hidden;
-}
-
-cardpreview > keywordcontainer {
-  text-align: left;
-  max-width:90%;
-  overflow-x: hidden;
-}
-cardpreview > keywordcontainer > keyword {
-  display: inline;
-  white-space: nowrap;
-  background-color: $accent-secondary;
-  border-radius: 0.6em;
-  font-size: 1em;
-  height: 1.2em;
-  margin-left: 0.1em;
-  margin-right: 0.1em;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-}
-
-cardpreview > .url {
-  visibility: hidden;
-}
-
-
 
 
 /*TEXTPANE*/
-cardpreview{
-  --right:23%;
-}
+
 
 @media all and (max-width: 1050px) {cardpreview{
   --right:15em !important;
@@ -93,39 +122,28 @@ cardpreview{
 cardpreview >        .text-pane {visibility: hidden;}                 /*Default, no touch*/
 cardpreview:hover >  .text-pane {visibility: visible;}                /*Tooltip on hover*/
 cardpreview > .text-pane:hover  {visibility: visible;}                /*Keep text pane Display visibility on hover*/
-cardpreview > .text-pane:active {visibility: visible;}                /*Stay up when focus shifts*/
 cardpreview:active > .text-pane {visibility: hidden;}                 /*Hide when drag begins*/
-cardpreview > .text-pane:active {visibility: visible}
+cardpreview > .text-pane:active {visibility: visible;}                /*Stay up when focus shifts*/
 
-cardpreview > .text-pane > .tri {
-  position: fixed;
-  transform: translateY(-3.5em);
-  right: calc(var(--right) - 0.75em);
-  z-index: 1;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 10px 0px 10px 10px;
-  border-color: transparent transparent transparent $accent-secondary
+cardpreview .text-pane .fake-body {
+  .post-load {
+    visibility: hidden;
+    height: 0;
+    white-space: pre-wrap !important;
+    text-align: left;
+  }
 }
 
-cardpreview > .text-pane > .fake-body  {
-  vertical-align: center;
-  $edge: 5em;
-  background: $accent-secondary;
+cardpreview .text-pane:hover .fake-body {
+  animation: expand 0.15s forwards;
 
-  border-style: solid;
-  border-width:0em 1em 0em 0em;
-  border-color: rgba(0,0,0,0);
-   background-clip: content-box;
+  .pre-load {
+    animation: expand-pre-load 0.15s forwards;
+  }
 
-
-  transform: translateX(1.1em) translateY(calc(-2.5em - 50%));
-  position: fixed;
-  right:var(--right);
-  left:calc(100% - var(--right) - $edge - 0.75em);
-  height: $edge;
-  z-index: 1;
+  .post-load {
+    animation: expand-post-load 0.15s forwards;
+  }
 }
 
 @keyframes expand {
@@ -146,7 +164,6 @@ cardpreview > .text-pane > .fake-body  {
   100% {
     left:var(--right);
     transform: translateX(1.1em);
-
     top:8em;
     bottom: 1em;
     height: calc(100% - 9em);
@@ -166,27 +183,3 @@ cardpreview > .text-pane > .fake-body  {
   51% {visibility: visible; height: auto; color:$accent-primary}
   100% {visibility: visible; height: auto; color: black}
 }
-cardpreview > .text-pane:hover > .fake-body {
-  animation: expand 0.15s forwards;
-}
-cardpreview > .text-pane:hover > .fake-body > .pre-load {
-  animation: expand-pre-load 0.15s forwards;
-}
-
-cardpreview > .text-pane > .fake-body > .post-load {
-  visibility: hidden;
-  height: 0;
-
-  white-space: pre-wrap !important;
-  text-align: left;
-}
-
-cardpreview > .text-pane:hover > .fake-body > .post-load {
-  animation: expand-post-load 0.15s forwards;
-}
-
-
-cardpreview > .text-pane > .fake-body::-webkit-scrollbar {background: #a00;}
-cardpreview > .text-pane > .fake-body::-webkit-scrollbar-thumb {border-radius: 1em;background:#a0a;}
- cardpreview > .text-pane > .fake-body::-webkit-scrollbar-track {border-radius: 1em; background:#00a;}
-cardpreview > .text-pane > .fake-body::-webkit-scrollbar{border-radius: 1em;background-color: greenyellow;}
