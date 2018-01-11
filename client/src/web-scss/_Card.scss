@@ -35,7 +35,8 @@ card {
   }
 
   &::selection {
-    background: dark(0.2); /* WebKit/Blink Browsers */
+    background: #000; /* WebKit/Blink Browsers */
+    color:#fff;
   }
 
   .cardHead {
@@ -130,6 +131,10 @@ card {
     }
   }
   .cardBody {
+    &::selection {
+      background: #000; /* WebKit/Blink Browsers */
+      color:#f00;
+    }
     min-height: 10em;
     text-align: left;
     white-space: pre-wrap;

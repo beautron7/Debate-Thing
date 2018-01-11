@@ -98,10 +98,7 @@ div.root {
 }
 
 .nav-item span.name:hover {
-  box-shadow: 0 0px 5px 0px;
-  $border-size: 1.5px;
-  border: solid $border-size;
-  padding: calc(0.37em - $border-size);
+  text-decoration: underline;
 }
 
 

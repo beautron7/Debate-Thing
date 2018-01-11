@@ -18,19 +18,26 @@ tab {
   -webkit-app-region: no-drag;
 
   color: var(--text-color);
-  background-color: var(--ribbon-tab-inactive);
+  background-color: $ribbon-tab-inactive;
+
 }
 
 tab.active {
-  background-color: var(--ribbon-tab-active);
-  border-color: var(--ribbon-tab-active-border);
-  border-bottom-color: var(--ribbon-tab-active-border);
+  &::before {
+    content: "> ";
+  }
+  &::after {
+    content: " <";
+  }
+  background-color: $ribbon-tab-active;
+  border-color: $ribbon-tab-active-border;
+  border-bottom-color: $ribbon-tab-active-border;
   color: var(--text-color);
 }
 
 
 tab:not(.active):hover{
-  /*background-color: var (--ribbon-tab-active);*/
-  border-color: var(--ribbon-tab-active-border);
+  background-color: $ribbon-tab-active;
+  border-color: $ribbon-tab-active-border;
   border-style: dashed;
 }

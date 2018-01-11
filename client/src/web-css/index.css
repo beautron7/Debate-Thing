@@ -37,6 +37,27 @@ body {
   --canvas-3: rgb(50, 50, 50);
   --canvas-4: rgb(60, 60, 60);
 } */
+/*transition: all 0.3s cubic-bezier(.25,.8,.25,1);*/
+/* line 6, src/web-scss/_shadows.scss */
+.box-1 {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+
+/* line 10, src/web-scss/_shadows.scss */
+.box-2 {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+
+/* line 14, src/web-scss/_shadows.scss */
+.box-3 {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); }
+
+/* line 18, src/web-scss/_shadows.scss */
+.box-4 {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
+
+/* line 22, src/web-scss/_shadows.scss */
+.box-5 {
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22); }
+
 @media (min-width: 1048px) {
   /* line 1, src/web-scss/_App.scss */
   .App {
@@ -246,9 +267,10 @@ card {
       font-style: normal; }
   /* line 37, src/web-scss/_Card.scss */
   card::selection {
-    background: rgba(0, 0, 0, 0.2);
-    /* WebKit/Blink Browsers */ }
-  /* line 41, src/web-scss/_Card.scss */
+    background: #000;
+    /* WebKit/Blink Browsers */
+    color: #fff; }
+  /* line 42, src/web-scss/_Card.scss */
   card .cardHead {
     border-radius: 0.9em;
     /* border-style: solid; */
@@ -257,18 +279,18 @@ card {
     display: block;
     position: sticky;
     top: 0em; }
-    /* line 50, src/web-scss/_Card.scss */
+    /* line 51, src/web-scss/_Card.scss */
     card .cardHead .cardHeadLower {
       background: #ddd;
       position: relative;
       height: 2.75em; }
-      /* line 54, src/web-scss/_Card.scss */
+      /* line 55, src/web-scss/_Card.scss */
       card .cardHead .cardHeadLower .cardButtons {
         position: absolute;
         right: 3.5px;
         top: 50%;
         transform: translateY(-50%); }
-      /* line 60, src/web-scss/_Card.scss */
+      /* line 61, src/web-scss/_Card.scss */
       card .cardHead .cardHeadLower .cardAuthor {
         font-size: 1.5em;
         font-weight: bold;
@@ -287,21 +309,21 @@ card {
         overflow-y: hidden;
         height: 1.5em;
         white-space: nowrap; }
-        /* line 85, src/web-scss/_Card.scss */
+        /* line 86, src/web-scss/_Card.scss */
         card .cardHead .cardHeadLower .cardAuthor::-webkit-scrollbar {
           background-color: rgba(0, 0, 0, 0.1);
           border-radius: 1em; }
-        /* line 89, src/web-scss/_Card.scss */
+        /* line 90, src/web-scss/_Card.scss */
         card .cardHead .cardHeadLower .cardAuthor::-webkit-scrollbar-thumb {
           background-color: rgba(0, 0, 0, 0.4);
           border-radius: 1em; }
-        /* line 93, src/web-scss/_Card.scss */
+        /* line 94, src/web-scss/_Card.scss */
         card .cardHead .cardHeadLower .cardAuthor::-webkit-scrollbar-thumb:hover {
           background-color: rgba(0, 0, 0, 0.6); }
-        /* line 96, src/web-scss/_Card.scss */
+        /* line 97, src/web-scss/_Card.scss */
         card .cardHead .cardHeadLower .cardAuthor::-webkit-scrollbar-thumb:active {
           background-color: rgba(0, 0, 0, 0.8); }
-    /* line 101, src/web-scss/_Card.scss */
+    /* line 102, src/web-scss/_Card.scss */
     card .cardHead .cardHeadUpper {
       min-width: 100%;
       min-height: 1em;
@@ -311,41 +333,46 @@ card {
       padding-top: 0.25em;
       background: #ddd;
       text-align: left; }
-    /* line 117, src/web-scss/_Card.scss */
+    /* line 118, src/web-scss/_Card.scss */
     card .cardHead .cardHeadFormatingBar {
       height: 0;
       background: #bbb;
       text-align: left;
       overflow-y: hidden;
       transition: height 1s; }
-      /* line 123, src/web-scss/_Card.scss */
+      /* line 124, src/web-scss/_Card.scss */
       card .cardHead .cardHeadFormatingBar > ribbonbutton {
         margin-left: 7px;
         margin-top: 3.5px;
         float: left; }
-  /* line 132, src/web-scss/_Card.scss */
+  /* line 133, src/web-scss/_Card.scss */
   card .cardBody {
     min-height: 10em;
     text-align: left;
     white-space: pre-wrap;
     font-family: Calibri;
     font-size: 12; }
-    /* line 138, src/web-scss/_Card.scss */
+    /* line 134, src/web-scss/_Card.scss */
+    card .cardBody::selection {
+      background: #000;
+      /* WebKit/Blink Browsers */
+      color: #f00; }
+    /* line 143, src/web-scss/_Card.scss */
     card .cardBody .hi {
       background-color: cyan; }
-    /* line 139, src/web-scss/_Card.scss */
+    /* line 144, src/web-scss/_Card.scss */
     card .cardBody .bold {
       font-weight: bold; }
-    /* line 140, src/web-scss/_Card.scss */
+    /* line 145, src/web-scss/_Card.scss */
     card .cardBody .emphasis {
       font-weight: bold; }
-    /* line 141, src/web-scss/_Card.scss */
+    /* line 146, src/web-scss/_Card.scss */
     card .cardBody .ital {
       font-style: italic; }
-    /* line 142, src/web-scss/_Card.scss */
+    /* line 147, src/web-scss/_Card.scss */
     card .cardBody .udln {
       text-decoration: underline; }
-    /* line 143, src/web-scss/_Card.scss */
+    /* line 148, src/web-scss/_Card.scss */
     card .cardBody .cptl {
       text-transform: uppercase; }
 
@@ -609,16 +636,29 @@ cardpreview .text-pane:hover .fake-body {
 
 /* line 1, src/web-scss/_Circle.scss */
 #editor circle {
-  width: 1em;
-  height: 1em;
-  border-radius: 50%;
   background-color: #000;
   margin: auto;
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin-top: 14px;
+  margin-bottom: 14px;
   transition: border-color 0.3s;
   border: 1px solid black;
-  display: block; }
+  display: block;
+  transition: height 0.1s, width 0.1s, margin-top 0.1s, margin-bottom 0.1s, border-color 0.3s;
+  transition-timing-function: cubic-bezier(1, 0, 1, 0.7) !important; }
+  /* line 10, src/web-scss/_Circle.scss */
+  #editor circle.large {
+    border-radius: 7px;
+    width: 100px;
+    height: 28px;
+    margin-top: 7px;
+    margin-bottom: 7px; }
+  /* line 18, src/web-scss/_Circle.scss */
+  #editor circle:not(.large) {
+    border-radius: 7px;
+    width: 14px;
+    height: 14px;
+    margin-top: 14px;
+    margin-bottom: 14px; }
 
 /*#editor circle:hover{
   border: 1px solid white;
@@ -629,28 +669,6 @@ cardpreview .text-pane:hover .fake-body {
   min-height: 1px;
   display: block;
 }*/
-/* line 25, src/web-scss/_Circle.scss */
-#editor circle.large {
-  width: 2em;
-  height: 2em;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em; }
-
-/* line 32, src/web-scss/_Circle.scss */
-#editor circle:not(.large) {
-  width: 1em;
-  height: 1em;
-  margin-top: 1em;
-  margin-bottom: 1em; }
-
-/* line 39, src/web-scss/_Circle.scss */
-#editor circle:not(.slow) {
-  transition: height 0.35s, width 0.35s, margin-top 0.35s, margin-bottom 0.35s, border-color 0.3s; }
-
-/* line 48, src/web-scss/_Circle.scss */
-#editor circle.slow {
-  transition: height 1s, width 1s, margin-top 1s, margin-bottom 1s, border-color 0.3s; }
-
 /* line 1, src/web-scss/_Editor.scss */
 #editor {
   position: absolute;
@@ -953,11 +971,9 @@ div.root {
 
 /* line 100, src/web-scss/_Navbar.scss */
 .nav-item span.name:hover {
-  box-shadow: 0 0px 5px 0px;
-  border: solid 1.5px;
-  padding: calc(0.37em - $border-size); }
+  text-decoration: underline; }
 
-/* line 108, src/web-scss/_Navbar.scss */
+/* line 105, src/web-scss/_Navbar.scss */
 .nav-item div.contents {
   /* position: absolute; */
   /* top: calc($nav-height); */
@@ -966,7 +982,7 @@ div.root {
   padding-top: 1.75em;
   padding-left: 1.75em; }
 
-/* line 117, src/web-scss/_Navbar.scss */
+/* line 114, src/web-scss/_Navbar.scss */
 .nav-item .slide-down-name {
   position: absolute;
   top: 1.75em;
@@ -1080,27 +1096,6 @@ ribbonbutton.lg .icon span {
 .search-bar-container {
   background-color: #ccc; }
 
-/*transition: all 0.3s cubic-bezier(.25,.8,.25,1);*/
-/* line 6, src/web-scss/_shadows.scss */
-.box-1 {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
-
-/* line 10, src/web-scss/_shadows.scss */
-.box-2 {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
-
-/* line 14, src/web-scss/_shadows.scss */
-.box-3 {
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); }
-
-/* line 18, src/web-scss/_shadows.scss */
-.box-4 {
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
-
-/* line 22, src/web-scss/_shadows.scss */
-.box-5 {
-  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22); }
-
 /* line 1, src/web-scss/_Sidebar.scss */
 sidebar {
   width: var(--sidebar-width);
@@ -1150,19 +1145,25 @@ tab {
   font-size: 14px;
   -webkit-app-region: no-drag;
   color: var(--text-color);
-  background-color: var(--ribbon-tab-inactive); }
+  background-color: #eee; }
 
-/* line 24, src/web-scss/_tab.scss */
+/* line 25, src/web-scss/_tab.scss */
 tab.active {
-  background-color: var(--ribbon-tab-active);
-  border-color: var(--ribbon-tab-active-border);
-  border-bottom-color: var(--ribbon-tab-active-border);
+  background-color: #ddd;
+  border-color: black;
+  border-bottom-color: black;
   color: var(--text-color); }
+  /* line 26, src/web-scss/_tab.scss */
+  tab.active::before {
+    content: "> "; }
+  /* line 29, src/web-scss/_tab.scss */
+  tab.active::after {
+    content: " <"; }
 
-/* line 32, src/web-scss/_tab.scss */
+/* line 39, src/web-scss/_tab.scss */
 tab:not(.active):hover {
-  /*background-color: var (--ribbon-tab-active);*/
-  border-color: var(--ribbon-tab-active-border);
+  background-color: #ddd;
+  border-color: black;
   border-style: dashed; }
 
 /* line 1, src/web-scss/_Tabbar.scss */

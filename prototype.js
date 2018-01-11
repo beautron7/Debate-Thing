@@ -1,38 +1,69 @@
-//FROM users WHERE {} SELECT {}
-
 class Type {
-  constructor(constraints) {
-    return class __TypeInstance__ extends Proxy {
-      constructor(data){
+  constructor(name, constraints) {
+    var _this = this;//the instance of class `Type`
+    _this.handler={};
+    _this.name=name;
+    _this.constraints=constraints;
 
+    _this.handler = {
+      set(target,property,value){
+        var valid =
+          Type.validateData(
+            value,
+            this.constraints[property],
+          )
+
+        if(valid){
+
+          return true
+        } else {
+          throw TypeError("no.")
+        }
+      }
+    }
+
+    return class {
+      constructor(data){
+        if(_this.validateData(data,constraints)){
+          return new Proxy(this.data=data,_this.handler)
+        } else {
+          throw new TypeError(`Invalid data for type ${name}`)
+        }
       }
     }
   }
 
-  function validateData(data,constraint) {
+  validateData(data){
+    return Type.validateData(data,this.constraints);
+  }
+
+  static validateData(data,constraint) {
     if(data instanceof Array){
       if(constraint instanceof Array){
-        return !data.find(item => !validateData(item,constraint[0]))
+        return data.find(                          //find the first item where
+          item => !Type.validateData(item,constraint[0])//validateData returns false
+        ) == undefined                             //if you cant find it (undef), data is good.
       } else {
         return false
       }
-    } else {
+    } else {//not an array
       try {
-        if (data instanceof constraint)return true;
+        if (data instanceof constraint)return true;//handles most objects.
+        if (constraint(data)===data) return true;  //HACK: handles primitives. may raise an error but we're in a try block.
       } catch (e){};
-      var invalid = true;
+      var keys_in_data = false;
       for (key in data) {
-        invalid = false;
-        if(!key in constraint || !validateData(data[key],constraint[key])){
+        keys_in_data = true;
+        if(!key in constraint || !Type.validateData(data[key],constraint[key])){
           return false
         }
       }
     }
-    return !invalid
+    return keys_in_data //if there are no keys in the data (eg: empty object), then validateData returns false.
   }
 }
-
-const Card = new Type({
+/*
+new Type('Card',{
   author:Person,
   id:String,
   datePublished:Date,
@@ -56,8 +87,8 @@ var people = new Accessor({
   data:[];
 })
 
-from(people).where({name:/.*ea.*/}).select('picture').then() //array of picture urls
-from(people).where({name:/.*ea.*/}).select('{picture}').then() //array of objects with picture urls
+from(people).where({name:/.*ea.* /}).select('picture').then() //array of picture urls
+from(people).where({name:/.*ea.* /}).select('{picture}').then() //array of objects with picture urls
 from(people).where({name:name => name.length % 2}).select('{name,articles:{name}}').then()
 from(people).where(person => person.name == person.surname).select("surname")
 
@@ -100,3 +131,4 @@ from(people).where(person => person.name == person.surname).select("surname")
 // $.sources = [];
 //
 //
+*/
