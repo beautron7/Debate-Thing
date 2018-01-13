@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-// import '../web-css/Navbar.css'
 import RibbonButton from '../web-components/RibbonButton.js'
 import {Tree, CardPoint, SectionNode} from '../web-js/Tree'
 const Aux =(props)=>props.children;
@@ -20,11 +19,11 @@ export default class Navbar extends Component {
       <div
         className="root"
         >
-        <Navbar.Breadcrumb ref={x=>this.Breadcrumb=x}></Navbar.Breadcrumb>
+        <Navbar.Breadcrumb
+          ref={x=>this.Breadcrumb=x}
+          />
         <Navbar.SectionNav
-          node={
-            this.state.tree._root
-          }
+          node={this.state.tree._root}
           />
       </div>
     )

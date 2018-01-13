@@ -18,11 +18,11 @@ export default class Editor extends Component {
       throw new Error("Editor can only be instanciated onece.")
     } else {
       Editor.instance = this;
-      var tree =new Tree("Title")
+      var tree = new Tree();
       tree._root=new SectionNode("Title");
       tree._root.isRoot=true;
-      this.state={data:tree};
-      Navbar.instance.setState({tree:tree})
+      this.state={data:tree,path:[]};
+      // Navbar.instance.setState({tree:tree})
     }
   }
 
@@ -52,7 +52,43 @@ export default class Editor extends Component {
     if(this.state.data._root.children[0].nav == null || this.state.data._root.children[0].nav.dom == null){
       return //HACK: if navbar is hidden, it doesn't traverse
     }
+    let newstate = [];
     traverse(this.state.data._root,false)
+
+    function traverse(node,index) {
+      for (var i = 0; i < node.children.length; i++) {
+        let current_child_node          = node.children[i],
+            section_dom                 = current_child_node.react.dom,
+            top_to_top_vertical_offset  = section_dom.offsetTop,
+            height_of_el                = section_dom.offsetHeight;
+
+        if(top_to_top_vertical_offset + height_of_el > scrollPos){//find the first element that the user hasn't already scrolled to the end of
+          if(current_child_node == this.state.path[index]){//if this conditional is true, then the active node may not be different from last time.
+            //no change
+          } else {
+            let old_node = this.state.path[index],
+                new_node = (this.state.path[index] = current_child_node);
+            
+            //Update navbar here
+            //Update breadcrumbs here
+          }
+
+          let has_children           = current_child_node.children && current_child_node.children.length,
+              is_first_child         = i==0,
+              is_partially_offscreen = scrollPos > top_to_top_vertical_offset + 10;
+
+          if(has_children && is_partially_offscreen){
+            traverse(current_child_node,dom_is_clean);
+          } else {
+            nav_dom
+              .querySelectorAll(".active")
+              .forEach(el => el.classList.remove("active"))
+            Navbar.instance.Breadcrumb.setState({activeNode:current_child_node});
+          }
+          break;
+        }
+      }
+    }
 
     function traverse(node,dom_is_clean){
       for (var i = 0; i < node.children.length; i++) {
